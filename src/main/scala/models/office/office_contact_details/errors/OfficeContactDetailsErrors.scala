@@ -7,6 +7,14 @@ sealed trait OfficeContactDetailsErrors {
   val errorMessage: String
 }
 
+case object OfficeContactDetailsNotCreated extends OfficeContactDetailsErrors:
+  override val code: String = this.toString
+  override val errorMessage: String = "address was not found"
+
+case object OfficeContactDetailsDatabaseError extends OfficeContactDetailsErrors:
+  override val code: String = this.toString
+  override val errorMessage: String = "DatabaseError"
+
 case object OfficeContactDetailsNotFound extends OfficeContactDetailsErrors:
   override val code: String = this.toString
   override val errorMessage: String = "address was not found"
