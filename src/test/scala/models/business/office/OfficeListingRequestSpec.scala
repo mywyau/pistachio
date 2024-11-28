@@ -63,7 +63,7 @@ object OfficeListingRequestSpec extends SimpleIOSuite {
 
   val officeListingRequest =
     OfficeListingRequest(
-      office_id = "office_id_1",
+      officeId = "office_id_1",
       officeSpecs = testOfficeSpecs,
       addressDetails = testOfficeAddress,
       availability = testOfficeAvailability,

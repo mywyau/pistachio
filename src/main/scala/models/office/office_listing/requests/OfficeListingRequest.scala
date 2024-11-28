@@ -11,7 +11,7 @@ import models.office.office_specs.OfficeSpecs
 import java.time.LocalDateTime
 
 case class OfficeListingRequest(
-                                 office_id: String,
+                                 officeId: String,
                                  officeSpecs: OfficeSpecs,
                                  addressDetails: OfficeAddress,
                                  availability: OfficeAvailability,
