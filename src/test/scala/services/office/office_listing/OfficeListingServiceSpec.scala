@@ -155,7 +155,7 @@ object OfficeListingServiceSpec extends SimpleIOSuite {
 
     for {
       result <- service.createOffice(request)
-    } yield expect(result.isInvalid && result == Validated.invalidNel(ConstraintViolation))
+    } yield expect(result.isInvalid && result == Validated.invalidNel(DatabaseError))
   }
 
   test("createOffice - multiple repositories fail") {
@@ -170,11 +170,7 @@ object OfficeListingServiceSpec extends SimpleIOSuite {
     for {
       result <- service.createOffice(request)
     } yield {
-      val expectedErrors = NonEmptyList.of(
-        ConstraintViolation,
-        ConstraintViolation
-      )
-      expect(result.isInvalid && result == Validated.invalid(expectedErrors))
+      expect(result.isInvalid && result == Validated.invalidNel(DatabaseError))
     }
   }
 

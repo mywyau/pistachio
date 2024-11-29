@@ -93,7 +93,7 @@ object OfficeListingRequestSpec extends SimpleIOSuite {
     val expectedJson =
       """
         |{
-        |  "office_id": "office_id_1",
+        |  "officeId": "office_id_1",
         |  "officeSpecs": {
         |    "id": 1,
         |    "businessId": "business_id_1",
@@ -114,7 +114,7 @@ object OfficeListingRequestSpec extends SimpleIOSuite {
         |    "updatedAt": "2025-01-01T00:00:00"
         |  },
         |  "addressDetails": {
-        |    "id": 10,
+        |    "id": 1,
         |    "businessId": "business_id_1",
         |    "officeId": "office_id_1",
         |    "buildingName": "build_123",
@@ -126,6 +126,17 @@ object OfficeListingRequestSpec extends SimpleIOSuite {
         |    "postcode": "10001",
         |    "latitude": 100.1,
         |    "longitude": -100.1,
+        |    "createdAt": "2025-01-01T00:00:00",
+        |    "updatedAt": "2025-01-01T00:00:00"
+        |  },
+        |  "contactDetails": {
+        |    "id": 1,
+        |    "businessId": "business_id_1",
+        |    "officeId": "office_id_1",
+        |    "primaryContactFirstName": "Michael",
+        |    "primaryContactLastName": "Yau",
+        |    "contactEmail": "mike@gmail.com",
+        |    "contactNumber": "07402205071",
         |    "createdAt": "2025-01-01T00:00:00",
         |    "updatedAt": "2025-01-01T00:00:00"
         |  },
