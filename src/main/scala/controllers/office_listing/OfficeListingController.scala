@@ -34,7 +34,7 @@ class OfficeListingControllerImpl[F[_] : Concurrent](
           officeListingService.createOffice(request).flatMap {
             case Valid(listing) =>
               logger.info(s"[OfficeListingControllerImpl] POST - Successfully created office for a business") *>
-                Ok(CreatedResponse(listing.toString).asJson)
+                Created(CreatedResponse("Business Office created successfully").asJson)
             case Invalid(error) =>
               val errorResponse = ErrorResponse("placeholder code", "error message")
               BadRequest(errorResponse.asJson)
