@@ -2,33 +2,31 @@ package controllers.office_listing
 
 import cats.effect.*
 import com.comcast.ip4s.{ipv4, port}
-import controllers.office_listing.OfficeListingController
+import controllers.constants.OfficeListingConstants.*
 import controllers.fragments.OfficeAddressRepoFragments.*
 import controllers.fragments.OfficeContactDetailsRepoFragments.*
 import controllers.fragments.OfficeSpecsRepoFragments.*
+import controllers.office_listing.OfficeListingController
 import doobie.implicits.*
 import doobie.util.transactor.Transactor
 import io.circe.Json
 import io.circe.syntax.*
 import models.office.adts.*
-import models.office.office_specs.OfficeAvailability
-import models.office.office_listing.requests.OfficeListingRequest
-import models.office.office_specs.OfficeSpecs
 import models.office.office_address.OfficeAddress
 import models.office.office_contact_details.OfficeContactDetails
+import models.office.office_listing.requests.OfficeListingRequest
+import models.office.office_specs.{OfficeAvailability, OfficeSpecs}
 import models.responses.CreatedResponse
 import org.http4s.*
 import org.http4s.Method.*
-import org.http4s.circe.CirceEntityCodec.circeEntityDecoder
 import org.http4s.circe.*
+import org.http4s.circe.CirceEntityCodec.circeEntityDecoder
 import org.http4s.ember.server.EmberServerBuilder
 import org.http4s.implicits.*
 import org.http4s.server.{Router, Server}
 import org.typelevel.log4cats.SelfAwareStructuredLogger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
-import repositories.office.OfficeAddressRepository
-import repositories.office.OfficeContactDetailsRepository
-import repositories.office.OfficeSpecsRepository
+import repositories.office.{OfficeAddressRepository, OfficeContactDetailsRepository, OfficeSpecsRepository}
 import services.office.office_listing.OfficeListingService
 import shared.{HttpClientResource, TransactorResource}
 import weaver.*
@@ -68,7 +66,7 @@ class OfficeListingControllerISpec(global: GlobalRead) extends IOSuite {
 
   def createController(transactor: Transactor[IO]): HttpRoutes[IO] = {
 
-    val officeAddressRepository =  OfficeAddressRepository(transactor)
+    val officeAddressRepository = OfficeAddressRepository(transactor)
     val officeContactDetailsRepository = OfficeContactDetailsRepository(transactor)
     val officeSpecsRepository = OfficeSpecsRepository(transactor)
 
@@ -80,78 +78,7 @@ class OfficeListingControllerISpec(global: GlobalRead) extends IOSuite {
     )
   }
 
-  val testOfficeSpecs: OfficeSpecs =
-    OfficeSpecs(
-      id = Some(1),
-      businessId = "business_id_1",
-      officeId = "office_id_1",
-      officeName = "Modern Workspace",
-      description = "A vibrant office space in the heart of the city, ideal for teams or individuals.",
-      officeType = OpenPlanOffice,
-      numberOfFloors = 3,
-      capacity = 50,
-      amenities = List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"),
-      availability =
-        OfficeAvailability(
-          days = List("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
-          startTime = LocalDateTime.of(2024, 11, 21, 10, 0, 0),
-          endTime = LocalDateTime.of(2024, 11, 21, 10, 30, 0)
-        ),
-      rules = Some("No smoking. Maintain cleanliness."),
-      createdAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0),
-      updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
-    )
-
-  val testOfficeAddress =
-    OfficeAddress(
-      id = Some(1),
-      businessId = "business_id_1",
-      officeId = "office_id_1",
-      buildingName = Some("OfficeListingControllerISpec Building"),
-      floorNumber = Some("floor 1"),
-      street = Some("123 Main Street"),
-      city = Some("New York"),
-      country = Some("USA"),
-      county = Some("New York County"),
-      postcode = Some("10001"),
-      latitude = Some(100.1),
-      longitude = Some(-100.1),
-      createdAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0),
-      updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
-    )
-
-  val testOfficeContactDetails =
-    OfficeContactDetails(
-      id = Some(1),
-      businessId = "business_id_1",
-      officeId = "office_id_1",
-      primaryContactFirstName = "Michael",
-      primaryContactLastName = "Yau",
-      contactEmail = "mike@gmail.com",
-      contactNumber = "07402205071",
-      createdAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0),
-      updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
-    )
-
-  val testOfficeAvailability =
-    OfficeAvailability(
-      days = List("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
-      startTime = LocalDateTime.of(2025, 1, 1, 0, 0, 0),
-      endTime = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
-    )
-
-  def testOfficeListingRequest(officeId: String): OfficeListingRequest =
-    OfficeListingRequest(
-      officeId = officeId,
-      addressDetails = testOfficeAddress,
-      officeSpecs = testOfficeSpecs,
-      contactDetails = testOfficeContactDetails,
-      availability = testOfficeAvailability,
-      createdAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0),
-      updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
-    )
-
-  test("GET - /pistachio/business/businesses/office/listing/create - should generate the user profile associated with the user") { (transactorResource, log) =>
+  test("GET - /pistachio/business/businesses/office/listing/create - should generate the office listing data for a business in the respective tables, returning Created response") { (transactorResource, log) =>
 
     val transactor = transactorResource._1.xa
     val client = transactorResource._2.client
