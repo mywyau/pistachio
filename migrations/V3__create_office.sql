@@ -40,6 +40,7 @@ CREATE TABLE office_specs (
     description TEXT,
     office_type VARCHAR(100),
     number_of_floors INT,
+    total_desks INT,
     capacity INT,
     amenities TEXT[],                                   -- Array of amenities (e.g., Wi-Fi, Coffee)
     availability JSONB,                                 -- Availability info (days, opening time, closing time)
