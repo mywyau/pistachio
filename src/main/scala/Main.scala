@@ -67,7 +67,7 @@ object Main extends IOApp {
     EmberServerBuilder
       .default[F]
       .withHost(ipv4"0.0.0.0")
-      .withPort(port"8081")
+      .withPort(port"1010")
       .withHttpApp(httpRoutes.orNotFound)
       .build
       .void

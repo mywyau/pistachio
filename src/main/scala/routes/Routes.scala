@@ -4,17 +4,17 @@ import cats.NonEmptyParallel
 import cats.effect.*
 import controllers.*
 import controllers.desk_listing.DeskListingControllerImpl
-import controllers.office_listing.OfficeListingController
+import controllers.office_listing.OfficeListingControllerImpl
 import dev.profunktor.redis4cats.effect.Log
 import doobie.hikari.HikariTransactor
 import org.http4s.HttpRoutes
 import org.typelevel.log4cats.Logger
 import repositories.*
 import repositories.business.DeskListingRepositoryImpl
-import repositories.office.{OfficeAddressRepository, OfficeContactDetailsRepository, OfficeSpecsRepository}
+import repositories.office.{OfficeAddressRepositoryImpl, OfficeContactDetailsRepositoryImpl, OfficeSpecsRepositoryImpl}
 import services.*
 import services.business.desk_listing.DeskListingServiceImpl
-import services.office.office_listing.OfficeListingService
+import services.office.office_listing.OfficeListingServiceImpl
 
 object Routes {
 
@@ -30,12 +30,12 @@ object Routes {
 
   def officeListingRoutes[F[_] : Concurrent : Temporal : NonEmptyParallel : Async : Log](transactor: HikariTransactor[F])(implicit logger: Logger[F]): HttpRoutes[F] = {
 
-    val officeSpecsRepository = OfficeSpecsRepository[F](transactor)
-    val officeAddressRepository = OfficeAddressRepository[F](transactor)
-    val officeContactDetailsRepository = OfficeContactDetailsRepository[F](transactor)
+    val officeSpecsRepository = new OfficeSpecsRepositoryImpl[F](transactor)
+    val officeAddressRepository = new OfficeAddressRepositoryImpl[F](transactor)
+    val officeContactDetailsRepository = new OfficeContactDetailsRepositoryImpl[F](transactor)
 
-    val officeListingService = OfficeListingService[F](officeAddressRepository, officeContactDetailsRepository, officeSpecsRepository)
-    val officeListingController = OfficeListingController[F](officeListingService)
+    val officeListingService = new OfficeListingServiceImpl[F](officeAddressRepository, officeContactDetailsRepository, officeSpecsRepository)
+    val officeListingController = new OfficeListingControllerImpl[F](officeListingService)
 
     officeListingController.routes
   }
