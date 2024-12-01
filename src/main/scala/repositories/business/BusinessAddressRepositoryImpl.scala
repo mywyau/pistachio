@@ -1,6 +1,7 @@
 package repositories.business
 
 import cats.Monad
+import cats.data.ValidatedNel
 import cats.effect.Concurrent
 import cats.syntax.all.*
 import doobie.*
@@ -8,6 +9,7 @@ import doobie.implicits.*
 import doobie.implicits.javasql.*
 import doobie.util.meta.Meta
 import models.business.business_address.service.BusinessAddress
+import models.database.*
 
 import java.sql.Timestamp
 import java.time.LocalDateTime
@@ -15,7 +17,7 @@ import java.time.LocalDateTime
 
 trait BusinessAddressRepositoryAlgebra[F[_]] {
 
-  def createUserAddress(user: BusinessAddress): F[Int]
+  def createBusinessAddress(businessAddress: BusinessAddress): F[ValidatedNel[SqlErrors, Int]]
 
   def findByUserId(userId: String): F[Option[BusinessAddress]]
 }
@@ -34,7 +36,7 @@ class BusinessAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Trans
     findQuery
   }
 
-  override def createUserAddress(businessAddress: BusinessAddress): F[Int] = {
+  override def createBusinessAddress(businessAddress: BusinessAddress): F[ValidatedNel[SqlErrors, Int]] = {
     sql"""
       INSERT INTO business_address (
         user_id,
@@ -61,6 +63,21 @@ class BusinessAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Trans
     """.update
       .run
       .transact(transactor)
+      .attempt // Capture potential errors
+      .map {
+        case Right(rowsAffected) =>
+          if (rowsAffected == 1) {
+            rowsAffected.validNel
+          } else {
+            InsertionFailed.invalidNel
+          }
+        case Left(e: java.sql.SQLIntegrityConstraintViolationException) =>
+          ConstraintViolation.invalidNel
+        case Left(e: java.sql.SQLException) =>
+          DatabaseError.invalidNel
+        case Left(e) =>
+          UnknownError.invalidNel
+      }
   }
 }
 
