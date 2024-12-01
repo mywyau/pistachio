@@ -1,21 +1,21 @@
-package repository.business.business_contact_details
+package repository.office
 
 import cats.data.Validated.Valid
 import cats.effect.IO
 import cats.effect.kernel.Ref
-import models.business.business_contact_details.BusinessContactDetails
-import repository.business.business.mocks.MockBusinessContactDetailsRepository
+import models.office.office_contact_details.OfficeContactDetails
+import repository.office.mocks.MockOfficeContactDetailsRepository
 import weaver.SimpleIOSuite
 
 import java.time.LocalDateTime
 
-object BusinessContactDetailsRepositorySpec extends SimpleIOSuite {
+object OfficeContactDetailsRepositorySpec extends SimpleIOSuite {
 
-  def testContactDetails(id: Option[Int], businessId: String, business_id: String): BusinessContactDetails =
-    BusinessContactDetails(
+  def testContactDetails(id: Option[Int], businessId: String, office_id: String): OfficeContactDetails =
+    OfficeContactDetails(
       id = id,
       businessId = businessId,
-      businessId = business_id,
+      officeId = office_id,
       primaryContactFirstName = "Michael",
       primaryContactLastName = "Yau",
       contactEmail = "mikey@gmail.com",
@@ -25,11 +25,11 @@ object BusinessContactDetailsRepositorySpec extends SimpleIOSuite {
     )
 
   // Helper method to create a mock repository with initial state
-  def createMockRepo(initialUsers: List[BusinessContactDetails]): IO[MockBusinessContactDetailsRepository] =
-    Ref.of[IO, List[BusinessContactDetails]](initialUsers).map(MockBusinessContactDetailsRepository.apply)
+  def createMockRepo(initialUsers: List[OfficeContactDetails]): IO[MockOfficeContactDetailsRepository] =
+    Ref.of[IO, List[OfficeContactDetails]](initialUsers).map(MockOfficeContactDetailsRepository.apply)
 
   test(".findByBusinessId() - should return the contact details if business_id exists") {
-    val existingContactDetailsForUser = testContactDetails(Some(1), "business_id_1", "business_1")
+    val existingContactDetailsForUser = testContactDetails(Some(1), "business_id_1", "office_1")
 
     for {
       mockRepo <- createMockRepo(List(existingContactDetailsForUser))
@@ -44,9 +44,9 @@ object BusinessContactDetailsRepositorySpec extends SimpleIOSuite {
     } yield expect(result.isEmpty)
   }
 
-  test(".createContactDetails() - when given a valid BusinessContactDetails should insert BusinessContactDetails data into the postgres db table") {
+  test(".createContactDetails() - when given a valid OfficeContactDetails should insert OfficeContactDetails data into the postgres db table") {
 
-    val testContactDetailsForUser2: BusinessContactDetails = testContactDetails(Some(2), "business_id_2", "business_2")
+    val testContactDetailsForUser2: OfficeContactDetails = testContactDetails(Some(2), "business_id_2", "office_2")
     for {
       mockRepo <- createMockRepo(List())
       result <- mockRepo.createContactDetails(testContactDetailsForUser2)

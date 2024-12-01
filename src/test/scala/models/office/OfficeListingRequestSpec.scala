@@ -1,4 +1,4 @@
-package models.business.office
+package models.office
 
 import cats.effect.IO
 import io.circe.*

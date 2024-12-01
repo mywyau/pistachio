@@ -1,9 +1,9 @@
-package repository.business.business_address
+package repository.business
 
 import cats.effect.IO
 import cats.effect.kernel.Ref
 import models.business.business_address.service.BusinessAddress
-import repository.business.business_address.mocks.MockBusinessAddressRepository
+import repository.business.mocks.MockBusinessAddressRepository
 import weaver.SimpleIOSuite
 
 import java.time.LocalDateTime

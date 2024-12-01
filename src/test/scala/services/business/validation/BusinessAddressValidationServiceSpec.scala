@@ -1,4 +1,4 @@
-package services.business_address.validation
+package services.business.validation
 
 import cats.data.Validated
 import cats.data.Validated.{Invalid, Valid}

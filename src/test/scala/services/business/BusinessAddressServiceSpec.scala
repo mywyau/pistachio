@@ -1,10 +1,11 @@
-package services.business_address
+package services.business
 
 import cats.effect.IO
 import models.business.business_address.errors.BusinessAddressNotFound
 import models.business.business_address.service.BusinessAddress
 import repositories.business.BusinessAddressRepositoryAlgebra
 import services.business.business_address.{BusinessAddressService, BusinessAddressServiceImpl}
+import services.business.mocks.MockBusinessAddressRepository
 import weaver.SimpleIOSuite
 
 import java.time.LocalDateTime
@@ -15,7 +16,8 @@ object BusinessAddressServiceSpec extends SimpleIOSuite {
     BusinessAddress(
       id = Some(1),
       userId = userId,
-      street = Some("fake street 1"),
+      address1 = Some("fake street 1"),
+      address2 = Some("fake street 1"),
       city = Some("fake city 1"),
       country = Some("UK"),
       county = Some("County 1"),
@@ -23,23 +25,6 @@ object BusinessAddressServiceSpec extends SimpleIOSuite {
       createdAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0),
       updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
     )
-
-  class MockBusinessAddressRepository(
-                                       existingBusinessAddress: Map[String, BusinessAddress] = Map.empty
-                                     ) extends BusinessAddressRepositoryAlgebra[IO] {
-
-    def showAllUsers: IO[Map[String, BusinessAddress]] = IO.pure(existingBusinessAddress)
-
-    override def createUserAddress(user: BusinessAddress): IO[Int] = IO.pure(1) // Assume user creation always succeeds
-
-    override def findByUserId(userId: String): IO[Option[BusinessAddress]] = IO.pure(existingBusinessAddress.get(userId))
-
-    override def updateAddressDynamic(userId: String, street: Option[String], city: Option[String], country: Option[String], county: Option[String], postcode: Option[String]): IO[Option[BusinessAddress]] = ???
-
-    override def createRegistrationBusinessAddress(userId: String): IO[Int] =
-      IO.pure(1)
-  }
-
 
   test(".getAddressDetailsByUserId() - when there is an existing user address details given a user_id should return the correct address details - Right(address)") {
 

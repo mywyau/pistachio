@@ -1,10 +1,10 @@
-package repository.business.office
+package repository.office
 
-import cats.effect.IO
 import cats.data.Validated.Valid
+import cats.effect.IO
 import cats.effect.kernel.Ref
 import models.office.office_address.OfficeAddress
-import repository.business.office.mocks.MockOfficeAddressRepository
+import repository.office.mocks.MockOfficeAddressRepository
 import weaver.SimpleIOSuite
 
 import java.time.LocalDateTime

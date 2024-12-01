@@ -1,10 +1,11 @@
-package models.business.desk_listing
+package models
 
 import cats.effect.IO
 import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import models.business.adts.PrivateDesk
+import models.business.desk_listing.Availability
 import models.business.desk_listing.requests.DeskListingRequest
 import weaver.SimpleIOSuite
 

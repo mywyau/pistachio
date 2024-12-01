@@ -10,7 +10,6 @@ import doobie.implicits.javasql.*
 import doobie.postgres.implicits.*
 import doobie.util.meta.Meta
 import io.circe.syntax.*
-import models.business.adts.BusinessType
 import models.business.business_specs.BusinessSpecs
 import models.database.*
 

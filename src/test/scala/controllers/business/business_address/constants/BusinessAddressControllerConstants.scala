@@ -10,7 +10,8 @@ object BusinessAddressControllerConstants {
     BusinessAddress(
       id = Some(1),
       userId = "user_1",
-      street = Some("1 Canton Street"),
+      address1 = Some("1 Canton Street"),
+      address2 = Some("2 Canton Street"),
       city = Some("Cardiff"),
       country = Some("United Kingdom"),
       county = Some("South Glamorgan"),

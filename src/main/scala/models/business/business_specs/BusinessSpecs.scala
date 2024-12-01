@@ -3,7 +3,6 @@ package models.business.business_specs
 import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
 import io.circe.{Decoder, Encoder}
 import models.business.business_specs.BusinessAvailability
-import models.business.adts.BusinessType
 
 import java.time.LocalDateTime
 

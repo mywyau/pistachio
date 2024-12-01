@@ -1,7 +1,7 @@
-package repository.business.office.mocks
+package repository.office.mocks
 
-import cats.data.ValidatedNel
 import cats.data.Validated.validNel
+import cats.data.ValidatedNel
 import cats.effect.IO
 import cats.effect.kernel.Ref
 import models.database.SqlErrors
