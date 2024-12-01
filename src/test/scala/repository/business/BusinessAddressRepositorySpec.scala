@@ -1,5 +1,6 @@
 package repository.business
 
+import cats.data.Validated.Valid
 import cats.effect.IO
 import cats.effect.kernel.Ref
 import models.business.business_address.service.BusinessAddress
@@ -14,12 +15,16 @@ object BusinessAddressRepositorySpec extends SimpleIOSuite {
     BusinessAddress(
       id = id,
       userId = userId,
-      address1 = Some("fake street 1"),
-      address2 = Some("fake street 1"),
+      businessId = Some("business1"),
+      buildingName = Some("building 1"),
+      floorNumber = Some("floor 1"),
+      street = Some("1 Canton Street"),
       city = Some("fake city 1"),
       country = Some("UK"),
       county = Some("County 1"),
       postcode = Some("CF3 3NJ"),
+      latitude = Some(100.1),
+      longitude = Some(-100.1),
       createdAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0),
       updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
     )
@@ -49,10 +54,10 @@ object BusinessAddressRepositorySpec extends SimpleIOSuite {
 
     for {
       mockRepo <- createMockRepo(List())
-      result <- mockRepo.createUserAddress(testAddressForUser2)
+      result <- mockRepo.createBusinessAddress(testAddressForUser2)
       findInsertedAddress <- mockRepo.findByUserId("user_id_2")
     } yield expect.all(
-      result == 1,
+      result == Valid(1),
       findInsertedAddress == Some(testAddressForUser2)
     )
   }

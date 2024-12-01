@@ -4,7 +4,7 @@ import cats.data.{NonEmptyList, Validated, ValidatedNel}
 import cats.effect.IO
 import cats.implicits.*
 import models.business.adts.*
-import models.business.business_address.BusinessAddress
+import models.business.business_address.service.BusinessAddress
 import models.business.business_address.service.BusinessAddress
 import models.business.business_contact_details.BusinessContactDetails
 import models.business.business_listing.errors.BusinessListingErrors
@@ -22,6 +22,7 @@ object BusinessListingServiceSpec extends SimpleIOSuite {
   val testBusinessSpecs: BusinessSpecs =
     BusinessSpecs(
       id = Some(1),
+      userId = "user_id_1",
       businessId = "business_id_1",
       businessName = "Modern Workspace",
       description = "A vibrant business space in the heart of the city, ideal for teams or individuals.",
@@ -31,13 +32,12 @@ object BusinessListingServiceSpec extends SimpleIOSuite {
 
   val testBusinessAddress: BusinessAddress =
     BusinessAddress(
-      id = Some(10),
+      id = Some(1),
       userId = "user_id_1",
-      businessId = "business_id_1",
+      businessId = Some("business_id_1"),
       buildingName = Some("build_123"),
       floorNumber = Some("floor 1"),
-      address1 = Some("123 Main Street"),
-      address2 = Some("123 Main Street"),
+      street = Some("1 Canton Street"),
       city = Some("New York"),
       country = Some("USA"),
       county = Some("New York County"),
@@ -51,6 +51,7 @@ object BusinessListingServiceSpec extends SimpleIOSuite {
   val testBusinessContactDetails =
     BusinessContactDetails(
       id = Some(1),
+      userId = "user_id_1",
       businessId = "business_id_1",
       primaryContactFirstName = "Michael",
       primaryContactLastName = "Yau",
@@ -75,7 +76,7 @@ object BusinessListingServiceSpec extends SimpleIOSuite {
                                        addressResult: IO[ValidatedNel[SqlErrors, Int]]
                                      ) extends BusinessAddressRepositoryAlgebra[IO] {
 
-    override def findByBusinessId(businessId: String): IO[Option[BusinessAddress]] = ???
+    override def findByUserId(userId: String): IO[Option[BusinessAddress]] = ???
 
     override def createBusinessAddress(businessAddress: BusinessAddress): IO[ValidatedNel[SqlErrors, Int]] = addressResult
   }

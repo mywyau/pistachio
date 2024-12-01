@@ -1,6 +1,7 @@
 package services.business
 
 import cats.effect.IO
+import cats.data.Validated.Valid
 import models.business.business_address.errors.BusinessAddressNotFound
 import models.business.business_address.service.BusinessAddress
 import repositories.business.BusinessAddressRepositoryAlgebra
@@ -19,12 +20,13 @@ object BusinessAddressServiceSpec extends SimpleIOSuite {
       businessId = Some("business_id_1"),
       buildingName = Some("building name"),
       floorNumber = Some("floor 1"),
-      address1 = Some("fake street 1"),
-      address2 = Some("fake street 1"),
+      street = Some("1 Canton Street"),
       city = Some("fake city 1"),
       country = Some("UK"),
       county = Some("County 1"),
       postcode = Some("CF3 3NJ"),
+      latitude = Some(100.1),
+      longitude = Some(-100.1),
       createdAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0),
       updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
     )
@@ -67,7 +69,7 @@ object BusinessAddressServiceSpec extends SimpleIOSuite {
     for {
       result <- service.createAddress(sampleAddress)
     } yield {
-      expect(result == 1)
+      expect(result == Valid(1))
     }
   }
 }

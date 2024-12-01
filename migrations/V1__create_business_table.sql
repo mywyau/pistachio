@@ -39,7 +39,6 @@ CREATE TABLE business_specs (
     business_id VARCHAR(255) NOT NULL UNIQUE,
     business_name VARCHAR(255) NOT NULL,
     description TEXT,
-    business_type VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

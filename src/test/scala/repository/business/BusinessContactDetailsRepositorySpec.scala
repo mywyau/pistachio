@@ -11,9 +11,15 @@ import java.time.LocalDateTime
 
 object BusinessContactDetailsRepositorySpec extends SimpleIOSuite {
 
-  def testContactDetails(id: Option[Int], businessId: String, business_id: String): BusinessContactDetails =
+  def testContactDetails(
+                          id: Option[Int],
+                          userId: String,
+                          businessId: String,
+                          business_id: String
+                        ): BusinessContactDetails =
     BusinessContactDetails(
       id = id,
+      userId = userId,
       businessId = businessId,
       primaryContactFirstName = "Michael",
       primaryContactLastName = "Yau",
@@ -27,7 +33,7 @@ object BusinessContactDetailsRepositorySpec extends SimpleIOSuite {
     Ref.of[IO, List[BusinessContactDetails]](initialUsers).map(MockBusinessContactDetailsRepository.apply)
 
   test(".findByBusinessId() - should return the contact details if business_id exists") {
-    val existingContactDetailsForUser = testContactDetails(Some(1), "business_id_1", "business_1")
+    val existingContactDetailsForUser = testContactDetails(Some(1), "user_id_1","business_id_1", "business_1")
 
     for {
       mockRepo <- createMockRepo(List(existingContactDetailsForUser))
@@ -44,7 +50,7 @@ object BusinessContactDetailsRepositorySpec extends SimpleIOSuite {
 
   test(".createContactDetails() - when given a valid BusinessContactDetails should insert BusinessContactDetails data into the postgres db table") {
 
-    val testContactDetailsForUser2: BusinessContactDetails = testContactDetails(Some(2), "business_id_2", "business_2")
+    val testContactDetailsForUser2: BusinessContactDetails = testContactDetails(Some(2),"user_id_1", "business_id_2", "business_2")
     for {
       mockRepo <- createMockRepo(List())
       result <- mockRepo.createContactDetails(testContactDetailsForUser2)

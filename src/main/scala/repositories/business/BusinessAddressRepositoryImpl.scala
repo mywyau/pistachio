@@ -17,9 +17,9 @@ import java.time.LocalDateTime
 
 trait BusinessAddressRepositoryAlgebra[F[_]] {
 
-  def createBusinessAddress(businessAddress: BusinessAddress): F[ValidatedNel[SqlErrors, Int]]
-
   def findByUserId(userId: String): F[Option[BusinessAddress]]
+
+  def createBusinessAddress(businessAddress: BusinessAddress): F[ValidatedNel[SqlErrors, Int]]
 }
 
 class BusinessAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transactor[F]) extends BusinessAddressRepositoryAlgebra[F] {
@@ -40,8 +40,11 @@ class BusinessAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Trans
     sql"""
       INSERT INTO business_address (
         user_id,
-        address1,
-        address2,
+        business_id,
+        business_name,
+        building_name,
+        floor_number,
+        street,
         city,
         country,
         county,
@@ -51,8 +54,10 @@ class BusinessAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Trans
       )
       VALUES (
         ${businessAddress.userId},
-        ${businessAddress.address1},
-        ${businessAddress.address2},
+        ${businessAddress.businessId},
+        ${businessAddress.buildingName},
+        ${businessAddress.floorNumber},
+        ${businessAddress.street},
         ${businessAddress.city},
         ${businessAddress.country},
         ${businessAddress.county},
