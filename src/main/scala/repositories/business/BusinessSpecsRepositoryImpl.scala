@@ -29,8 +29,6 @@ class BusinessSpecsRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transac
   implicit val localDateTimeMeta: Meta[LocalDateTime] =
     Meta[Timestamp].imap(_.toLocalDateTime)(Timestamp.valueOf)
 
-  implicit val businessTypeMeta: Meta[BusinessType] = Meta[String].imap(BusinessType.fromString)(_.toString)
-
   override def findByBusinessId(businessId: String): F[Option[BusinessSpecs]] = {
     val findQuery: F[Option[BusinessSpecs]] =
       sql"SELECT * FROM business_specs WHERE business_id = $businessId"
@@ -46,27 +44,12 @@ class BusinessSpecsRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transac
         business_id,
         business_name,
         description,
-        business_type,
-        number_of_floors,
-        total_desks,
-        capacity,
-        amenities,
-        availability,
-        rules,
         created_at,
         updated_at
       ) VALUES (
         ${businessSpecs.businessId},
         ${businessSpecs.businessId},
         ${businessSpecs.businessName},
-        ${businessSpecs.description},
-        ${businessSpecs.businessType},
-        ${businessSpecs.numberOfFloors},
-        ${businessSpecs.totalDesks},
-        ${businessSpecs.capacity},
-        ${businessSpecs.amenities},
-        ${businessSpecs.availability.asJson.noSpaces}::jsonb,
-        ${businessSpecs.rules},
         ${businessSpecs.createdAt},
         ${businessSpecs.updatedAt}
       )
@@ -74,7 +57,7 @@ class BusinessSpecsRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transac
       .update
       .run
       .transact(transactor)
-      .attempt // Capture potential errors
+      .attempt
       .map {
         case Right(rowsAffected) =>
           if (rowsAffected == 1) {

@@ -12,13 +12,6 @@ case class BusinessSpecs(
                         businessId: String,
                         businessName: String,
                         description: String,
-                        businessType: BusinessType,
-                        numberOfFloors: Int,
-                        totalDesks: Int,
-                        capacity: Int,
-                        amenities: List[String],
-                        availability: BusinessAvailability,
-                        rules: Option[String],
                         createdAt: LocalDateTime,
                         updatedAt: LocalDateTime
                       )

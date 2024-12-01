@@ -15,20 +15,9 @@ import java.time.LocalDateTime
 
 trait BusinessAddressRepositoryAlgebra[F[_]] {
 
-  def createRegistrationBusinessAddress(userId: String): F[Int]
-
   def createUserAddress(user: BusinessAddress): F[Int]
 
   def findByUserId(userId: String): F[Option[BusinessAddress]]
-
-  def updateAddressDynamic(
-                            userId: String,
-                            street: Option[String],
-                            city: Option[String],
-                            country: Option[String],
-                            county: Option[String],
-                            postcode: Option[String]
-                          ): F[Option[BusinessAddress]]
 }
 
 class BusinessAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transactor[F]) extends BusinessAddressRepositoryAlgebra[F] {
@@ -45,24 +34,12 @@ class BusinessAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Trans
     findQuery
   }
 
-  override def createRegistrationBusinessAddress(userId: String): F[Int] = {
-    sql"""
-      INSERT INTO business_address (
-        user_id
-      )
-      VALUES (
-        $userId
-        )
-    """.update
-      .run
-      .transact(transactor)
-  }
-
   override def createUserAddress(businessAddress: BusinessAddress): F[Int] = {
     sql"""
       INSERT INTO business_address (
         user_id,
-        street,
+        address1,
+        address2,
         city,
         country,
         county,
@@ -72,7 +49,8 @@ class BusinessAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Trans
       )
       VALUES (
         ${businessAddress.userId},
-        ${businessAddress.street},
+        ${businessAddress.address1},
+        ${businessAddress.address2},
         ${businessAddress.city},
         ${businessAddress.country},
         ${businessAddress.county},
@@ -84,51 +62,6 @@ class BusinessAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Trans
       .run
       .transact(transactor)
   }
-
-  override def updateAddressDynamic(
-                                     userId: String,
-                                     street: Option[String],
-                                     city: Option[String],
-                                     country: Option[String],
-                                     county: Option[String],
-                                     postcode: Option[String]
-                                   ): F[Option[BusinessAddress]] = {
-
-    // Dynamically build the update query
-    val updates = List(
-      street.map(s => fr"street = $s"),
-      city.map(c => fr"city = $c"),
-      country.map(c => fr"country = $c"),
-      county.map(c => fr"county = $c"),
-      postcode.map(p => fr"postcode = $p")
-    ).flatten
-
-    val updateQuery: Option[ConnectionIO[Int]] =
-      if (updates.nonEmpty) {
-        (fr"UPDATE business_address SET" ++ updates.intercalate(fr",") ++
-          fr"WHERE user_id = $userId").update.run.some
-      } else None
-
-    val selectQuery: ConnectionIO[Option[BusinessAddress]] =
-      sql"""
-          SELECT id, user_id, street, city, country, county, postcode, created_at, updated_at
-          FROM business_address
-          WHERE user_id = $userId
-        """.query[BusinessAddress].option
-
-    val result: ConnectionIO[Option[BusinessAddress]] = updateQuery match {
-      case Some(query) =>
-        for {
-          rowsAffected <- query
-          updatedAddress <- if (rowsAffected > 0) selectQuery else none[BusinessAddress].pure[ConnectionIO]
-        } yield updatedAddress
-      case None =>
-        selectQuery // If no updates, return the existing address
-    }
-
-    result.transact(transactor)
-  }
-
 }
 
 
