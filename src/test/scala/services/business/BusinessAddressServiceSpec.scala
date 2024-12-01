@@ -14,8 +14,11 @@ object BusinessAddressServiceSpec extends SimpleIOSuite {
 
   def testAddress(id: Option[Int], userId: String): BusinessAddress =
     BusinessAddress(
-      id = Some(1),
+      id = id,
       userId = userId,
+      businessId = Some("business_id_1"),
+      buildingName = Some("building name"),
+      floorNumber = Some("floor 1"),
       address1 = Some("fake street 1"),
       address2 = Some("fake street 1"),
       city = Some("fake city 1"),

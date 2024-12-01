@@ -11,3 +11,4 @@ trait BusinessAddressServiceAlgebra[F[_]] {
   def getAddressDetailsByUserId(userId: String): F[Either[BusinessAddressErrors, BusinessAddress]]
 
   def createAddress(wandererAddress: BusinessAddress): F[ValidatedNel[SqlErrors, Int]]
+}

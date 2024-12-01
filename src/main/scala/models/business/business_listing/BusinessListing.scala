@@ -11,6 +11,7 @@ import java.time.LocalDateTime
 
 case class BusinessListing(
                             id: Option[Int],
+                            userId: String,
                             businessId: String,
                             businessSpecs: BusinessSpecs,
                             addressDetails: BusinessAddress,

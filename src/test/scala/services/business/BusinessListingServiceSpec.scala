@@ -12,7 +12,7 @@ import models.business.business_listing.requests.BusinessListingRequest
 import models.business.business_specs.{BusinessAvailability, BusinessSpecs}
 import models.database.{SqlErrors, *}
 import repositories.business.{BusinessAddressRepositoryAlgebra, BusinessContactDetailsRepositoryAlgebra, BusinessSpecsRepositoryAlgebra}
-import services.business.business_address.BusinessListingServiceImpl
+import services.business.business_listing.BusinessListingServiceImpl
 import weaver.SimpleIOSuite
 
 import java.time.LocalDateTime
@@ -32,6 +32,7 @@ object BusinessListingServiceSpec extends SimpleIOSuite {
   val testBusinessAddress: BusinessAddress =
     BusinessAddress(
       id = Some(10),
+      userId = "user_id_1",
       businessId = "business_id_1",
       buildingName = Some("build_123"),
       floorNumber = Some("floor 1"),

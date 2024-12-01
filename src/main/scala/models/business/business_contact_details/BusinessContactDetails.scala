@@ -8,6 +8,7 @@ import java.time.LocalDateTime
 
 case class BusinessContactDetails(
                                    id: Option[Int],
+                                   userId: String,
                                    businessId: String,
                                    primaryContactFirstName: String,
                                    primaryContactLastName: String,
