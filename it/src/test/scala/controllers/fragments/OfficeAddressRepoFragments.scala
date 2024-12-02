@@ -13,8 +13,8 @@ object OfficeAddressRepoFragments {
     sql"""
       CREATE TABLE IF NOT EXISTS office_address (
         id BIGSERIAL PRIMARY KEY,
-        business_id VARCHAR(255),
-        office_id VARCHAR(255),
+        business_id VARCHAR(255) NOT NULL UNIQUE,
+        office_id VARCHAR(255) NOT NULL UNIQUE,
         building_name VARCHAR(255),
         floor_number VARCHAR(50),
         street VARCHAR(255),
