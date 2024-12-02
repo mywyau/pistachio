@@ -3,16 +3,16 @@ ThisBuild / scalaVersion := "3.3.0"
 ThisBuild / parallelExecution := true
 
 
-lazy val shared = (project in file("shared"))
-  .settings(
-    name := "pistachio-shared",
-    scalaVersion := scalaVersion.value,
-    libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test ++ AppDependencies.integrationTest,
-
-  )
+//lazy val shared = (project in file("shared"))
+//  .settings(
+//    name := "pistachio-shared",
+//    scalaVersion := scalaVersion.value,
+//    libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test ++ AppDependencies.integrationTest,
+//
+//  )
 
 lazy val root = (project in file("."))
-  .dependsOn(shared) // Depend on shared module
+//  .dependsOn(shared) // Depend on shared module
   .settings(
     name := "pistachio",
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test,
@@ -21,7 +21,8 @@ lazy val root = (project in file("."))
   )
 
 lazy val it = (project in file("it"))
-  .dependsOn(root, shared) // Depend on root and shared module
+//  .dependsOn(root, shared) // Depend on root and shared module
+  .dependsOn(root) // Depend on root and shared module
   .settings(
     name := "pistachio-it",
     libraryDependencies ++= AppDependencies.integrationTest,
