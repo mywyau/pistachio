@@ -54,6 +54,7 @@ object BusinessListingServiceSpec extends SimpleIOSuite {
       id = Some(1),
       userId = "user_id_1",
       businessId = "business_id_1",
+      businessId = "businessCorp",
       primaryContactFirstName = "Michael",
       primaryContactLastName = "Yau",
       contactEmail = "mike@gmail.com",

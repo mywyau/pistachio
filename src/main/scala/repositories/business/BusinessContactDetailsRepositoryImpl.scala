@@ -41,6 +41,7 @@ class BusinessContactDetailsRepositoryImpl[F[_] : Concurrent : Monad](transactor
       INSERT INTO business_contact_details (
         user_id,
         business_id,
+        business_name,
         primary_contact_first_name,
         primary_contact_last_name,
         contact_email,
@@ -51,6 +52,7 @@ class BusinessContactDetailsRepositoryImpl[F[_] : Concurrent : Monad](transactor
       ) VALUES (
         ${businessContactDetails.userId},
         ${businessContactDetails.businessId},
+        ${businessContactDetails.businessName},
         ${businessContactDetails.primaryContactFirstName},
         ${businessContactDetails.primaryContactLastName},
         ${businessContactDetails.contactEmail},
