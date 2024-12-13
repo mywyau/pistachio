@@ -48,7 +48,6 @@ object BusinessContactDetailsSpec extends SimpleIOSuite {
     val expectedResult: Json = parse(expectedJson).getOrElse(Json.Null)
 
     for {
-//            _ <- IO(println(jsonResult.noSpaces)) // For debugging, prints the actual JSON result.
       _ <- IO("")
     } yield {
       expect(jsonResult == expectedResult)
