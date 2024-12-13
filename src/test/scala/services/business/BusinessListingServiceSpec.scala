@@ -35,6 +35,7 @@ object BusinessListingServiceSpec extends SimpleIOSuite {
       id = Some(1),
       userId = "user_id_1",
       businessId = Some("business_id_1"),
+      businessName = Some("businessCorp"),
       buildingName = Some("build_123"),
       floorNumber = Some("floor 1"),
       street = Some("1 Canton Street"),
@@ -57,6 +58,7 @@ object BusinessListingServiceSpec extends SimpleIOSuite {
       primaryContactLastName = "Yau",
       contactEmail = "mike@gmail.com",
       contactNumber = "07402205071",
+      websiteUrl = "mikey.com",
       createdAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0),
       updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
     )

@@ -45,6 +45,7 @@ class BusinessContactDetailsRepositoryImpl[F[_] : Concurrent : Monad](transactor
         primary_contact_last_name,
         contact_email,
         contact_number,
+        website_url,
         created_at,
         updated_at
       ) VALUES (
@@ -54,6 +55,7 @@ class BusinessContactDetailsRepositoryImpl[F[_] : Concurrent : Monad](transactor
         ${businessContactDetails.primaryContactLastName},
         ${businessContactDetails.contactEmail},
         ${businessContactDetails.contactNumber},
+        ${businessContactDetails.websiteUrl},
         ${businessContactDetails.createdAt},
         ${businessContactDetails.updatedAt}
       )

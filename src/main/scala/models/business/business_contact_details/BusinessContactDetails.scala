@@ -14,6 +14,7 @@ case class BusinessContactDetails(
                                    primaryContactLastName: String,
                                    contactEmail: String,
                                    contactNumber: String,
+                                   websiteUrl: String,
                                    createdAt: LocalDateTime,
                                    updatedAt: LocalDateTime
                                  )

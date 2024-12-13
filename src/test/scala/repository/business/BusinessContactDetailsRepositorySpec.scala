@@ -25,6 +25,7 @@ object BusinessContactDetailsRepositorySpec extends SimpleIOSuite {
       primaryContactLastName = "Yau",
       contactEmail = "mikey@gmail.com",
       contactNumber = "07402205071",
+      websiteUrl = "mikey.com",
       createdAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0),
       updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
     )
