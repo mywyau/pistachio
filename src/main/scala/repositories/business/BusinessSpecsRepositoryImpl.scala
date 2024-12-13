@@ -50,6 +50,7 @@ class BusinessSpecsRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transac
         ${businessSpecs.userId},
         ${businessSpecs.businessId},
         ${businessSpecs.businessName},
+        ${businessSpecs.description},
         ${businessSpecs.createdAt},
         ${businessSpecs.updatedAt}
       )
