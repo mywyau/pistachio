@@ -20,6 +20,7 @@ object BusinessContactDetailsServiceSpec extends SimpleIOSuite {
       id = Some(1),
       userId = userId,
       businessId = businessId,
+      businessName = "MikeyCorp",
       primaryContactFirstName = "Michael",
       primaryContactLastName = "Yau",
       contactEmail = "mike@gmail.com",

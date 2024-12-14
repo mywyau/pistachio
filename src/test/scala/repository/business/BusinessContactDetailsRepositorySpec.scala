@@ -21,6 +21,7 @@ object BusinessContactDetailsRepositorySpec extends SimpleIOSuite {
       id = id,
       userId = userId,
       businessId = businessId,
+      businessName = "mikeyCorp",
       primaryContactFirstName = "Michael",
       primaryContactLastName = "Yau",
       contactEmail = "mikey@gmail.com",

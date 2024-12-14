@@ -11,6 +11,8 @@ import models.business.business_listing.errors.BusinessListingErrors
 import models.business.business_listing.requests.BusinessListingRequest
 import models.business.business_specs.{BusinessAvailability, BusinessSpecs}
 import models.database.{SqlErrors, *}
+import org.typelevel.log4cats.SelfAwareStructuredLogger
+import org.typelevel.log4cats.slf4j.Slf4jLogger
 import repositories.business.{BusinessAddressRepositoryAlgebra, BusinessContactDetailsRepositoryAlgebra, BusinessSpecsRepositoryAlgebra}
 import services.business.business_listing.BusinessListingServiceImpl
 import weaver.SimpleIOSuite
@@ -18,6 +20,8 @@ import weaver.SimpleIOSuite
 import java.time.LocalDateTime
 
 object BusinessListingServiceSpec extends SimpleIOSuite {
+
+  implicit val testLogger: SelfAwareStructuredLogger[IO] = Slf4jLogger.getLogger[IO]
 
   val testBusinessSpecs: BusinessSpecs =
     BusinessSpecs(
@@ -54,7 +58,7 @@ object BusinessListingServiceSpec extends SimpleIOSuite {
       id = Some(1),
       userId = "user_id_1",
       businessId = "business_id_1",
-      businessId = "businessCorp",
+      businessName = "businessCorp",
       primaryContactFirstName = "Michael",
       primaryContactLastName = "Yau",
       contactEmail = "mike@gmail.com",
