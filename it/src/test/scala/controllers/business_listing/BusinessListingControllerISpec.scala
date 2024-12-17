@@ -39,14 +39,6 @@ class BusinessListingControllerISpec(global: GlobalRead) extends IOSuite {
 
   type Res = (TransactorResource, HttpClientResource)
 
-  def createServer[F[_] : Async](router: HttpRoutes[F]): Resource[F, Server] =
-    EmberServerBuilder
-      .default[F]
-      .withHost(ipv4"127.0.0.1")
-      .withPort(port"9999")
-      .withHttpApp(router.orNotFound)
-      .build
-
   def sharedResource: Resource[IO, Res] = {
     for {
       transactor <- global.getOrFailR[TransactorResource]()
@@ -59,23 +51,7 @@ class BusinessListingControllerISpec(global: GlobalRead) extends IOSuite {
           resetBusinessSpecsTable.update.run.transact(transactor.xa).void
       )
       client <- global.getOrFailR[HttpClientResource]()
-      routes = createController(transactor.xa)
-      server <- createServer(routes)
     } yield (transactor, client)
-  }
-
-  def createController(transactor: Transactor[IO]): HttpRoutes[IO] = {
-
-    val businessAddressRepository = BusinessAddressRepository(transactor)
-    val businessContactDetailsRepository = BusinessContactDetailsRepository(transactor)
-    val businessSpecsRepository = BusinessSpecsRepository(transactor)
-
-    val businessListingService = BusinessListingService(businessAddressRepository, businessContactDetailsRepository, businessSpecsRepository)
-    val businessListingController = BusinessListingController(businessListingService)
-
-    Router(
-      "/pistachio" -> businessListingController.routes
-    )
   }
 
   test(

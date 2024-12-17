@@ -8,7 +8,7 @@ import org.http4s.*
 import org.http4s.circe.*
 import org.http4s.dsl.Http4sDsl
 import org.typelevel.log4cats.Logger
-import services.business.business_address.BusinessAddressServiceAlgebra
+import services.business.address.BusinessAddressServiceAlgebra
 
 trait BusinessAddressControllerAlgebra[F[_]] {
   def routes: HttpRoutes[F]

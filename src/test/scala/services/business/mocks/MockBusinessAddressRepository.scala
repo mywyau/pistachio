@@ -7,7 +7,7 @@ import models.business.business_address.errors.BusinessAddressNotFound
 import models.business.business_address.service.BusinessAddress
 import models.database.SqlErrors
 import repositories.business.BusinessAddressRepositoryAlgebra
-import services.business.business_address.{BusinessAddressService, BusinessAddressServiceImpl}
+import services.business.address.{BusinessAddressService, BusinessAddressServiceImpl}
 import weaver.SimpleIOSuite
 
 import java.time.LocalDateTime

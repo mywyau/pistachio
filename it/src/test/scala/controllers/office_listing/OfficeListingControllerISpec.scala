@@ -21,9 +21,7 @@ import org.http4s.*
 import org.http4s.Method.*
 import org.http4s.circe.*
 import org.http4s.circe.CirceEntityCodec.circeEntityDecoder
-import org.http4s.ember.server.EmberServerBuilder
 import org.http4s.implicits.*
-import org.http4s.server.{Router, Server}
 import org.typelevel.log4cats.SelfAwareStructuredLogger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 import repositories.office.{OfficeAddressRepository, OfficeContactDetailsRepository, OfficeSpecsRepository}
@@ -39,14 +37,6 @@ class OfficeListingControllerISpec(global: GlobalRead) extends IOSuite {
 
   type Res = (TransactorResource, HttpClientResource)
 
-  def createServer[F[_] : Async](router: HttpRoutes[F]): Resource[F, Server] =
-    EmberServerBuilder
-      .default[F]
-      .withHost(ipv4"127.0.0.1")
-      .withPort(port"9999")
-      .withHttpApp(router.orNotFound)
-      .build
-
   def sharedResource: Resource[IO, Res] = {
     for {
       transactor <- global.getOrFailR[TransactorResource]()
@@ -59,23 +49,7 @@ class OfficeListingControllerISpec(global: GlobalRead) extends IOSuite {
           resetOfficeSpecsTable.update.run.transact(transactor.xa).void
       )
       client <- global.getOrFailR[HttpClientResource]()
-      routes = createController(transactor.xa)
-      server <- createServer(routes)
     } yield (transactor, client)
-  }
-
-  def createController(transactor: Transactor[IO]): HttpRoutes[IO] = {
-
-    val officeAddressRepository = OfficeAddressRepository(transactor)
-    val officeContactDetailsRepository = OfficeContactDetailsRepository(transactor)
-    val officeSpecsRepository = OfficeSpecsRepository(transactor)
-
-    val officeListingService = OfficeListingService(officeAddressRepository, officeContactDetailsRepository, officeSpecsRepository)
-    val officeListingController = OfficeListingController(officeListingService)
-
-    Router(
-      "/pistachio" -> officeListingController.routes
-    )
   }
 
   test("POST - /pistachio/business/businesses/office/listing/create - should generate the office listing data for a business in the respective tables, returning Created response") { (transactorResource, log) =>

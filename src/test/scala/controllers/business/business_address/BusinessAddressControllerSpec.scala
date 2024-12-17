@@ -13,7 +13,7 @@ import org.http4s.circe.CirceEntityDecoder.*
 import org.http4s.implicits.*
 import org.typelevel.log4cats.SelfAwareStructuredLogger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
-import services.business.business_address.BusinessAddressServiceAlgebra
+import services.business.address.BusinessAddressServiceAlgebra
 import weaver.SimpleIOSuite
 
 object BusinessAddressControllerSpec extends SimpleIOSuite {

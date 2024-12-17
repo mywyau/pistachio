@@ -5,7 +5,7 @@ import cats.effect.IO
 import models.business.business_address.errors.{BusinessAddressErrors, BusinessUserNotFound}
 import models.business.business_address.service.BusinessAddress
 import models.database.SqlErrors
-import services.business.business_address.BusinessAddressServiceAlgebra
+import services.business.address.BusinessAddressServiceAlgebra
 
 
 class MockBusinessAddressService(userAddressData: Map[String, BusinessAddress])

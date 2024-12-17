@@ -5,7 +5,7 @@ import cats.effect.IO
 import models.business.business_address.errors.BusinessAddressNotFound
 import models.business.business_address.service.BusinessAddress
 import repositories.business.BusinessAddressRepositoryAlgebra
-import services.business.business_address.{BusinessAddressService, BusinessAddressServiceImpl}
+import services.business.address.{BusinessAddressService, BusinessAddressServiceImpl}
 import services.business.mocks.MockBusinessAddressRepository
 import weaver.SimpleIOSuite
 

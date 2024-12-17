@@ -20,8 +20,8 @@ import org.http4s.implicits.*
 import org.http4s.server.{Router, Server}
 import org.typelevel.log4cats.SelfAwareStructuredLogger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
-import repositories.business.DeskListingRepositoryImpl
-import services.business.desk_listing.DeskListingServiceImpl
+import repositories.desk.DeskListingRepositoryImpl
+import services.desk_listing.DeskListingServiceImpl
 import shared.{HttpClientResource, TransactorResource}
 import weaver.*
 
@@ -49,20 +49,7 @@ class DeskListingControllerISpec(global: GlobalRead) extends IOSuite {
           resetDeskListingTable.update.run.transact(transactor.xa).void
       )
       client <- global.getOrFailR[HttpClientResource]()
-      routes = createController(transactor.xa)
-      server <- createServer(routes)
     } yield (transactor, client)
-  }
-
-  def createController(transactor: Transactor[IO]): HttpRoutes[IO] = {
-
-    val deskListingRepository = new DeskListingRepositoryImpl(transactor)
-    val deskListingService = new DeskListingServiceImpl(deskListingRepository)
-    val deskListingController = DeskListingController(deskListingService)
-
-    Router(
-      "/pistachio" -> deskListingController.routes
-    )
   }
 
   test("GET - /pistachio/business/desk/listing/create - should generate the user profile associated with the user") { (transactorResource, log) =>
