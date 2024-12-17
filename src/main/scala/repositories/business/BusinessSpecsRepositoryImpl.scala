@@ -20,7 +20,7 @@ trait BusinessSpecsRepositoryAlgebra[F[_]] {
 
   def findByBusinessId(businessId: String): F[Option[BusinessSpecifications]]
 
-  def createSpecs(user: BusinessSpecifications): F[ValidatedNel[SqlErrors, Int]]
+  def createSpecs(businessSpecifications: BusinessSpecifications): F[ValidatedNel[SqlErrors, Int]]
 }
 
 class BusinessSpecsRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transactor[F]) extends BusinessSpecsRepositoryAlgebra[F] {

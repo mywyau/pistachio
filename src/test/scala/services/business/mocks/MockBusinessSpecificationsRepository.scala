@@ -14,10 +14,10 @@ class MockBusinessSpecificationsRepository(
                                             existingBusinessSpecification: Map[String, BusinessSpecifications] = Map.empty
                                           ) extends BusinessSpecsRepositoryAlgebra[IO] {
 
-  def showAllUsers: IO[Map[String, BusinessSpecification]] = IO.pure(existingBusinessSpecification)
+  def showAllUsers: IO[Map[String, BusinessSpecifications]] = IO.pure(existingBusinessSpecification)
 
   override def findByBusinessId(businessId: String): IO[Option[BusinessSpecifications]] = IO.pure(existingBusinessSpecification.get(businessId))
 
-  override def createSpecification(businessSpecification: BusinessSpecifications): IO[ValidatedNel[SqlErrors, Int]] = IO(Valid(1))
+  override def createSpecs(businessSpecifications: BusinessSpecifications): IO[ValidatedNel[SqlErrors, Int]] = IO(Valid(1))
 
 }

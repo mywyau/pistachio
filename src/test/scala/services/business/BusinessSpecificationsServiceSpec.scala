@@ -3,7 +3,7 @@ package services.business
 import cats.data.Validated.{Invalid, Valid}
 import cats.data.ValidatedNel
 import cats.effect.IO
-import models.business.business_specifications.errors.BusinessSpecificationsNotFound
+import models.business.business_specs.errors.BusinessSpecificationsNotFound
 import models.business.business_specs.BusinessSpecifications
 import models.database.SqlErrors
 import repositories.business.BusinessSpecsRepositoryAlgebra
@@ -30,7 +30,7 @@ object BusinessSpecificationsServiceSpec extends SimpleIOSuite {
       updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
     )
 
-  test(".getByBusinessId() - when there is an existing user Specifications details given a business_id should return the correct Specifications - Right(Specifications)") {
+  test(".getByBusinessId() - when there is an existing BusinessSpecifications, given a business_id should return the correct Specifications - Right(Specifications)") {
 
     val existingSpecificationsForUser = testSpecifications(Some(1), "user_id_1", "business_1")
 
@@ -44,7 +44,7 @@ object BusinessSpecificationsServiceSpec extends SimpleIOSuite {
     }
   }
 
-  test(".getByBusinessId() - when there are no existing user Specifications details given a business_id should return Left(SpecificationsNotFound)") {
+  test(".getByBusinessId() - when there are no existing BusinessSpecifications, given a business_id should return Left(SpecificationsNotFound)") {
 
     val existingSpecificationsForUser = testSpecifications(Some(1), "user_id_1", "business_1")
 
@@ -58,7 +58,7 @@ object BusinessSpecificationsServiceSpec extends SimpleIOSuite {
     }
   }
 
-  test(".create() - when given a BusinessSpecifications successfully create the Specifications") {
+  test(".create() - when given a BusinessSpecifications, successfully create the BusinessSpecifications in Database") {
 
     val sampleSpecifications = testSpecifications(Some(1), "user_id_1", "business_1")
 
