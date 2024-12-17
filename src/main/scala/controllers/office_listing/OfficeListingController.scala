@@ -2,13 +2,13 @@ package controllers.office_listing
 
 import cats.data.Validated.{Invalid, Valid}
 import cats.effect.Concurrent
-import cats.implicits
-import io.circe.syntax.EncoderOps
+import cats.implicits.*
+import io.circe.syntax.*
 import models.business.desk_listing.requests.DeskListingRequest
 import models.office.office_listing.requests.OfficeListingRequest
 import models.responses.{CreatedResponse, ErrorResponse}
-import org.http4s
-import org.http4s.circe
+import org.http4s.*
+import org.http4s.circe.*
 import org.http4s.dsl.Http4sDsl
 import org.typelevel.log4cats.Logger
 import services.office.office_listing.OfficeListingServiceAlgebra

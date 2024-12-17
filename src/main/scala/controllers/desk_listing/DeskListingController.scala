@@ -9,7 +9,7 @@ import org.http4s.*
 import org.http4s.circe.*
 import org.http4s.dsl.Http4sDsl
 import org.typelevel.log4cats.Logger
-import services.*
+import services.business.desk_listing.*
 import services.business.desk_listing.DeskListingServiceAlgebra
 
 trait DeskListingController[F[_]] {

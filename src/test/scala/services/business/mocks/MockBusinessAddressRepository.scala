@@ -1,7 +1,7 @@
 package services.business.mocks
 
-import cats.data.ValidatedNel
 import cats.data.Validated.Valid
+import cats.data.ValidatedNel
 import cats.effect.IO
 import models.business.business_address.errors.BusinessAddressNotFound
 import models.business.business_address.service.BusinessAddress

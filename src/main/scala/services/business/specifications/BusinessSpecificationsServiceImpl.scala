@@ -10,12 +10,19 @@ import models.business.business_specs.errors.*
 import models.database.SqlErrors
 import repositories.business.BusinessSpecsRepositoryAlgebra
 
+trait BusinessSpecificationsServiceAlgebra[F[_]] {
+
+  def getByBusinessId(businessId: String): F[Either[BusinessSpecificationsErrors, BusinessSpecifications]]
+
+  def create(businessSpecifications: BusinessSpecifications): F[cats.data.ValidatedNel[BusinessSpecificationsErrors, Int]]
+}
+
 
 class BusinessSpecificationsServiceImpl[F[_] : Concurrent : NonEmptyParallel : Monad](
                                                                                        businessSpecificationsRepo: BusinessSpecsRepositoryAlgebra[F]
                                                                                      ) extends BusinessSpecificationsServiceAlgebra[F] {
 
-  override def get(businessId: String): F[Either[BusinessSpecificationsErrors, BusinessSpecifications]] = {
+  override def getByBusinessId(businessId: String): F[Either[BusinessSpecificationsErrors, BusinessSpecifications]] = {
     businessSpecificationsRepo.findByBusinessId(businessId).flatMap {
       case Some(user) =>
         Concurrent[F].pure(Right(user))
@@ -24,7 +31,7 @@ class BusinessSpecificationsServiceImpl[F[_] : Concurrent : NonEmptyParallel : M
     }
   }
 
-  override def createBusinessSpecifications(businessSpecifications: BusinessSpecifications): F[ValidatedNel[BusinessSpecificationsErrors, Int]] = {
+  override def create(businessSpecifications: BusinessSpecifications): F[ValidatedNel[BusinessSpecificationsErrors, Int]] = {
 
     val specificationsCreation: F[ValidatedNel[SqlErrors, Int]] =
       businessSpecificationsRepo.createSpecs(businessSpecifications)
