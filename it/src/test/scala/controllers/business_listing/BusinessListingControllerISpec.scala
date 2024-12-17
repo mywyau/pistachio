@@ -15,7 +15,7 @@ import models.business.adts.*
 import models.business.business_address.service.BusinessAddress
 import models.business.business_contact_details.BusinessContactDetails
 import models.business.business_listing.requests.BusinessListingRequest
-import models.business.business_specs.{BusinessAvailability, BusinessSpecs}
+import models.business.business_specs.{BusinessAvailability, BusinessSpecifications}
 import models.responses.CreatedResponse
 import org.http4s.*
 import org.http4s.Method.*

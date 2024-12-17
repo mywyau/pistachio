@@ -5,14 +5,14 @@ import models.business.adts.*
 import models.business.business_address.service.BusinessAddress
 import models.business.business_contact_details.BusinessContactDetails
 import models.business.business_listing.requests.BusinessListingRequest
-import models.business.business_specs.{BusinessAvailability, BusinessSpecs}
+import models.business.business_specs.{BusinessAvailability, BusinessSpecifications}
 
 import java.time.LocalDateTime
 
 object BusinessListingConstants {
 
-  val testBusinessSpecs: BusinessSpecs =
-    BusinessSpecs(
+  val testBusinessSpecs: BusinessSpecifications =
+    BusinessSpecifications(
       id = Some(1),
       userId = "user_id_1",
       businessId = "business_id_1",
