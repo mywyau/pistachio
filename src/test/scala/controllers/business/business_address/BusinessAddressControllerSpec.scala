@@ -1,9 +1,9 @@
 package controllers.business.business_address
 
 import cats.effect.IO
+import controllers.business.BusinessAddressController
 import controllers.business.business_address.constants.BusinessAddressControllerConstants.sampleBusinessAddress1
 import controllers.business.business_address.mocks.MockBusinessAddressService
-import controllers.business_address.BusinessAddressController
 import models.business.business_address.errors.BusinessUserNotFound
 import models.business.business_address.responses.error.BusinessAddressErrorResponse
 import org.http4s.*
@@ -23,13 +23,13 @@ object BusinessAddressControllerSpec extends SimpleIOSuite {
   def createUserController(businessAddressService: BusinessAddressServiceAlgebra[IO]): HttpRoutes[IO] =
     BusinessAddressController[IO](businessAddressService).routes
   
-  test("POST - /business/address/details/ should return 201 when user is created successfully") {
+  test("POST - /business/businesses/address/details/ should return 201 when user is created successfully") {
 
     val mockBusinessAddressService = new MockBusinessAddressService(Map("user_id_1" -> sampleBusinessAddress1))
 
     val controller = createUserController(mockBusinessAddressService)
 
-    val request = Request[IO](Method.GET, uri"/business/address/details/user_id_1")
+    val request = Request[IO](Method.GET, uri"/business/businesses/address/details/user_id_1")
 
     for {
       response <- controller.orNotFound.run(request)
@@ -42,7 +42,7 @@ object BusinessAddressControllerSpec extends SimpleIOSuite {
 
     val controller = createUserController(mockBusinessAddressService)
 
-    val request = Request[IO](Method.GET, uri"/business/address/details/user_id_2")
+    val request = Request[IO](Method.GET, uri"/business/businesses/address/details/user_id_2")
 
     for {
       response <- controller.orNotFound.run(request)

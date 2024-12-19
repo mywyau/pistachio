@@ -1,20 +1,18 @@
-package controllers.business_listing
+package controllers.business
 
 import cats.effect.*
 import com.comcast.ip4s.{ipv4, port}
-import controllers.business_listing.BusinessListingController
-import controllers.constants.BusinessListingConstants.*
+import controllers.business.BusinessAddressController
+import controllers.constants.BusinessAddressConstants.*
 import controllers.fragments.business.BusinessAddressRepoFragments.*
-import controllers.fragments.business.BusinessContactDetailsRepoFragments.*
-import controllers.fragments.business.BusinessSpecsRepoFragments.*
 import doobie.implicits.*
 import doobie.util.transactor.Transactor
 import io.circe.Json
 import io.circe.syntax.*
 import models.business.adts.*
+import models.business.business_address.requests.BusinessAddressRequest
 import models.business.business_address.service.BusinessAddress
 import models.business.business_contact_details.BusinessContactDetails
-import models.business.business_listing.requests.BusinessListingRequest
 import models.business.business_specs.{BusinessAvailability, BusinessSpecifications}
 import models.responses.CreatedResponse
 import org.http4s.*
@@ -27,13 +25,13 @@ import org.http4s.server.{Router, Server}
 import org.typelevel.log4cats.SelfAwareStructuredLogger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 import repositories.business.{BusinessAddressRepository, BusinessContactDetailsRepository, BusinessSpecsRepository}
-import services.business.business_listing.BusinessListingService
+import services.business.address.BusinessAddressService
 import shared.{HttpClientResource, TransactorResource}
 import weaver.*
 
 import java.time.LocalDateTime
 
-class BusinessListingControllerISpec(global: GlobalRead) extends IOSuite {
+class BusinessAddressControllerISpec(global: GlobalRead) extends IOSuite {
 
   implicit val testLogger: SelfAwareStructuredLogger[IO] = Slf4jLogger.getLogger[IO]
 
@@ -45,36 +43,30 @@ class BusinessListingControllerISpec(global: GlobalRead) extends IOSuite {
       _ <- Resource.eval(
         createBusinessAddressTable.update.run.transact(transactor.xa).void *>
           resetBusinessAddressTable.update.run.transact(transactor.xa).void *>
-          createBusinessContactDetailsTable.update.run.transact(transactor.xa).void *>
-          resetBusinessContactDetailsTable.update.run.transact(transactor.xa).void *>
-          createBusinessSpecsTable.update.run.transact(transactor.xa).void *>
-          resetBusinessSpecsTable.update.run.transact(transactor.xa).void
+          insertBusinessAddressTable.update.run.transact(transactor.xa).void
       )
       client <- global.getOrFailR[HttpClientResource]()
     } yield (transactor, client)
   }
 
   test(
-    "POST - /pistachio/business/businesses/listing/create - " +
-      "should generate the business listing data for a business in the respective tables, returning Created response"
+    "GET - /pistachio/business/businesses/address/details/business_id_1 - " +
+      "given a business_id, find the business address data for given id, returning OK and the address json"
   ) { (transactorResource, log) =>
 
     val transactor = transactorResource._1.xa
     val client = transactorResource._2.client
 
-    val businessListingRequest: Json = testBusinessListingRequest("business_id_1").asJson
-
     val request =
-      Request[IO](POST, uri"http://127.0.0.1:9999/pistachio/business/businesses/listing/create")
-        .withEntity(businessListingRequest)
+      Request[IO](GET, uri"http://127.0.0.1:9999/pistachio/business/businesses/address/details/business_id_1")
 
-    val expectedBusinessListing = CreatedResponse("Business created successfully")
+    val expectedBusinessAddress = testBusinessAddress(Some(1), "user_id_1", Some("business_id_1"))
 
     client.run(request).use { response =>
-      response.as[CreatedResponse].map { body =>
+      response.as[BusinessAddress].map { body =>
         expect.all(
-          response.status == Status.Created,
-          body == expectedBusinessListing
+          response.status == Status.Ok,
+          body == expectedBusinessAddress
         )
       }
     }

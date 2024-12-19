@@ -4,6 +4,7 @@ import cats.effect.*
 import cats.implicits.*
 import cats.syntax.all.*
 import com.comcast.ip4s.{ipv4, port}
+import controllers.business.BusinessAddressController
 import controllers.business_listing.BusinessListingController
 import controllers.desk_listing.DeskListingController
 import controllers.office_listing.OfficeListingController
@@ -25,6 +26,7 @@ import org.typelevel.log4cats.slf4j.Slf4jLogger
 import repositories.business.{BusinessAddressRepository, BusinessContactDetailsRepository, BusinessSpecsRepository}
 import repositories.desk.DeskListingRepository
 import repositories.office.{OfficeAddressRepository, OfficeContactDetailsRepository, OfficeSpecsRepository}
+import services.business.address.BusinessAddressService
 import services.business.business_listing.BusinessListingService
 import services.desk_listing.DeskListingService
 import services.office.office_listing.OfficeListingService
@@ -35,6 +37,16 @@ import java.time.LocalDateTime
 object TestRoutes {
 
   implicit val testLogger: SelfAwareStructuredLogger[IO] = Slf4jLogger.getLogger[IO]
+
+  def businessAddressRoutes(transactor: Transactor[IO]): HttpRoutes[IO] = {
+
+    val businessAddressRepository = BusinessAddressRepository(transactor)
+
+    val businessAddressService = BusinessAddressService(businessAddressRepository)
+    val businessAddressController = BusinessAddressController(businessAddressService)
+
+    businessAddressController.routes
+  }
 
   def businessListingRoutes(transactor: Transactor[IO]): HttpRoutes[IO] = {
 
@@ -75,7 +87,8 @@ object TestRoutes {
       "/pistachio" -> (
         businessListingRoutes(transactor) <+>
           deskListingRoutes(transactor) <+>
-          officeListingRoutes(transactor)
+          officeListingRoutes(transactor) <+>
+          businessAddressRoutes(transactor)
         )
     )
   }

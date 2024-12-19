@@ -5,6 +5,7 @@ import cats.effect.Concurrent
 import cats.implicits.*
 import cats.{Monad, NonEmptyParallel}
 import models.business.business_address.errors.*
+import models.business.business_address.requests.BusinessAddressRequest
 import models.business.business_address.service.BusinessAddress
 import models.database.SqlErrors
 import repositories.business.BusinessAddressRepositoryAlgebra
@@ -14,17 +15,17 @@ class BusinessAddressServiceImpl[F[_] : Concurrent : NonEmptyParallel : Monad](
                                                                                 businessAddressRepo: BusinessAddressRepositoryAlgebra[F]
                                                                               ) extends BusinessAddressServiceAlgebra[F] {
 
-  override def getAddressDetailsByUserId(userId: String): F[Either[BusinessAddressErrors, BusinessAddress]] = {
-    businessAddressRepo.findByUserId(userId).flatMap {
-      case Some(user) =>
-        Concurrent[F].pure(Right(user))
+  override def getByBusinessId(businessId: String): F[Either[BusinessAddressErrors, BusinessAddress]] = {
+    businessAddressRepo.findByBusinessId(businessId).flatMap {
+      case Some(business) =>
+        Concurrent[F].pure(Right(business))
       case None =>
         Concurrent[F].pure(Left(BusinessAddressNotFound))
     }
   }
 
-  override def createAddress(businessAddress: BusinessAddress): F[ValidatedNel[SqlErrors, Int]] = {
-    businessAddressRepo.createBusinessAddress(businessAddress)
+  override def createAddress(businessAddressRequest: BusinessAddressRequest): F[ValidatedNel[SqlErrors, Int]] = {
+    businessAddressRepo.createBusinessAddress(businessAddressRequest)
   }
 }
 

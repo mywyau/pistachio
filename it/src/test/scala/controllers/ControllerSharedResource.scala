@@ -40,6 +40,7 @@ object ControllerSharedResource extends GlobalResource {
       )
       client <- EmberClientBuilder.default[IO].build
       sharedSingleInstanceServer <- createServer(createTestRouter(xa)) // create shared server for tests
+      _ <- global.putR(TransactorResource(xa)) // Store repository.TransactorResource in global context
       _ <- global.putR(HttpClientResource(client))
     } yield ()
   }
