@@ -4,7 +4,7 @@ import cats.effect.*
 import cats.implicits.*
 import cats.syntax.all.*
 import com.comcast.ip4s.{ipv4, port}
-import controllers.business.BusinessAddressController
+import controllers.business.{BusinessAddressController, BusinessContactDetailsController}
 import controllers.business_listing.BusinessListingController
 import controllers.desk_listing.DeskListingController
 import controllers.office_listing.OfficeListingController
@@ -28,6 +28,7 @@ import repositories.desk.DeskListingRepository
 import repositories.office.{OfficeAddressRepository, OfficeContactDetailsRepository, OfficeSpecsRepository}
 import services.business.address.BusinessAddressService
 import services.business.business_listing.BusinessListingService
+import services.business.contact_details.BusinessContactDetailsService
 import services.desk_listing.DeskListingService
 import services.office.office_listing.OfficeListingService
 import weaver.*
@@ -37,6 +38,17 @@ import java.time.LocalDateTime
 object TestRoutes {
 
   implicit val testLogger: SelfAwareStructuredLogger[IO] = Slf4jLogger.getLogger[IO]
+
+  def businessContactDetailsRoutes(transactor: Transactor[IO]): HttpRoutes[IO] = {
+
+    val businessContactDetailsRepository = BusinessContactDetailsRepository(transactor)
+
+    val businessContactDetailsService = BusinessContactDetailsService(businessContactDetailsRepository)
+    val businessContactDetailsController = BusinessContactDetailsController(businessContactDetailsService)
+
+    businessContactDetailsController.routes
+  }
+
 
   def businessAddressRoutes(transactor: Transactor[IO]): HttpRoutes[IO] = {
 
@@ -85,10 +97,11 @@ object TestRoutes {
 
     Router(
       "/pistachio" -> (
-        businessListingRoutes(transactor) <+>
+        businessAddressRoutes(transactor) <+>
+          businessContactDetailsRoutes(transactor) <+>
+          businessListingRoutes(transactor) <+>
           deskListingRoutes(transactor) <+>
-          officeListingRoutes(transactor) <+>
-          businessAddressRoutes(transactor)
+          officeListingRoutes(transactor)
         )
     )
   }
