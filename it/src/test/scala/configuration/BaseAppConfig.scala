@@ -2,7 +2,7 @@ package configuration
 
 import cats.effect.*
 import com.comcast.ip4s.{Host, Port, ipv4, port}
-import configuration.models.AppConfig
+import configuration.models.*
 import configuration.{ConfigReader, ConfigReaderAlgebra}
 
 trait BaseAppConfig {
@@ -37,15 +37,9 @@ trait BaseAppConfig {
     )
   }
 
-  def postgresqlHostResource(appConfig: AppConfig): Resource[IO, String] = {
+  def postgresqlConfigResource(appConfig: AppConfig): Resource[IO, PostgresqlConfig] = {
     Resource.eval(
-      IO(appConfig.integrationSpecConfig.postgresHost)
-    )
-  }
-
-  def postgresqlPortResource(appConfig: AppConfig): Resource[IO, Int] = {
-    Resource.eval(
-      IO(appConfig.integrationSpecConfig.postgresPort)
+      IO(appConfig.integrationSpecConfig.postgresqlConfig)
     )
   }
 }

@@ -11,13 +11,18 @@ object AppConfigSpec extends SimpleIOSuite {
   test("load test configurations correctly") {
 
     val serverConfig = ServerConfig("0.0.0.0", 8081)
+
     val integrationSpecConfig =
       IntegrationSpecConfig(
         host = "127.0.0.1",
         port = 9999,
+        postgresDbName = "shared_test_db",
         postgresHost = "localhost",
         postgresPort = 5432,
+        postgresUsername = "shared_user",
+        postgresPassword = "share"
       )
+
     val appConfig = AppConfig(serverConfig, integrationSpecConfig)
 
     for {

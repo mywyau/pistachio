@@ -2,6 +2,7 @@ package repository
 
 import cats.effect.{IO, Resource}
 import configuration.BaseAppConfig
+import configuration.models.*
 import doobie.*
 import doobie.hikari.HikariTransactor
 import doobie.implicits.*
@@ -66,22 +67,21 @@ object DatabaseResource extends GlobalResource with BaseAppConfig {
   def executionContextResource: Resource[IO, ExecutionContext] =
     ExecutionContexts.fixedThreadPool(4)
 
-  def transactorResource(host: String, port: Int, ce: ExecutionContext): Resource[IO, HikariTransactor[IO]] =
+  def transactorResource(postgresqlConfig: PostgresqlConfig, ce: ExecutionContext): Resource[IO, HikariTransactor[IO]] =
     HikariTransactor.newHikariTransactor[IO](
       driverClassName = "org.postgresql.Driver",
-      url = s"jdbc:postgresql://$host:$port/shared_test_db",
-      user = sys.env.getOrElse("TEST_DB_USER", "shared_user"),
-      pass = sys.env.getOrElse("TEST_DB_PASS", "share"),
+      url = s"jdbc:postgresql://${postgresqlConfig.host}:${postgresqlConfig.port}/${postgresqlConfig.dbName}",
+      user = postgresqlConfig.username,
+      pass = postgresqlConfig.password,
       connectEC = ce
     )
 
   def sharedResources(global: GlobalWrite): Resource[IO, Unit] = {
     for {
       appConfig <- configResource
-      postgresqlHost <- postgresqlHostResource(appConfig)
-      postgresqlPort <- postgresqlPortResource(appConfig)
+      postgresqlConfig <- postgresqlConfigResource(appConfig)
       ce <- executionContextResource
-      xa <- transactorResource(postgresqlHost, postgresqlPort, ce)
+      xa <- transactorResource(postgresqlConfig, ce)
       _ <- global.putR(TransactorResource(xa))
       // Uncomment the following lines to enable schema printing and test insertion during initialization
       // _ <- printSchema(xa)

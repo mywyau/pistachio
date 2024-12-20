@@ -2,7 +2,7 @@ package controllers
 
 import cats.effect.*
 import com.comcast.ip4s.{Host, Port, ipv4, port}
-import configuration.models.AppConfig
+import configuration.models.*
 import configuration.{BaseAppConfig, ConfigReader, ConfigReaderAlgebra}
 import controllers.TestRoutes.*
 import doobie.*
@@ -18,6 +18,7 @@ import org.http4s.ember.client.EmberClientBuilder
 import org.http4s.ember.server.EmberServerBuilder
 import org.http4s.implicits.*
 import org.http4s.server.{Router, Server}
+import repository.DatabaseResource.{postgresqlConfigResource, transactorResource}
 import shared.{HttpClientResource, TransactorResource}
 import weaver.{GlobalResource, GlobalWrite}
 
@@ -28,12 +29,12 @@ object ControllerSharedResource extends GlobalResource with BaseAppConfig {
   def executionContextResource: Resource[IO, ExecutionContext] =
     ExecutionContexts.fixedThreadPool(4)
 
-  def transactorResource(host: String, port: Int, ce: ExecutionContext): Resource[IO, HikariTransactor[IO]] =
+  def transactorResource(postgresqlConfig: PostgresqlConfig, ce: ExecutionContext): Resource[IO, HikariTransactor[IO]] =
     HikariTransactor.newHikariTransactor[IO](
       driverClassName = "org.postgresql.Driver",
-      url = "jdbc:postgresql://localhost:5432/shared_test_db",
-      user = sys.env.getOrElse("TEST_DB_USER", "shared_user"),
-      pass = sys.env.getOrElse("TEST_DB_PASS", "share"),
+      url = s"jdbc:postgresql://${postgresqlConfig.host}:${postgresqlConfig.port}/${postgresqlConfig.dbName}",
+      user = postgresqlConfig.username,
+      pass = postgresqlConfig.password,
       connectEC = ce
     )
 
@@ -57,10 +58,9 @@ object ControllerSharedResource extends GlobalResource with BaseAppConfig {
       appConfig <- configResource
       host <- hostResource(appConfig)
       port <- portResource(appConfig)
-      postgresqlHost <- postgresqlHostResource(appConfig)
-      postgresqlPort <- postgresqlPortResource(appConfig)
+      postgresqlConfig <- postgresqlConfigResource(appConfig)
       ce <- executionContextResource
-      xa <- transactorResource(postgresqlHost, postgresqlPort, ce)
+      xa <- transactorResource(postgresqlConfig, ce)
       client <- clientResource
       _ <- serverResource(host, port, createTestRouter(xa))
       _ <- global.putR(TransactorResource(xa))
