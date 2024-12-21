@@ -106,6 +106,8 @@ object BusinessListingServiceSpec extends SimpleIOSuite {
     override def findByBusinessId(businessId: String): IO[Option[BusinessSpecifications]] = ???
 
     override def createSpecs(user: BusinessSpecifications): IO[ValidatedNel[SqlErrors, Int]] = specsResult
+
+    override def deleteSpecifications(businessId: String): IO[ValidatedNel[SqlErrors, Int]] = ???
   }
 
   def createTestService(
