@@ -53,7 +53,7 @@ class BusinessAddressControllerImpl[F[_] : Concurrent](
         businessAddressService.deleteAddress(businessId).flatMap {
           case Valid(address) =>
             logger.info(s"[BusinessAddressControllerImpl] DELETE - Successfully deleted business address for $businessId") *>
-              Ok(DeletedResponse("Business contact details deleted successfully").asJson)
+              Ok(DeletedResponse("Business address details deleted successfully").asJson)
           case Invalid(error) =>
             val errorResponse = ErrorResponse("placeholder error", "some deleted business address message")
             BadRequest(errorResponse.asJson)

@@ -98,7 +98,7 @@ class BusinessAddressControllerISpec(global: GlobalRead) extends IOSuite {
 
   test(
     "DELETE - /pistachio/business/businesses/address/details/business_id_2 - " +
-      "given a business_id, find the business address data for given id, returning OK and the address json"
+      "given a business_id, delete the business address details data for given business id, returning OK and Deleted response json"
   ) { (transactorResource, log) =>
 
     val transactor = transactorResource._1.xa
@@ -107,7 +107,7 @@ class BusinessAddressControllerISpec(global: GlobalRead) extends IOSuite {
     val request =
       Request[IO](DELETE, uri"http://127.0.0.1:9999/pistachio/business/businesses/address/details/business_id_2")
 
-    val expectedBody = DeletedResponse("Business contact details deleted successfully")
+    val expectedBody = DeletedResponse("Business address details deleted successfully")
 
     client.run(request).use { response =>
       response.as[DeletedResponse].map { body =>
