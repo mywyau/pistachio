@@ -48,7 +48,6 @@ class BusinessContactDetailsControllerImpl[F[_] : Concurrent](
           }
         }
 
-
     case DELETE -> Root / "business" / "businesses" / "contact" / "details" / businessId =>
       logger.info(s"[BusinessContactControllerImpl] DELETE - Attempting to delete business contact details") *>
         businessContactDetailsService.deleteContactDetails(businessId).flatMap {
