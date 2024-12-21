@@ -95,6 +95,8 @@ object BusinessListingServiceSpec extends SimpleIOSuite {
     override def findByBusinessId(businessId: String): IO[Option[BusinessContactDetails]] = ???
 
     override def createContactDetails(businessContactDetails: BusinessContactDetails): IO[ValidatedNel[SqlErrors, Int]] = contactResult
+
+    override def deleteContactDetails(businessId: String): IO[ValidatedNel[SqlErrors, Int]] = ???
   }
 
   class MockSpecificationsRepository(
