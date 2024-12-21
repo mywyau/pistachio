@@ -96,7 +96,7 @@ class BusinessAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Trans
   override def deleteBusinessAddress(businessId: String): F[ValidatedNel[SqlErrors, Int]] = {
     val deleteQuery: Update0 =
       sql"""
-        DELETE FROM business_addresses
+        DELETE FROM business_address
         WHERE business_id = $businessId
       """.update
 
