@@ -54,7 +54,7 @@ object OfficeAddressRepositorySpec extends SimpleIOSuite {
     val testAddressForUser2: OfficeAddress = testAddress(Some(2), "business_id_2", "office_2")
     for {
       mockRepo <- createMockRepo(List())
-      result <- mockRepo.createOfficeAddress(testAddressForUser2)
+      result <- mockRepo.create(testAddressForUser2)
       findInsertedAddress <- mockRepo.findByBusinessId("business_id_2")
     } yield expect.all(
       result == Valid(1),

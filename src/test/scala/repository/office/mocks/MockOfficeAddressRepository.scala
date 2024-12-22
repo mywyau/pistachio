@@ -15,7 +15,7 @@ case class MockOfficeAddressRepository(ref: Ref[IO, List[OfficeAddress]]) extend
   override def findByBusinessId(businessId: String): IO[Option[OfficeAddress]] =
     ref.get.map(_.find(_.businessId == businessId))
 
-  override def createOfficeAddress(officeAddress: OfficeAddress): IO[ValidatedNel[SqlErrors, Int]] =
+  override def create(officeAddress: OfficeAddress): IO[ValidatedNel[SqlErrors, Int]] =
     ref.modify { address =>
       val updatedList = officeAddress :: address
       (updatedList, validNel(1))
