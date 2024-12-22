@@ -77,7 +77,7 @@ class OfficeContactDetailsRepositoryISpec(global: GlobalRead) extends IOSuite {
       )
 
     for {
-      officeContactDetailsOpt <- officeContactDetailsRepo.findByOfficeId("business_id_1")
+      officeContactDetailsOpt <- officeContactDetailsRepo.findByOfficeId("office_1")
       //      _ <- IO(println(s"Query Result: $officeContactDetailsOpt")) // Debug log the result
     } yield expect(officeContactDetailsOpt == Some(expectedResult))
   }
