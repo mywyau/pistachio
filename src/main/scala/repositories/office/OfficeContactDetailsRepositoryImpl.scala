@@ -50,7 +50,7 @@ class OfficeContactDetailsRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
         created_at,
         updated_at
       ) VALUES (
-        ${officeContactDetails.officeId},
+        ${officeContactDetails.businessId},
         ${officeContactDetails.officeId},
         ${officeContactDetails.primaryContactFirstName},
         ${officeContactDetails.primaryContactLastName},
