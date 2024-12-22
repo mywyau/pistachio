@@ -7,6 +7,7 @@ import cats.implicits.*
 import cats.{Monad, NonEmptyParallel}
 import models.database.*
 import models.office.address_details.OfficeAddress
+import models.office.address_details.requests.OfficeAddressRequest
 import models.office.address_details.errors.*
 import repositories.office.OfficeAddressRepositoryAlgebra
 
@@ -24,7 +25,7 @@ class OfficeAddressServiceImpl[F[_] : Concurrent : NonEmptyParallel : Monad](
     }
   }
 
-  override def create(officeAddress: OfficeAddress): F[ValidatedNel[OfficeAddressErrors, Int]] = {
+  override def create(officeAddress: OfficeAddressRequest): F[ValidatedNel[OfficeAddressErrors, Int]] = {
 
     val addressCreation: F[ValidatedNel[SqlErrors, Int]] =
       officeAddressRepo.create(officeAddress)
