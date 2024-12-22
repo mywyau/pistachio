@@ -33,9 +33,9 @@ object OfficeContactDetailsServiceSpec extends SimpleIOSuite {
 
     def showAllUsers: IO[Map[String, OfficeContactDetails]] = IO.pure(existingOfficeContactDetails)
 
-    override def findByBusinessId(businessId: String): IO[Option[OfficeContactDetails]] = IO.pure(existingOfficeContactDetails.get(businessId))
+    override def findByOfficeId(businessId: String): IO[Option[OfficeContactDetails]] = IO.pure(existingOfficeContactDetails.get(businessId))
 
-    override def createContactDetails(officeContactDetails: OfficeContactDetails): IO[ValidatedNel[SqlErrors, Int]] = IO(Valid(1))
+    override def create(officeContactDetails: OfficeContactDetails): IO[ValidatedNel[SqlErrors, Int]] = IO(Valid(1))
 
   }
 
@@ -48,7 +48,7 @@ object OfficeContactDetailsServiceSpec extends SimpleIOSuite {
     val service = new OfficeContactDetailsServiceImpl[IO](mockOfficeContactDetailsRepository)
 
     for {
-      result <- service.getContactDetailsByBusinessId("business_1")
+      result <- service.getByOfficeId("business_1")
     } yield {
       expect(result == Right(existingContactDetailsForUser))
     }
@@ -62,7 +62,7 @@ object OfficeContactDetailsServiceSpec extends SimpleIOSuite {
     val service = new OfficeContactDetailsServiceImpl[IO](mockOfficeContactDetailsRepository)
 
     for {
-      result <- service.getContactDetailsByBusinessId("business_1")
+      result <- service.getByOfficeId("business_1")
     } yield {
       expect(result == Left(OfficeContactDetailsNotFound))
     }
@@ -76,7 +76,7 @@ object OfficeContactDetailsServiceSpec extends SimpleIOSuite {
     val service = OfficeContactDetailsService(mockOfficeContactDetailsRepository)
 
     for {
-      result <- service.createOfficeContactDetails(sampleContactDetails)
+      result <- service.create(sampleContactDetails)
     } yield {
       expect(result == Valid(1))
     }
