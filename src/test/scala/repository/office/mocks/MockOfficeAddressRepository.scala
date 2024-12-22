@@ -12,8 +12,8 @@ import java.time.LocalDateTime
 
 case class MockOfficeAddressRepository(ref: Ref[IO, List[OfficeAddress]]) extends OfficeAddressRepositoryAlgebra[IO] {
 
-  override def findByBusinessId(businessId: String): IO[Option[OfficeAddress]] =
-    ref.get.map(_.find(_.businessId == businessId))
+  override def findByOfficeId(officeId: String): IO[Option[OfficeAddress]] =
+    ref.get.map(_.find(_.officeId == officeId))
 
   override def create(officeAddress: OfficeAddress): IO[ValidatedNel[SqlErrors, Int]] =
     ref.modify { address =>
@@ -21,4 +21,5 @@ case class MockOfficeAddressRepository(ref: Ref[IO, List[OfficeAddress]]) extend
       (updatedList, validNel(1))
     }
 
+  override def delete(officeId: String): IO[ValidatedNel[SqlErrors, Int]] = ???
 }

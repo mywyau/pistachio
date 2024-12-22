@@ -38,9 +38,11 @@ object OfficeAddressServiceSpec extends SimpleIOSuite {
 
     def showAllUsers: IO[Map[String, OfficeAddress]] = IO.pure(existingOfficeAddress)
 
-    override def findByBusinessId(businessId: String): IO[Option[OfficeAddress]] = IO.pure(existingOfficeAddress.get(businessId))
+    override def findByOfficeId(officeId: String): IO[Option[OfficeAddress]] = IO.pure(existingOfficeAddress.get(officeId))
 
     override def create(officeAddress: OfficeAddress): IO[ValidatedNel[SqlErrors, Int]] = IO(Valid(1))
+
+    override def delete(officeId: String): IO[ValidatedNel[SqlErrors, Int]] = ???
   }
 
 
