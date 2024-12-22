@@ -22,7 +22,7 @@ class OfficeAddressControllerImpl[F[_] : Concurrent](
                                                     )(implicit logger: Logger[F])
   extends Http4sDsl[F] with OfficeAddressControllerAlgebra[F] {
 
-  implicit val officeAddressRequestDecoder: EntityDecoder[F, OfficeAddress] = jsonOf[F, OfficeAddress]
+  implicit val officeAddressDecoder: EntityDecoder[F, OfficeAddress] = jsonOf[F, OfficeAddress]
   implicit val officeAddressRequestDecoder: EntityDecoder[F, OfficeAddressRequest] = jsonOf[F, OfficeAddressRequest]
 
   val routes: HttpRoutes[F] = HttpRoutes.of[F] {
