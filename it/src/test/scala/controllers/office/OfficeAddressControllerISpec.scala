@@ -58,7 +58,7 @@ class OfficeAddressControllerISpec(global: GlobalRead) extends IOSuite {
     val request =
       Request[IO](GET, uri"http://127.0.0.1:9999/pistachio/business/offices/address/OFF001")
 
-    val expectedOfficeAddress = testOfficeAddress1(Some(1), "BUS001", "OFF001")
+    val expectedOfficeAddress = testOfficeAddress1(Some(1), "BUS123", "OFF001")
 
     client.run(request).use { response =>
       response.as[OfficeAddress].map { body =>
