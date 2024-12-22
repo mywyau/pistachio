@@ -36,7 +36,7 @@ class OfficeSpecsRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transacto
 
   override def findByOfficeId(officeId: String): F[Option[OfficeSpecs]] = {
     val findQuery: F[Option[OfficeSpecs]] =
-      sql"SELECT * FROM office_specs WHERE officeId = $officeId"
+      sql"SELECT * FROM office_specs WHERE office_id = $officeId"
         .query[OfficeSpecs]
         .option
         .transact(transactor)
@@ -46,7 +46,7 @@ class OfficeSpecsRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transacto
   override def createSpecs(officeSpecs: OfficeSpecs): F[ValidatedNel[SqlErrors, Int]] = {
     sql"""
       INSERT INTO office_specs (
-        office_id,
+        business_id,
         office_id,
         office_name,
         description,
@@ -60,7 +60,7 @@ class OfficeSpecsRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transacto
         created_at,
         updated_at
       ) VALUES (
-        ${officeSpecs.officeId},
+        ${officeSpecs.businessId},
         ${officeSpecs.officeId},
         ${officeSpecs.officeName},
         ${officeSpecs.description},

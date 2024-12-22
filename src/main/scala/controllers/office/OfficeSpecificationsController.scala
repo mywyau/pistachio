@@ -25,7 +25,7 @@ class OfficeSpecificationsControllerImpl[F[_] : Concurrent](
 
   val routes: HttpRoutes[F] = HttpRoutes.of[F] {
 
-    case GET -> Root / "office" / "offices" / "specifications" / officeId =>
+    case GET -> Root / "business" / "offices" / "specifications" / officeId =>
       logger.debug(s"[OfficeSpecificationsControllerImpl] GET - Office specifications for officeId: $officeId") *>
         officeSpecificationsService.getByOfficeId(officeId).flatMap {
           case Right(specifications) =>
@@ -36,7 +36,7 @@ class OfficeSpecificationsControllerImpl[F[_] : Concurrent](
             BadRequest(errorResponse.asJson)
         }
 
-    case req@POST -> Root / "office" / "offices" / "specifications" / "create" =>
+    case req@POST -> Root / "business" / "offices" / "specifications" / "create" =>
       logger.info(s"[OfficeListingControllerImpl] POST - Creating office listing") *>
         req.decode[OfficeSpecs] { request =>
           officeSpecificationsService.create(request).flatMap {
@@ -48,7 +48,7 @@ class OfficeSpecificationsControllerImpl[F[_] : Concurrent](
           }
         }
 
-    case DELETE -> Root / "office" / "offices" / "specifications" / officeId =>
+    case DELETE -> Root / "business" / "offices" / "specifications" / officeId =>
       logger.info(s"[OfficeAddressControllerImpl] DELETE - Attempting to delete the office specifications") *>
         officeSpecificationsService.delete(officeId).flatMap {
           case Valid(address) =>
