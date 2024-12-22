@@ -1,8 +1,8 @@
 package services.office.contact_details
 
-import cats.effect.IO
 import cats.data.Validated.{Invalid, Valid}
 import cats.data.ValidatedNel
+import cats.effect.IO
 import models.database.SqlErrors
 import models.office.contact_details.OfficeContactDetails
 import models.office.contact_details.errors.OfficeContactDetailsNotFound
@@ -37,10 +37,14 @@ object OfficeContactDetailsServiceSpec extends SimpleIOSuite {
 
     override def create(officeContactDetails: OfficeContactDetails): IO[ValidatedNel[SqlErrors, Int]] = IO(Valid(1))
 
+    override def delete(officeId: String): IO[ValidatedNel[SqlErrors, Int]] = ???
   }
 
 
-  test(".getContactDetailsByBusinessId() - when there is an existing user ContactDetails details given a business_id should return the correct ContactDetails - Right(ContactDetails)") {
+  test(
+    ".getContactDetailsByBusinessId() - " +
+      "when there is an existing user ContactDetails details given a business_id should return the correct ContactDetails - Right(ContactDetails)"
+  ) {
 
     val existingContactDetailsForUser = testContactDetails(Some(1), "business_1", "office_1")
 
@@ -54,7 +58,10 @@ object OfficeContactDetailsServiceSpec extends SimpleIOSuite {
     }
   }
 
-  test(".getContactDetailsByBusinessId() - when there are no existing user ContactDetails details given a business_id should return Left(ContactDetailsNotFound)") {
+  test(
+    ".getContactDetailsByBusinessId() - " +
+      "when there are no existing user ContactDetails details given a business_id should return Left(ContactDetailsNotFound)"
+  ) {
 
     val existingContactDetailsForUser = testContactDetails(Some(1), "business_1", "office_1")
 

@@ -82,10 +82,9 @@ class OfficeContactDetailsRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
   override def delete(officeId: String): F[ValidatedNel[SqlErrors, Int]] = {
     val deleteQuery: Update0 =
       sql"""
-            DELETE FROM office_contact_details
-            WHERE office_id = $officeId
-          """.update
-
+        DELETE FROM office_contact_details
+        WHERE office_id = $officeId
+      """.update
     deleteQuery
       .run
       .transact(transactor)

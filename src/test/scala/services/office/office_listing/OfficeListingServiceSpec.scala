@@ -102,6 +102,8 @@ object OfficeListingServiceSpec extends SimpleIOSuite {
     override def findByOfficeId(businessId: String): IO[Option[OfficeContactDetails]] = ???
 
     override def create(officeContactDetails: OfficeContactDetails): IO[ValidatedNel[SqlErrors, Int]] = contactResult
+
+    override def delete(officeId: String): IO[ValidatedNel[SqlErrors, Int]] = ???
   }
 
   class MockSpecsRepository(

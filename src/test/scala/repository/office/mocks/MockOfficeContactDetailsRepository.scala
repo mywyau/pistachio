@@ -22,4 +22,5 @@ case class MockOfficeContactDetailsRepository(ref: Ref[IO, List[OfficeContactDet
     }
 
 
+  override def delete(officeId: String): IO[ValidatedNel[SqlErrors, Int]] = ???
 }
