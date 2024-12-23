@@ -42,7 +42,7 @@ class OfficeAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transac
 
   override def create(officeAddressRequest: OfficeAddressRequest): F[ValidatedNel[SqlErrors, Int]] = {
     sql"""
-      INSERT INTO office_address (
+      INSERT INTO shared_schema.office_address (
         business_id,
         office_id,
         building_name,
@@ -67,7 +67,7 @@ class OfficeAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transac
         ${officeAddressRequest.latitude},
         ${officeAddressRequest.longitude}
       )
-    """.update
+    """.update // Specify `shared_schema` explicitly
       .run
       .transact(transactor)
       .attempt
