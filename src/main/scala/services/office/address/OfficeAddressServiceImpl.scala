@@ -25,10 +25,10 @@ class OfficeAddressServiceImpl[F[_] : Concurrent : NonEmptyParallel : Monad](
     }
   }
 
-  override def create(officeAddress: OfficeAddressRequest): F[ValidatedNel[OfficeAddressErrors, Int]] = {
+  override def create(officeAddressRequest: OfficeAddressRequest): F[ValidatedNel[OfficeAddressErrors, Int]] = {
 
     val addressCreation: F[ValidatedNel[SqlErrors, Int]] =
-      officeAddressRepo.create(officeAddress)
+      officeAddressRepo.create(officeAddressRequest)
 
     addressCreation.map {
       case Validated.Valid(addressId) =>
