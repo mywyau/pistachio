@@ -7,13 +7,13 @@ import java.time.LocalDateTime
 
 case class BusinessContactDetailsRequest(
                                         userId: String,
-                                        street: String,
-                                        city: String,
-                                        country: String,
-                                        county: Option[String],
-                                        postcode: String,
-                                        createdAt: LocalDateTime,
-                                        updated_at: LocalDateTime
+                                        businessId: String,
+                                        businessName: String,
+                                        primaryContactFirstName: String,
+                                        primaryContactLastName: String,
+                                        contactEmail: String,
+                                        contactNumber: String,
+                                        websiteUrl: String
                                       )
 
 object BusinessContactDetailsRequest {
