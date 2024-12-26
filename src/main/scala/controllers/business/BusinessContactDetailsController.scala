@@ -40,7 +40,7 @@ class BusinessContactDetailsControllerImpl[F[_] : Concurrent](
     case req@POST -> Root / "business" / "businesses" / "contact" / "details" / "create" =>
       logger.info(s"[BusinessContactControllerImpl] POST - Creating business listing") *>
         req.decode[CreateBusinessContactDetailsRequest] { request =>
-          businessContactDetailsService.createBusinessContactDetails(request).flatMap {
+          businessContactDetailsService.create(request).flatMap {
             case Valid(listing) =>
               logger.info(s"[BusinessContactControllerImpl] POST - Successfully created a business contact details") *>
                 Created(CreatedResponse("Business contact details created successfully").asJson)
@@ -51,7 +51,7 @@ class BusinessContactDetailsControllerImpl[F[_] : Concurrent](
 
     case DELETE -> Root / "business" / "businesses" / "contact" / "details" / businessId =>
       logger.info(s"[BusinessContactControllerImpl] DELETE - Attempting to delete business contact details") *>
-        businessContactDetailsService.deleteContactDetails(businessId).flatMap {
+        businessContactDetailsService.delete(businessId).flatMap {
           case Valid(contact) =>
             logger.info(s"[BusinessContactControllerImpl] DELETE - Successfully deleted business contact details for $businessId") *>
               Ok(DeletedResponse("Business contact details deleted successfully").asJson)

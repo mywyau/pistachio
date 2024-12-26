@@ -111,7 +111,7 @@ object OfficeListingServiceSpec extends SimpleIOSuite {
     override def delete(officeId: String): IO[ValidatedNel[SqlErrors, Int]] = ???
   }
 
-  class MockSpecsRepository(
+  class MockOfficeSpecificationsRepository(
                              specsResult: IO[ValidatedNel[SqlErrors, Int]]
                            ) extends OfficeSpecificationsRepositoryAlgebra[IO] {
 
@@ -129,7 +129,7 @@ object OfficeListingServiceSpec extends SimpleIOSuite {
                        ): OfficeListingServiceImpl[IO] = {
     val addressRepo = new MockOfficeAddressRepository(addressResult)
     val contactRepo = new MockContactDetailsRepository(contactResult)
-    val specsRepo = new MockSpecsRepository(specsResult)
+    val specsRepo = new MockOfficeSpecificationsRepository(specsResult)
 
     new OfficeListingServiceImpl[IO](addressRepo, contactRepo, specsRepo)
   }

@@ -45,9 +45,7 @@ object BusinessAddressControllerConstants {
       county = Some("Manhattan"),
       postcode = Some("10001"),
       latitude = Some(100.1),
-      longitude = Some(-100.1),
-      createdAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0),
-      updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
+      longitude = Some(-100.1)
     )
   }
 

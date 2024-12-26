@@ -19,22 +19,41 @@ import weaver.SimpleIOSuite
 
 import java.time.LocalDateTime
 
-object BusinessContactDetailsConstants {
+object BusinessAddressServiceConstants {
 
-  def testContactDetails(id: Option[Int], userId: String, businessId: String, business_id: String): BusinessContactDetails =
-    BusinessContactDetails(
-      id = Some(1),
+  def testBusinessAddressRequest(userId: String, businessId: Option[String]): CreateBusinessAddressRequest =
+    CreateBusinessAddressRequest(
       userId = userId,
       businessId = businessId,
-      businessName = "MikeyCorp",
-      primaryContactFirstName = "Michael",
-      primaryContactLastName = "Yau",
-      contactEmail = "mike@gmail.com",
-      contactNumber = "07402205071",
-      websiteUrl = "mikey.com",
+      businessName = Some("mikeyCorp"),
+      buildingName = Some("building name"),
+      floorNumber = Some("floor 1"),
+      street = Some("1 Canton Street"),
+      city = Some("fake city 1"),
+      country = Some("UK"),
+      county = Some("County 1"),
+      postcode = Some("CF3 3NJ"),
+      latitude = Some(100.1),
+      longitude = Some(-100.1)
+    )
+
+  def testBusinessAddress(id: Option[Int], userId: String, businessId: Option[String]): BusinessAddress =
+    BusinessAddress(
+      id = id,
+      userId = userId,
+      businessId = businessId,
+      businessName = Some("mikeyCorp"),
+      buildingName = Some("building name"),
+      floorNumber = Some("floor 1"),
+      street = Some("1 Canton Street"),
+      city = Some("fake city 1"),
+      country = Some("UK"),
+      county = Some("County 1"),
+      postcode = Some("CF3 3NJ"),
+      latitude = Some(100.1),
+      longitude = Some(-100.1),
       createdAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0),
       updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
     )
-
 
 }

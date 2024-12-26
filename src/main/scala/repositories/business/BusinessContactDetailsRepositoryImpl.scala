@@ -20,9 +20,9 @@ trait BusinessContactDetailsRepositoryAlgebra[F[_]] {
 
   def findByBusinessId(businessId: String): F[Option[BusinessContactDetails]]
 
-  def createContactDetails(createBusinessContactDetailsRequest: CreateBusinessContactDetailsRequest): F[ValidatedNel[SqlErrors, Int]]
+  def create(createBusinessContactDetailsRequest: CreateBusinessContactDetailsRequest): F[ValidatedNel[SqlErrors, Int]]
 
-  def deleteContactDetails(businessId: String): F[ValidatedNel[SqlErrors, Int]]
+  def delete(businessId: String): F[ValidatedNel[SqlErrors, Int]]
 }
 
 class BusinessContactDetailsRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transactor[F]) extends BusinessContactDetailsRepositoryAlgebra[F] {
@@ -39,7 +39,7 @@ class BusinessContactDetailsRepositoryImpl[F[_] : Concurrent : Monad](transactor
     findQuery
   }
 
-  override def createContactDetails(createBusinessContactDetailsRequest: CreateBusinessContactDetailsRequest): F[ValidatedNel[SqlErrors, Int]] = {
+  override def create(createBusinessContactDetailsRequest: CreateBusinessContactDetailsRequest): F[ValidatedNel[SqlErrors, Int]] = {
     sql"""
       INSERT INTO business_contact_details (
         user_id,
@@ -81,7 +81,7 @@ class BusinessContactDetailsRepositoryImpl[F[_] : Concurrent : Monad](transactor
   }
 
 
-  override def deleteContactDetails(businessId: String): F[ValidatedNel[SqlErrors, Int]] = {
+  override def delete(businessId: String): F[ValidatedNel[SqlErrors, Int]] = {
     val deleteQuery: Update0 =
       sql"""
         DELETE FROM business_contact_details

@@ -33,8 +33,8 @@ case class MockBusinessAddressRepository(ref: Ref[IO, List[BusinessAddress]]) ex
         request.postcode,
         request.latitude,
         request.longitude,
-        request.createdAt,
-        request.updatedAt
+        createdAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0),
+        updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
       ) :: addresses,
       Valid(1)
     )

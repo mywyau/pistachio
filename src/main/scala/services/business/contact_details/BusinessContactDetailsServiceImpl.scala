@@ -16,9 +16,9 @@ trait BusinessContactDetailsServiceAlgebra[F[_]] {
 
   def getContactDetailsByBusinessId(businessId: String): F[Either[BusinessContactDetailsErrors, BusinessContactDetails]]
 
-  def createBusinessContactDetails(businessContactDetails: CreateBusinessContactDetailsRequest): F[ValidatedNel[BusinessContactDetailsErrors, Int]]
+  def create(businessContactDetails: CreateBusinessContactDetailsRequest): F[ValidatedNel[BusinessContactDetailsErrors, Int]]
 
-  def deleteContactDetails(businessId: String): F[ValidatedNel[SqlErrors, Int]]
+  def delete(businessId: String): F[ValidatedNel[SqlErrors, Int]]
 
 }
 
@@ -35,10 +35,10 @@ class BusinessContactDetailsServiceImpl[F[_] : Concurrent : NonEmptyParallel : M
     }
   }
 
-  override def createBusinessContactDetails(businessContactDetails: CreateBusinessContactDetailsRequest): F[ValidatedNel[BusinessContactDetailsErrors, Int]] = {
+  override def create(businessContactDetails: CreateBusinessContactDetailsRequest): F[ValidatedNel[BusinessContactDetailsErrors, Int]] = {
 
     val contactDetailsCreation: F[ValidatedNel[SqlErrors, Int]] =
-      businessContactDetailsRepo.createContactDetails(businessContactDetails)
+      businessContactDetailsRepo.create(businessContactDetails)
 
     contactDetailsCreation.map {
       case Validated.Valid(i) =>
@@ -52,8 +52,8 @@ class BusinessContactDetailsServiceImpl[F[_] : Concurrent : NonEmptyParallel : M
     }
   }
 
-  override def deleteContactDetails(businessId: String): F[ValidatedNel[SqlErrors, Int]] = {
-    businessContactDetailsRepo.deleteContactDetails(businessId)
+  override def delete(businessId: String): F[ValidatedNel[SqlErrors, Int]] = {
+    businessContactDetailsRepo.delete(businessId)
   }
 }
 

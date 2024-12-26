@@ -33,7 +33,7 @@ class BusinessListingServiceImpl[F[_] : Concurrent : NonEmptyParallel : Monad](
       businessAddressRepo.createBusinessAddress(businessListing.addressDetails)
 
     val contactDetailsCreation: F[ValidatedNel[SqlErrors, Int]] =
-      businessContactDetailsRepo.createContactDetails(businessListing.contactDetails)
+      businessContactDetailsRepo.create(businessListing.contactDetails)
 
     val specsCreation: F[ValidatedNel[SqlErrors, Int]] =
       businessSpecsRepo.create(businessListing.businessSpecs)

@@ -9,7 +9,7 @@ import weaver.SimpleIOSuite
 
 import java.time.LocalDateTime
 
-object CreateBusinessAddressRequest extends SimpleIOSuite {
+object CreateBusinessAddressRequestSpec extends SimpleIOSuite {
 
   val testCreateBusinessAddressRequest: CreateBusinessAddressRequest =
     CreateBusinessAddressRequest(
@@ -29,7 +29,7 @@ object CreateBusinessAddressRequest extends SimpleIOSuite {
 
   test("CreateBusinessAddressRequest model encodes correctly to JSON") {
 
-    val jsonResult = testBusinessAddress.asJson
+    val jsonResult = testCreateBusinessAddressRequest.asJson
 
     val expectedJson =
       """
