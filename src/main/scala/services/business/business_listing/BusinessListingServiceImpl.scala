@@ -36,7 +36,7 @@ class BusinessListingServiceImpl[F[_] : Concurrent : NonEmptyParallel : Monad](
       businessContactDetailsRepo.createContactDetails(businessListing.contactDetails)
 
     val specsCreation: F[ValidatedNel[SqlErrors, Int]] =
-      businessSpecsRepo.createSpecs(businessListing.businessSpecs)
+      businessSpecsRepo.create(businessListing.businessSpecs)
 
     // Run the operations in parallel
     (addressCreation, contactDetailsCreation, specsCreation).parMapN {

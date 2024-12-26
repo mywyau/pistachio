@@ -11,6 +11,7 @@ import doobie.util.meta.Meta
 import models.database.*
 import models.business.contact_details.errors.BusinessContactDetailsErrors
 import models.business.contact_details.BusinessContactDetails
+import models.business.contact_details.requests.CreateBusinessContactDetailsRequest
 
 import java.sql.Timestamp
 import java.time.LocalDateTime
@@ -19,7 +20,7 @@ trait BusinessContactDetailsRepositoryAlgebra[F[_]] {
 
   def findByBusinessId(businessId: String): F[Option[BusinessContactDetails]]
 
-  def createContactDetails(businessContactDetails: BusinessContactDetails): F[ValidatedNel[SqlErrors, Int]]
+  def createContactDetails(createBusinessContactDetailsRequest: CreateBusinessContactDetailsRequest): F[ValidatedNel[SqlErrors, Int]]
 
   def deleteContactDetails(businessId: String): F[ValidatedNel[SqlErrors, Int]]
 }
@@ -38,7 +39,7 @@ class BusinessContactDetailsRepositoryImpl[F[_] : Concurrent : Monad](transactor
     findQuery
   }
 
-  override def createContactDetails(businessContactDetails: BusinessContactDetails): F[ValidatedNel[SqlErrors, Int]] = {
+  override def createContactDetails(createBusinessContactDetailsRequest: CreateBusinessContactDetailsRequest): F[ValidatedNel[SqlErrors, Int]] = {
     sql"""
       INSERT INTO business_contact_details (
         user_id,
@@ -48,20 +49,16 @@ class BusinessContactDetailsRepositoryImpl[F[_] : Concurrent : Monad](transactor
         primary_contact_last_name,
         contact_email,
         contact_number,
-        website_url,
-        created_at,
-        updated_at
+        website_url
       ) VALUES (
-        ${businessContactDetails.userId},
-        ${businessContactDetails.businessId},
-        ${businessContactDetails.businessName},
-        ${businessContactDetails.primaryContactFirstName},
-        ${businessContactDetails.primaryContactLastName},
-        ${businessContactDetails.contactEmail},
-        ${businessContactDetails.contactNumber},
-        ${businessContactDetails.websiteUrl},
-        ${businessContactDetails.createdAt},
-        ${businessContactDetails.updatedAt}
+        ${createBusinessContactDetailsRequest.userId},
+        ${createBusinessContactDetailsRequest.businessId},
+        ${createBusinessContactDetailsRequest.businessName},
+        ${createBusinessContactDetailsRequest.primaryContactFirstName},
+        ${createBusinessContactDetailsRequest.primaryContactLastName},
+        ${createBusinessContactDetailsRequest.contactEmail},
+        ${createBusinessContactDetailsRequest.contactNumber},
+        ${createBusinessContactDetailsRequest.websiteUrl}
       )
     """.update
       .run

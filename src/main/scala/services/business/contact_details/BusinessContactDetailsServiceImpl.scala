@@ -6,10 +6,21 @@ import cats.effect.Concurrent
 import cats.implicits.*
 import cats.{Monad, NonEmptyParallel}
 import models.business.contact_details.BusinessContactDetails
+import models.business.contact_details.requests.CreateBusinessContactDetailsRequest
 import models.business.contact_details.errors.*
 import models.database.SqlErrors
 import repositories.business.BusinessContactDetailsRepositoryAlgebra
 
+
+trait BusinessContactDetailsServiceAlgebra[F[_]] {
+
+  def getContactDetailsByBusinessId(businessId: String): F[Either[BusinessContactDetailsErrors, BusinessContactDetails]]
+
+  def createBusinessContactDetails(businessContactDetails: CreateBusinessContactDetailsRequest): F[ValidatedNel[BusinessContactDetailsErrors, Int]]
+
+  def deleteContactDetails(businessId: String): F[ValidatedNel[SqlErrors, Int]]
+
+}
 
 class BusinessContactDetailsServiceImpl[F[_] : Concurrent : NonEmptyParallel : Monad](
                                                                                        businessContactDetailsRepo: BusinessContactDetailsRepositoryAlgebra[F]
@@ -24,7 +35,7 @@ class BusinessContactDetailsServiceImpl[F[_] : Concurrent : NonEmptyParallel : M
     }
   }
 
-  override def createBusinessContactDetails(businessContactDetails: BusinessContactDetails): F[ValidatedNel[BusinessContactDetailsErrors, Int]] = {
+  override def createBusinessContactDetails(businessContactDetails: CreateBusinessContactDetailsRequest): F[ValidatedNel[BusinessContactDetailsErrors, Int]] = {
 
     val contactDetailsCreation: F[ValidatedNel[SqlErrors, Int]] =
       businessContactDetailsRepo.createContactDetails(businessContactDetails)

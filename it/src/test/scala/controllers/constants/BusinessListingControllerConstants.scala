@@ -3,7 +3,7 @@ package controllers.constants
 import cats.effect.*
 import models.business.address.BusinessAddress
 import models.business.adts.*
-import models.business.address.requests.BusinessAddressRequest
+import models.business.address.requests.CreateBusinessAddressRequest
 import models.business.contact_details.BusinessContactDetails
 import models.business.business_listing.requests.BusinessListingRequest
 import models.business.specifications.{BusinessAvailability, BusinessSpecifications}
@@ -42,8 +42,8 @@ object BusinessListingControllerConstants {
       updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
     )
 
-  val testBusinessAddressRequest: BusinessAddressRequest =
-    BusinessAddressRequest(
+  val testBusinessAddressRequest: CreateBusinessAddressRequest =
+    CreateBusinessAddressRequest(
       userId = "user_id_1",
       businessId = Some("business_id_1"),
       businessName = Some("MikeyCorp"),

@@ -117,7 +117,7 @@ object OfficeListingServiceSpec extends SimpleIOSuite {
 
     override def findByOfficeId(officeId: String): IO[Option[OfficeSpecifications]] = ???
 
-    override def createSpecs(createOfficeSpecificationsRequest: CreateOfficeSpecificationsRequest): IO[ValidatedNel[SqlErrors, Int]] = specsResult
+    override def create(createOfficeSpecificationsRequest: CreateOfficeSpecificationsRequest): IO[ValidatedNel[SqlErrors, Int]] = specsResult
 
     override def delete(officeId: String): IO[ValidatedNel[SqlErrors, Int]] = ???
   }

@@ -4,7 +4,7 @@ import cats.data.{NonEmptyList, Validated, ValidatedNel}
 import cats.effect.IO
 import cats.implicits.*
 import models.business.address.BusinessAddress
-import models.business.address.requests.BusinessAddressRequest
+import models.business.address.requests.CreateBusinessAddressRequest
 import models.business.adts.*
 import models.business.business_listing.errors.BusinessListingErrors
 import models.business.business_listing.requests.BusinessListingRequest
@@ -25,7 +25,7 @@ object BusinessListingMocks {
 
     override def findByBusinessId(userId: String): IO[Option[BusinessAddress]] = ???
 
-    override def createBusinessAddress(businessAddress: BusinessAddressRequest): IO[ValidatedNel[SqlErrors, Int]] = addressResult
+    override def createBusinessAddress(businessAddress: CreateBusinessAddressRequest): IO[ValidatedNel[SqlErrors, Int]] = addressResult
 
     override def deleteBusinessAddress(businessId: String): IO[ValidatedNel[SqlErrors, Int]] = ???
   }
@@ -49,6 +49,6 @@ object BusinessListingMocks {
 
     override def createSpecs(user: BusinessSpecifications): IO[ValidatedNel[SqlErrors, Int]] = specsResult
 
-    override def deleteSpecifications(businessId: String): IO[ValidatedNel[SqlErrors, Int]] = ???
+    override def delete(businessId: String): IO[ValidatedNel[SqlErrors, Int]] = ???
   }
 }

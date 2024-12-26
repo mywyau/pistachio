@@ -4,7 +4,7 @@ import cats.data.Validated.Valid
 import cats.effect.IO
 import cats.effect.kernel.Ref
 import models.business.address.BusinessAddress
-import models.business.address.requests.BusinessAddressRequest
+import models.business.address.requests.CreateBusinessAddressRequest
 import repository.business.mocks.MockBusinessAddressRepository
 
 import java.time.LocalDateTime
@@ -14,8 +14,8 @@ object BusinessAddressConstants {
   def createMockRepo(initialUsers: List[BusinessAddress]): IO[MockBusinessAddressRepository] =
     Ref.of[IO, List[BusinessAddress]](initialUsers).map(MockBusinessAddressRepository.apply)
 
-  def testAddressRequest(userId: String, businessId: Option[String]): BusinessAddressRequest =
-    BusinessAddressRequest(
+  def testAddressRequest(userId: String, businessId: Option[String]): CreateBusinessAddressRequest =
+    CreateBusinessAddressRequest(
       userId = userId,
       businessId = businessId,
       businessName = Some("mikeyCorp"),

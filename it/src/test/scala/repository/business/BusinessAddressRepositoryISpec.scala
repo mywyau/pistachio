@@ -6,7 +6,7 @@ import cats.implicits.*
 import doobie.*
 import doobie.implicits.*
 import models.business.address.BusinessAddress
-import models.business.address.requests.BusinessAddressRequest
+import models.business.address.requests.CreateBusinessAddressRequest
 import models.business.adts.PrivateDesk
 import models.business.specifications.BusinessAvailability
 import repositories.business.BusinessAddressRepositoryImpl
@@ -26,8 +26,8 @@ class BusinessAddressRepositoryISpec(global: GlobalRead) extends IOSuite {
         resetBusinessAddressTable.update.run.transact(transactor.xa).void
     )
 
-  def testBusinessAddressRequest(userId: String, businessId: Option[String]): BusinessAddressRequest = {
-    BusinessAddressRequest(
+  def testBusinessAddressRequest(userId: String, businessId: Option[String]): CreateBusinessAddressRequest = {
+    CreateBusinessAddressRequest(
       userId = userId,
       businessId = businessId,
       businessName = Some("mikey_corp"),

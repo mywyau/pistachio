@@ -5,6 +5,7 @@ import cats.effect.Concurrent
 import cats.implicits.*
 import io.circe.syntax.EncoderOps
 import models.business.contact_details.BusinessContactDetails
+import models.business.contact_details.requests.CreateBusinessContactDetailsRequest
 import models.responses.{CreatedResponse, DeletedResponse, ErrorResponse}
 import org.http4s.*
 import org.http4s.circe.*
@@ -21,7 +22,7 @@ class BusinessContactDetailsControllerImpl[F[_] : Concurrent](
                                                              )(implicit logger: Logger[F])
   extends Http4sDsl[F] with BusinessContactDetailsControllerAlgebra[F] {
 
-  implicit val businessContactDetailsRequestDecoder: EntityDecoder[F, BusinessContactDetails] = jsonOf[F, BusinessContactDetails]
+  implicit val createBusinessContactDetailsRequestDecoder: EntityDecoder[F, CreateBusinessContactDetailsRequest] = jsonOf[F, CreateBusinessContactDetailsRequest]
 
   val routes: HttpRoutes[F] = HttpRoutes.of[F] {
 
@@ -38,7 +39,7 @@ class BusinessContactDetailsControllerImpl[F[_] : Concurrent](
 
     case req@POST -> Root / "business" / "businesses" / "contact" / "details" / "create" =>
       logger.info(s"[BusinessContactControllerImpl] POST - Creating business listing") *>
-        req.decode[BusinessContactDetails] { request =>
+        req.decode[CreateBusinessContactDetailsRequest] { request =>
           businessContactDetailsService.createBusinessContactDetails(request).flatMap {
             case Valid(listing) =>
               logger.info(s"[BusinessContactControllerImpl] POST - Successfully created a business contact details") *>

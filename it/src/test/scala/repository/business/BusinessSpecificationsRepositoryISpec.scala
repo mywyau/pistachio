@@ -8,7 +8,7 @@ import models.business.adts.PrivateDesk
 import models.business.specifications.BusinessSpecifications
 import models.business.specifications.BusinessAvailability
 import repositories.business.BusinessSpecificationsRepositoryImpl
-import repository.fragments.business.BusinessSpecsRepoFragments.{createBusinessSpecsTable, resetBusinessSpecsTable}
+import repository.fragments.business.BusinessSpecificationsRepoFragments.{createBusinessSpecsTable, resetBusinessSpecsTable}
 import shared.TransactorResource
 import weaver.{GlobalRead, IOSuite, ResourceTag}
 
@@ -44,7 +44,7 @@ class BusinessSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite 
       testBusinessSpecs(Some(4), "user_id_4", "business_id_4"),
       testBusinessSpecs(Some(5), "user_id_5", "business_id_5")
     )
-    users.traverse(businessSpecsRepo.createSpecs).void
+    users.traverse(businessSpecsRepo.create).void
   }
 
   def sharedResource: Resource[IO, BusinessSpecificationsRepositoryImpl[IO]] = {

@@ -6,7 +6,7 @@ import cats.effect.IO
 import cats.effect.kernel.Ref
 import cats.implicits.*
 import models.business.address.BusinessAddress
-import models.business.address.requests.BusinessAddressRequest
+import models.business.address.requests.CreateBusinessAddressRequest
 import models.database.*
 import repositories.business.BusinessAddressRepositoryAlgebra
 
@@ -17,7 +17,7 @@ case class MockBusinessAddressRepository(ref: Ref[IO, List[BusinessAddress]]) ex
   override def findByBusinessId(businessId: String): IO[Option[BusinessAddress]] =
     ref.get.map(_.find(_.businessId.contains(businessId)))
 
-  override def createBusinessAddress(request: BusinessAddressRequest): IO[ValidatedNel[SqlErrors, Int]] =
+  override def createBusinessAddress(request: CreateBusinessAddressRequest): IO[ValidatedNel[SqlErrors, Int]] =
     ref.modify(addresses => (
       BusinessAddress(
         Some(1),
