@@ -96,7 +96,7 @@ class OfficeSpecificationsRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
 
   override def update(officeId: String, request: UpdateOfficeSpecificationsRequest): F[ValidatedNel[SqlErrors, Int]] = {
     sql"""
-      UPDATE office_address
+      UPDATE office_specs
       SET
         office_name = ${request.officeName},
         description = ${request.description},
@@ -105,7 +105,7 @@ class OfficeSpecificationsRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
         total_desks = ${request.totalDesks},
         capacity = ${request.capacity},
         amenities = ${request.amenities},
-        availability = ${request.availability},
+        availability = ${request.availability}::jsonb,
         rules = ${request.rules},
         updated_at = ${request.updatedAt}
       WHERE office_id = $officeId

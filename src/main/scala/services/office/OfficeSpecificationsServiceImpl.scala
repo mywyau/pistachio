@@ -57,11 +57,11 @@ class OfficeSpecificationsServiceImpl[F[_] : Concurrent : NonEmptyParallel : Mon
 
   override def update(officeId: String, request: UpdateOfficeSpecificationsRequest): F[ValidatedNel[OfficeSpecificationsErrors, Int]] = {
 
-    val updateAddress: F[ValidatedNel[SqlErrors, Int]] =
+    val updateSpecifications: F[ValidatedNel[SqlErrors, Int]] =
       officeSpecificationsRepo.update(officeId, request)
 
-    updateAddress.map {
-      case Valid(addressId) =>
+    updateSpecifications.map {
+      case Valid(specificationsId) =>
         Valid(1)
       case result =>
         val errors =
