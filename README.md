@@ -128,3 +128,21 @@ contactEmail="mikey@gmail.com" \
 contactNumber="07402205071" \
 updatedAt="2025-01-01T12:00:00"
 
+
+
+### TODO: WIP
+```
+
+http PUT http://localhost:1010/pistachio/business/offices/specifications/update/OFF-3fc560b7-c039-4267-9de3-023a10077a5f \
+officeName="BUS001',\
+description="'OFF001',\
+officeType="'Downtown Workspace',\
+numberOfFloors="'A modern co-working space.',\
+totalDesks="'co-working',\
+capacity=2,\
+amenities=50,\
+availability="100,\
+rules="ARRAY['WiFi', 'Coffee', 'Meeting Rooms'],\
+updatedAt="2025-01-01T12:00:00"
+
+```
