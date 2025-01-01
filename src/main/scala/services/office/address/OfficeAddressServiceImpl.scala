@@ -69,8 +69,6 @@ class OfficeAddressServiceImpl[F[_] : Concurrent : NonEmptyParallel : Monad](
     }.handleErrorWith { e =>
       Concurrent[F].pure(AddressDatabaseError.invalidNel)
     }
-
-
   }
 
   override def delete(officeId: String): F[ValidatedNel[SqlErrors, Int]] = {
