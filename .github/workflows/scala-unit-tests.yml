@@ -38,4 +38,4 @@ jobs:
         run: sbt test
 
       - name: Run Integration Tests
-        run: sbt it test  
+        run: sbt it/test  
