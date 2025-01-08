@@ -76,7 +76,7 @@ class OfficeListingControllerImpl[F[_] : Concurrent](officeListingService: Offic
               Ok(DeletedResponse("Office listing deleted successfully").asJson)
           case Invalid(error) =>
             val errorResponse = ErrorResponse("placeholder error", "some deleted office listing message")
-            BadRequest(errorResponse.asJson)B
+            BadRequest(errorResponse.asJson)
         }
 
     case DELETE -> Root / "business" / "office" / "listing" / "delete" / "all" / businessId =>
