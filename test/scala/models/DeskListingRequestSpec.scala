@@ -5,8 +5,8 @@ import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import models.business.adts.PrivateDesk
-import models.business.desk_listing.Availability
-import models.business.desk_listing.requests.DeskListingRequest
+import models.desk_listing.Availability
+import models.desk_listing.requests.DeskListingRequest
 import weaver.SimpleIOSuite
 
 import java.time.LocalDateTime

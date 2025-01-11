@@ -1,8 +1,8 @@
 package services.desk_listing
 
-import models.business.desk_listing.errors.DeskListingErrors
-import models.business.desk_listing.requests.DeskListingRequest
-import models.business.desk_listing.service.DeskListing
+import models.desk_listing.errors.DeskListingErrors
+import models.desk_listing.requests.DeskListingRequest
+import models.desk_listing.service.DeskListing
 
 trait DeskListingServiceAlgebra[F[_]] {
 

@@ -4,10 +4,10 @@ import cats.effect.Concurrent
 import cats.implicits.*
 import cats.Monad
 import cats.NonEmptyParallel
-import models.business.desk_listing.errors.*
-import models.business.desk_listing.requests.DeskListingRequest
-import models.business.desk_listing.service.DeskListing
+import models.desk_listing.requests.DeskListingRequest
+import models.desk_listing.service.DeskListing
 import repositories.desk.DeskListingRepositoryAlgebra
+import models.desk_listing.errors.{DeskListingNotFound, DeskListingErrors, DatabaseError}
 
 class DeskListingServiceImpl[F[_] : Concurrent : NonEmptyParallel : Monad](deskListingRepo: DeskListingRepositoryAlgebra[F]) extends DeskListingServiceAlgebra[F] {
 

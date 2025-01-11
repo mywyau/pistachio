@@ -1,15 +1,15 @@
-package models.business.desk_listing.service
+package models.desk_listing.requests
 
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.generic.semiauto.deriveEncoder
 import io.circe.Decoder
 import io.circe.Encoder
+import io.circe.Json
 import java.time.LocalDateTime
 import models.business.adts.DeskType
 import models.business.desk_listing.Availability
 
-case class DeskListing(
-  id: Option[Int],
+case class DeskListingRequest(
   business_id: String,
   workspace_id: String,
   title: String,
@@ -18,14 +18,14 @@ case class DeskListing(
   quantity: Int,
   price_per_hour: BigDecimal,
   price_per_day: BigDecimal,
-  features: List[String],
-  availability: Availability,
   rules: Option[String],
+  features: List[String], // Stored as PostgreSQL TEXT[]
+  availability: Availability, // Stored as PostgreSQL JSONB
   created_at: LocalDateTime,
   updated_at: LocalDateTime
 )
 
-object DeskListing {
-  implicit val businessDeskEncoder: Encoder[DeskListing] = deriveEncoder[DeskListing]
-  implicit val businessDeskDecoder: Decoder[DeskListing] = deriveDecoder[DeskListing]
+object DeskListingRequest {
+  implicit val eskRequestEncoder: Encoder[DeskListingRequest] = deriveEncoder[DeskListingRequest]
+  implicit val eskRequestDecoder: Decoder[DeskListingRequest] = deriveDecoder[DeskListingRequest]
 }

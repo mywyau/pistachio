@@ -4,7 +4,7 @@ import cats.effect.Concurrent
 import cats.effect.IO
 import cats.implicits.*
 import io.circe.syntax.*
-import models.business.desk_listing.requests.DeskListingRequest
+import models.desk_listing.requests.DeskListingRequest
 import models.responses.CreatedResponse
 import models.responses.ErrorResponse
 import org.http4s.*
