@@ -40,23 +40,19 @@ object DeskListingRequestSpec extends SimpleIOSuite {
     val expectedJson =
       """
         |{
-        |  "business_id": "business_123",
-        |  "workspace_id": "workspace_456",
-        |  "title": "Private Office Desk",
+        |  "deskName": "Private Office Desk",
         |  "description": "A comfortable desk in a private office space with all amenities included.",
-        |  "desk_type": "PrivateDesk",
+        |  "deskType": "PrivateDesk",
         |  "quantity": 5,
-        |  "price_per_hour": 15.50,
-        |  "price_per_day": 120.00,
+        |  "pricePerHour": 15.50,
+        |  "pricePerDay": 120.00,
         |  "rules": "Please keep the desk clean and quiet.",
         |  "features": ["Wi-Fi", "Power Outlets", "Monitor", "Ergonomic Chair"],
         |  "availability": {
         |    "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
         |    "startTime": "10:00:00",
         |    "endTime": "10:30:00"
-        |  },
-        |  "created_at": "2024-11-21T10:00:00",
-        |  "updated_at": "2024-11-21T10:30:00"
+        |  }
         |}
         |""".stripMargin
 
