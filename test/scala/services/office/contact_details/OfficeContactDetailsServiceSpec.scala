@@ -7,7 +7,7 @@ import models.database.DatabaseErrors
 import models.office.contact_details.OfficeContactDetails
 import models.office.contact_details.errors.OfficeContactDetailsNotFound
 import repositories.office.OfficeContactDetailsRepositoryAlgebra
-import services.office.contact_details.{OfficeContactDetailsService, OfficeContactDetailsServiceImpl}
+import services.office.{OfficeContactDetailsService, OfficeContactDetailsServiceImpl}
 import weaver.SimpleIOSuite
 import services.constants.OfficeContactDetailsServiceConstants.*
 
@@ -45,20 +45,6 @@ object OfficeContactDetailsServiceSpec extends SimpleIOSuite {
       result <- service.getByOfficeId("office_id_1")
     } yield {
       expect(result == Left(OfficeContactDetailsNotFound))
-    }
-  }
-
-  test(".create() - when given a OfficeContactDetails successfully create the ContactDetails") {
-
-    val testCreateRequest = testCreateOfficeContactDetailsRequest("business__id_1", "office_id_1")
-
-    val mockOfficeContactDetailsRepository = new MockOfficeContactDetailsRepository(Map())
-    val service = OfficeContactDetailsService(mockOfficeContactDetailsRepository)
-
-    for {
-      result <- service.create(testCreateRequest)
-    } yield {
-      expect(result == Valid(CreateSuccess))
     }
   }
 }

@@ -20,10 +20,7 @@ class MockBusinessAddressService(userAddressData: Map[String, BusinessAddressPar
       case Some(address) => IO.pure(Right(address))
       case None => IO.pure(Left(BusinessUserNotFound))
     }
-
-  override def createAddress(request: CreateBusinessAddressRequest): IO[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
-    IO.pure(Valid(CreateSuccess))
-
+    
   override def update(businessId: String, request: UpdateBusinessAddressRequest): IO[ValidatedNel[BusinessAddressErrors, DatabaseSuccess]] = ???
 
   override def delete(businessId: String): IO[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = ???

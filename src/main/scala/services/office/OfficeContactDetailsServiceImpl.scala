@@ -1,4 +1,4 @@
-package services.office.contact_details
+package services.office
 
 import cats.data.Validated
 import cats.data.Validated.Invalid
@@ -12,16 +12,13 @@ import models.database.CreateSuccess
 import models.database.DatabaseErrors
 import models.database.DatabaseSuccess
 import models.office.contact_details.errors.*
-import models.office.contact_details.requests.CreateOfficeContactDetailsRequest
-import models.office.contact_details.requests.UpdateOfficeContactDetailsRequest
 import models.office.contact_details.OfficeContactDetailsPartial
+import models.office.contact_details.UpdateOfficeContactDetailsRequest
 import repositories.office.OfficeContactDetailsRepositoryAlgebra
 
 trait OfficeContactDetailsServiceAlgebra[F[_]] {
 
   def getByOfficeId(officeId: String): F[Either[OfficeContactDetailsErrors, OfficeContactDetailsPartial]]
-
-  def create(createOfficeContactDetailsRequest: CreateOfficeContactDetailsRequest): F[cats.data.ValidatedNel[OfficeContactDetailsErrors, DatabaseSuccess]]
 
   def update(officeId: String, officeAddress: UpdateOfficeContactDetailsRequest): F[ValidatedNel[OfficeContactDetailsErrors, DatabaseSuccess]]
 
@@ -39,25 +36,6 @@ class OfficeContactDetailsServiceImpl[F[_] : Concurrent : NonEmptyParallel : Mon
       case None =>
         Concurrent[F].pure(Left(OfficeContactDetailsNotFound))
     }
-
-  override def create(createOfficeContactDetailsRequest: CreateOfficeContactDetailsRequest): F[ValidatedNel[OfficeContactDetailsErrors, DatabaseSuccess]] = {
-
-    val contactDetailsCreation =
-      officeContactDetailsRepo.create(createOfficeContactDetailsRequest)
-
-    contactDetailsCreation
-      .map {
-        case Validated.Valid(i) =>
-          Valid(i)
-        case contactDetailsResult =>
-          val errors =
-            List(contactDetailsResult.toEither.left.getOrElse(Nil))
-          OfficeContactDetailsNotCreated.invalidNel
-      }
-      .handleErrorWith { e =>
-        Concurrent[F].pure(OfficeContactDetailsDatabaseError.invalidNel)
-      }
-  }
 
   override def update(officeId: String, request: UpdateOfficeContactDetailsRequest): F[ValidatedNel[OfficeContactDetailsErrors, DatabaseSuccess]] = {
 

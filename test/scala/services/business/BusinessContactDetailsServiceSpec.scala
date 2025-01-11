@@ -39,15 +39,5 @@ object BusinessContactDetailsServiceSpec extends SimpleIOSuite {
     } yield expect(result == Left(BusinessContactDetailsNotFound))
   }
 
-  test(".createBusinessContactDetails() - when given a BusinessContactDetails successfully create the ContactDetails") {
-
-    val sampleContactDetails = testCreateBusinessContactDetailsRequest("user_id_1", "business_id_1")
-
-    val mockBusinessContactDetailsRepository = new MockBusinessContactDetailsRepository(Map())
-    val service = BusinessContactDetailsService[IO](mockBusinessContactDetailsRepository)
-
-    for {
-      result <- service.create(sampleContactDetails)
-    } yield expect(result == Valid(CreateSuccess))
-  }
+  
 }

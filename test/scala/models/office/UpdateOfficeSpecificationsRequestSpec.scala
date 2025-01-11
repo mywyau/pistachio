@@ -6,7 +6,7 @@ import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import models.office.adts.*
 import models.office.specifications.OfficeAvailability
-import models.office.specifications.requests.UpdateOfficeSpecificationsRequest
+import models.office.specifications.UpdateOfficeSpecificationsRequest
 import weaver.SimpleIOSuite
 
 import java.time.LocalDateTime

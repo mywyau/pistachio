@@ -75,16 +75,5 @@ object BusinessSpecificationsServiceSpec extends SimpleIOSuite {
       result <- service.getByBusinessId("business_1")
     } yield expect(result == Left(BusinessSpecificationsNotFound))
   }
-
-  test(".create() - when given a BusinessSpecifications, successfully create the BusinessSpecifications in Database") {
-
-    val sampleSpecifications = testCreateBusinessSpecificationsRequest("user_id_1", "business_1")
-
-    val mockBusinessSpecificationsRepository = new MockBusinessSpecificationsRepository(Map())
-    val service = BusinessSpecificationsService[IO](mockBusinessSpecificationsRepository)
-
-    for {
-      result <- service.create(sampleSpecifications)
-    } yield expect(result == Valid(CreateSuccess))
-  }
+  
 }

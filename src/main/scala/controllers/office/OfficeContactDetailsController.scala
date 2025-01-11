@@ -5,8 +5,7 @@ import cats.data.Validated.Valid
 import cats.effect.Concurrent
 import cats.implicits.*
 import io.circe.syntax.EncoderOps
-import models.office.contact_details.requests.CreateOfficeContactDetailsRequest
-import models.office.contact_details.requests.UpdateOfficeContactDetailsRequest
+import models.office.contact_details.UpdateOfficeContactDetailsRequest
 import models.office.contact_details.OfficeContactDetails
 import models.responses.CreatedResponse
 import models.responses.DeletedResponse
@@ -16,7 +15,7 @@ import org.http4s.*
 import org.http4s.circe.*
 import org.http4s.dsl.Http4sDsl
 import org.typelevel.log4cats.Logger
-import services.office.contact_details.OfficeContactDetailsServiceAlgebra
+import services.office.OfficeContactDetailsServiceAlgebra
 
 trait OfficeContactDetailsControllerAlgebra[F[_]] {
   def routes: HttpRoutes[F]
@@ -26,7 +25,6 @@ class OfficeContactDetailsControllerImpl[F[_] : Concurrent](officeContactDetails
     extends Http4sDsl[F]
     with OfficeContactDetailsControllerAlgebra[F] {
 
-  implicit val createOfficeContactDetailsRequestDecoder: EntityDecoder[F, CreateOfficeContactDetailsRequest] = jsonOf[F, CreateOfficeContactDetailsRequest]
   implicit val updateOfficeContactDetailsRequestDecoder: EntityDecoder[F, UpdateOfficeContactDetailsRequest] = jsonOf[F, UpdateOfficeContactDetailsRequest]
 
   val routes: HttpRoutes[F] = HttpRoutes.of[F] {
@@ -40,18 +38,6 @@ class OfficeContactDetailsControllerImpl[F[_] : Concurrent](officeContactDetails
           case Left(error) =>
             val errorResponse = ErrorResponse(error.code, error.errorMessage)
             BadRequest(errorResponse.asJson)
-        }
-
-    case req @ POST -> Root / "business" / "offices" / "contact" / "details" / "create" =>
-      logger.info(s"[OfficeContactDetailsControllerImpl] POST - Creating office listing") *>
-        req.decode[CreateOfficeContactDetailsRequest] { request =>
-          officeContactDetailsService.create(request).flatMap {
-            case Valid(listing) =>
-              logger.info(s"[OfficeContactDetailsControllerImpl] POST - Successfully created a office contact details") *>
-                Created(CreatedResponse("Office contact details created successfully").asJson)
-            case _ =>
-              InternalServerError(ErrorResponse(code = "Code", message = "An error occurred").asJson)
-          }
         }
 
     case req @ PUT -> Root / "business" / "offices" / "contact" / "details" / "update" / officeId =>

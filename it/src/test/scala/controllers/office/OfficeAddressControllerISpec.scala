@@ -24,7 +24,7 @@ import org.http4s.server.{Router, Server}
 import org.typelevel.log4cats.SelfAwareStructuredLogger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 import repositories.office.OfficeAddressRepository
-import services.office.address.OfficeAddressService
+import services.office.OfficeAddressService
 import shared.{HttpClientResource, TransactorResource}
 import weaver.*
 

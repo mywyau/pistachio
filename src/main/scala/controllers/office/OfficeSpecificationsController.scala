@@ -6,7 +6,7 @@ import cats.effect.Concurrent
 import cats.implicits.*
 import io.circe.syntax.EncoderOps
 import models.office.specifications.requests.CreateOfficeSpecificationsRequest
-import models.office.specifications.requests.UpdateOfficeSpecificationsRequest
+import models.office.specifications.UpdateOfficeSpecificationsRequest
 import models.office.specifications.OfficeSpecifications
 import models.responses.CreatedResponse
 import models.responses.DeletedResponse
@@ -40,18 +40,6 @@ class OfficeSpecificationsControllerImpl[F[_] : Concurrent](officeSpecifications
           case Left(error) =>
             val errorResponse = ErrorResponse(error.code, error.errorMessage)
             BadRequest(errorResponse.asJson)
-        }
-
-    case req @ POST -> Root / "business" / "offices" / "specifications" / "create" =>
-      logger.info(s"[OfficeSpecificationsControllerImpl] POST - Creating office listing") *>
-        req.decode[CreateOfficeSpecificationsRequest] { request =>
-          officeSpecificationsService.create(request).flatMap {
-            case Valid(listing) =>
-              logger.info(s"[OfficeSpecificationsControllerImpl] POST - Successfully created a office specifications") *>
-                Created(CreatedResponse("Office specifications created successfully").asJson)
-            case _ =>
-              InternalServerError(ErrorResponse(code = "Code", message = "An error occurred").asJson)
-          }
         }
 
     case req @ PUT -> Root / "business" / "offices" / "specifications" / "update" / officeId =>

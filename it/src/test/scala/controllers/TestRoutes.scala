@@ -26,7 +26,7 @@ import services.business.specifications.BusinessSpecificationsService
 import services.desk_listing.DeskListingService
 import services.office.OfficeSpecificationsService
 import services.office.address.OfficeAddressService
-import services.office.contact_details.OfficeContactDetailsService
+import services.office.OfficeContactDetailsService
 import services.office.office_listing.OfficeListingService
 
 import java.time.LocalDateTime

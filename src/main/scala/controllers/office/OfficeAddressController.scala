@@ -6,7 +6,7 @@ import cats.effect.Concurrent
 import cats.implicits.*
 import io.circe.syntax.EncoderOps
 import models.office.address_details.requests.CreateOfficeAddressRequest
-import models.office.address_details.requests.UpdateOfficeAddressRequest
+import models.office.address_details.UpdateOfficeAddressRequest
 import models.office.address_details.OfficeAddress
 import models.responses.CreatedResponse
 import models.responses.DeletedResponse
@@ -16,7 +16,7 @@ import org.http4s.*
 import org.http4s.circe.*
 import org.http4s.dsl.Http4sDsl
 import org.typelevel.log4cats.Logger
-import services.office.address.OfficeAddressServiceAlgebra
+import services.office.OfficeAddressServiceAlgebra
 
 trait OfficeAddressControllerAlgebra[F[_]] {
   def routes: HttpRoutes[F]
@@ -33,7 +33,7 @@ class OfficeAddressControllerImpl[F[_] : Concurrent : Logger](
 
   val routes: HttpRoutes[F] = HttpRoutes.of[F] {
 
-    case GET -> Root / "business" / "offices" / "address" / officeId =>
+    case GET -> Root / "business" / "offices" / "address" / "details" / officeId =>
       Logger[F].info(s"[OfficeAddressControllerImpl] GET - Office address for officeId: $officeId") *>
         officeAddressService.findByOfficeId(officeId).flatMap {
           case Right(address) =>
@@ -44,22 +44,7 @@ class OfficeAddressControllerImpl[F[_] : Concurrent : Logger](
             BadRequest(errorResponse.asJson)
         }
 
-    case req @ POST -> Root / "business" / "offices" / "address" / "create" =>
-      Logger[F].info(s"[OfficeListingControllerImpl] POST - Creating office listing") *>
-        req.decode[CreateOfficeAddressRequest] { request =>
-          officeAddressService.create(request).flatMap {
-            case Valid(listing) =>
-              Logger[F].info(s"[OfficeListingControllerImpl] POST - Successfully created a office address") *>
-                Created(CreatedResponse("Office address created successfully").asJson)
-            case Invalid(errors) =>
-              Logger[F].warn(s"[OfficeListingControllerImpl] POST - Validation failed for office address creation: ${errors.toList}") *>
-                BadRequest(ErrorResponse(code = "VALIDATION_ERROR", message = errors.toList.mkString(", ")).asJson)
-            case _ =>
-              InternalServerError(ErrorResponse(code = "Code", message = "An error occurred").asJson)
-          }
-        }
-
-    case req @ PUT -> Root / "business" / "offices" / "address" / officeId =>
+    case req @ PUT -> Root / "business" / "offices" / "address" / "details" / "update" / officeId =>
       Logger[F].info(s"[OfficeListingControllerImpl] PUT - Updating office address with ID: $officeId") *>
         req.decode[UpdateOfficeAddressRequest] { request =>
           officeAddressService.update(officeId, request).flatMap {
@@ -75,7 +60,7 @@ class OfficeAddressControllerImpl[F[_] : Concurrent : Logger](
           }
         }
 
-    case DELETE -> Root / "business" / "offices" / "address" / officeId =>
+    case DELETE -> Root / "business" / "offices" / "address" / "details" / officeId =>
       Logger[F].info(s"[OfficeAddressControllerImpl] DELETE - Attempting to delete the office address") *>
         officeAddressService.delete(officeId).flatMap {
           case Valid(address) =>

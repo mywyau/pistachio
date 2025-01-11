@@ -42,18 +42,6 @@ class BusinessSpecificationsControllerImpl[F[_] : Concurrent](businessSpecificat
             BadRequest(errorResponse.asJson)
         }
 
-    case req @ POST -> Root / "business" / "businesses" / "specifications" / "create" =>
-      logger.info(s"[BusinessSpecificationsControllerImpl] POST - Creating business listing") *>
-        req.decode[CreateBusinessSpecificationsRequest] { request =>
-          businessSpecificationsService.create(request).flatMap {
-            case Valid(listing) =>
-              logger.info(s"[BusinessSpecificationsControllerImpl] POST - Successfully created a business specifications") *>
-                Created(CreatedResponse("Business specifications created successfully").asJson)
-            case _ =>
-              InternalServerError(ErrorResponse(code = "Code", message = "An error occurred").asJson)
-          }
-        }
-
     case req @ PUT -> Root / "business" / "businesses" / "specifications" / "update" / businessId =>
       logger.info(s"[BusinessSpecificationsControllerImpl] PUT - Updating business specifications with ID: $businessId") *>
         req.decode[UpdateBusinessSpecificationsRequest] { request =>

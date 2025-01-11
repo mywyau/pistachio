@@ -15,7 +15,7 @@ import models.database.CreateSuccess
 import models.database.DeleteSuccess
 import models.database.NotFoundError
 import models.database.UpdateSuccess
-import models.office.address_details.requests.UpdateOfficeAddressRequest
+import models.office.address_details.UpdateOfficeAddressRequest
 import models.office.adts.OpenPlanOffice
 import models.office.adts.PrivateOffice
 import models.office.specifications.requests.CreateOfficeSpecificationsRequest

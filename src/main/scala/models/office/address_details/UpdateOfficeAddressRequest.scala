@@ -1,4 +1,4 @@
-package models.office.address_details.requests
+package models.office.address_details
 
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.generic.semiauto.deriveEncoder

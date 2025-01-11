@@ -12,7 +12,7 @@ import org.http4s.*
 import org.http4s.circe.*
 import org.http4s.dsl.Http4sDsl
 import org.typelevel.log4cats.Logger
-import services.office.office_listing.OfficeListingServiceAlgebra
+import services.office.OfficeListingServiceAlgebra
 
 trait OfficeListingControllerAlgebra[F[_]] {
   def routes: HttpRoutes[F]

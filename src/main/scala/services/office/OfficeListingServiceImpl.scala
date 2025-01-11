@@ -1,4 +1,4 @@
-package services.office.office_listing
+package services.office
 
 import cats.data.ValidatedNel
 import cats.effect.Concurrent

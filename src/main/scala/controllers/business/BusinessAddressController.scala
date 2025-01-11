@@ -41,18 +41,6 @@ class BusinessAddressControllerImpl[F[_] : Concurrent](businessAddressService: B
             BadRequest(errorResponse.asJson)
         }
 
-    case req @ POST -> Root / "business" / "businesses" / "address" / "details" / "create" =>
-      logger.info(s"[BusinessAddressControllerImpl] POST - Creating business address") *>
-        req.decode[CreateBusinessAddressRequest] { request =>
-          businessAddressService.createAddress(request).flatMap {
-            case Valid(listing) =>
-              logger.info(s"[BusinessAddressControllerImpl] POST - Successfully created a business address") *>
-                Created(CreatedResponse("Business address details created successfully").asJson)
-            case _ =>
-              InternalServerError(ErrorResponse(code = "Code", message = "An error occurred").asJson)
-          }
-        }
-
     case req @ PUT -> Root / "business" / "businesses" / "address" / "details" / "update" / businessId =>
       logger.info(s"[BusinessAddressControllerImpl] PUT - Updating business address with ID: $businessId") *>
         req.decode[UpdateBusinessAddressRequest] { request =>

@@ -10,7 +10,7 @@ import models.database.*
 import models.database.DatabaseErrors
 import models.database.DatabaseSuccess
 import models.office.address_details.requests.CreateOfficeAddressRequest
-import models.office.address_details.requests.UpdateOfficeAddressRequest
+import models.office.address_details.UpdateOfficeAddressRequest
 import models.office.address_details.OfficeAddressPartial
 import repositories.office.OfficeAddressRepositoryAlgebra
 

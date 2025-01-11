@@ -20,8 +20,6 @@ trait BusinessAddressServiceAlgebra[F[_]] {
 
   def getByBusinessId(businessId: String): F[Either[BusinessAddressErrors, BusinessAddressPartial]]
 
-  def createAddress(businessAddressRequest: CreateBusinessAddressRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
-
   def update(businessId: String, request: UpdateBusinessAddressRequest): F[ValidatedNel[BusinessAddressErrors, DatabaseSuccess]]
 
   def delete(businessId: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
@@ -38,9 +36,6 @@ class BusinessAddressServiceImpl[F[_] : Concurrent : NonEmptyParallel : Monad](
       case None =>
         Concurrent[F].pure(Left(BusinessAddressNotFound))
     }
-
-  override def createAddress(businessAddressRequest: CreateBusinessAddressRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
-    businessAddressRepo.create(businessAddressRequest)
 
   override def update(businessId: String, request: UpdateBusinessAddressRequest): F[ValidatedNel[BusinessAddressErrors, DatabaseSuccess]] = {
 

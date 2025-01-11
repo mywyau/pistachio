@@ -20,8 +20,6 @@ trait BusinessSpecificationsServiceAlgebra[F[_]] {
 
   def getByBusinessId(businessId: String): F[Either[BusinessSpecificationsErrors, BusinessSpecificationsPartial]]
 
-  def create(createBusinessSpecificationsRequest: CreateBusinessSpecificationsRequest): F[cats.data.ValidatedNel[BusinessSpecificationsErrors, DatabaseSuccess]]
-
   def update(businessId: String, request: UpdateBusinessSpecificationsRequest): F[ValidatedNel[BusinessSpecificationsErrors, DatabaseSuccess]]
 
   def delete(businessId: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
@@ -40,25 +38,6 @@ class BusinessSpecificationsServiceImpl[F[_] : Concurrent : NonEmptyParallel : M
         case None =>
           Concurrent[F].pure(Left(BusinessSpecificationsNotFound))
       }
-
-  override def create(createBusinessSpecificationsRequest: CreateBusinessSpecificationsRequest): F[ValidatedNel[BusinessSpecificationsErrors, DatabaseSuccess]] = {
-
-    val specificationsCreation =
-      businessSpecificationsRepo.create(createBusinessSpecificationsRequest)
-
-    specificationsCreation
-      .map {
-        case Valid(response) =>
-          Valid(response)
-        case businessSpecificationsResult =>
-          val errors =
-            List(businessSpecificationsResult.toEither.left.getOrElse(Nil))
-          BusinessSpecificationsNotCreated.invalidNel
-      }
-      .handleErrorWith { e =>
-        Concurrent[F].pure(BusinessSpecificationsDatabaseError.invalidNel)
-      }
-  }
 
   override def update(businessId: String, request: UpdateBusinessSpecificationsRequest): F[ValidatedNel[BusinessSpecificationsErrors, DatabaseSuccess]] = {
 

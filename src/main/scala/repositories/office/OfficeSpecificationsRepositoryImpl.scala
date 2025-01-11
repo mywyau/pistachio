@@ -14,16 +14,13 @@ import java.sql.Timestamp
 import java.time.LocalDateTime
 import models.database.*
 import models.office.adts.OfficeType
-import models.office.specifications.requests.CreateOfficeSpecificationsRequest
-import models.office.specifications.requests.UpdateOfficeSpecificationsRequest
+import models.office.specifications.UpdateOfficeSpecificationsRequest
 import models.office.specifications.OfficeSpecifications
 import models.office.specifications.OfficeSpecificationsPartial
 
 trait OfficeSpecificationsRepositoryAlgebra[F[_]] {
 
   def findByOfficeId(officeId: String): F[Option[OfficeSpecificationsPartial]]
-
-  def create(createOfficeSpecificationsRequest: CreateOfficeSpecificationsRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
   def update(officeId: String, request: UpdateOfficeSpecificationsRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
@@ -60,46 +57,6 @@ class OfficeSpecificationsRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
 
     findQuery
   }
-
-  override def create(createOfficeSpecificationsRequest: CreateOfficeSpecificationsRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
-    sql"""
-      INSERT INTO office_specifications (
-        business_id,
-        office_id,
-        office_name,
-        description,
-        office_type,
-        number_of_floors,
-        total_desks,
-        capacity,
-        amenities,
-        availability,
-        rules
-      ) VALUES (
-        ${createOfficeSpecificationsRequest.businessId},
-        ${createOfficeSpecificationsRequest.officeId},
-        ${createOfficeSpecificationsRequest.officeName},
-        ${createOfficeSpecificationsRequest.description},
-        ${createOfficeSpecificationsRequest.officeType},
-        ${createOfficeSpecificationsRequest.numberOfFloors},
-        ${createOfficeSpecificationsRequest.totalDesks},
-        ${createOfficeSpecificationsRequest.capacity},
-        ${createOfficeSpecificationsRequest.amenities},
-        ${createOfficeSpecificationsRequest.availability.asJson.noSpaces}::jsonb,
-        ${createOfficeSpecificationsRequest.rules}
-      )
-    """.update.run.transact(transactor).attempt.map {
-      case Right(affectedRows) if affectedRows == 1 =>
-        CreateSuccess.validNel
-      case Left(e: java.sql.SQLIntegrityConstraintViolationException) =>
-        ConstraintViolation.invalidNel
-      case Left(e: java.sql.SQLException) =>
-        DatabaseError.invalidNel
-      case Left(ex) =>
-        UnknownError(s"Unexpected error: ${ex.getMessage}").invalidNel
-      case _ =>
-        UnexpectedResultError.invalidNel
-    }
 
   override def update(officeId: String, request: UpdateOfficeSpecificationsRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
     sql"""

@@ -42,18 +42,6 @@ class BusinessContactDetailsControllerImpl[F[_] : Concurrent](businessContactDet
             NotFound(errorResponse.asJson)
         }
 
-    case req @ POST -> Root / "business" / "businesses" / "contact" / "details" / "create" =>
-      logger.info(s"[BusinessContactControllerImpl] POST - Creating business listing") *>
-        req.decode[CreateBusinessContactDetailsRequest] { request =>
-          businessContactDetailsService.create(request).flatMap {
-            case Valid(listing) =>
-              logger.info(s"[BusinessContactControllerImpl] POST - Successfully created a business contact details") *>
-                Created(CreatedResponse("Business contact details created successfully").asJson)
-            case _ =>
-              InternalServerError(ErrorResponse(code = "Code", message = "An error occurred").asJson)
-          }
-        }
-
     case req @ PUT -> Root / "business" / "businesses" / "contact" / "details" / "update" / businessId =>
       logger.info(s"[BusinessContactDetailsControllerImpl] PUT - Updating business contactDetails with ID: $businessId") *>
         req.decode[UpdateBusinessContactDetailsRequest] { request =>

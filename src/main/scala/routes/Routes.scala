@@ -32,9 +32,9 @@ import services.business.business_listing.BusinessListingService
 import services.business.contact_details.BusinessContactDetailsService
 import services.business.specifications.BusinessSpecificationsService
 import services.desk_listing.DeskListingService
-import services.office.address.OfficeAddressService
-import services.office.contact_details.OfficeContactDetailsService
-import services.office.office_listing.OfficeListingService
+import services.office.OfficeAddressService
+import services.office.OfficeContactDetailsService
+import services.office.OfficeListingService
 import services.office.OfficeSpecificationsService
 
 object Routes {

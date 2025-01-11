@@ -23,6 +23,7 @@ import models.office.specifications.OfficeSpecifications
 import models.office.specifications.OfficeSpecificationsPartial
 import repositories.office.OfficeListingRepositoryAlgebra
 import weaver.SimpleIOSuite
+import services.office.OfficeListingServiceImpl
 
 object OfficeListingServiceSpec extends SimpleIOSuite {
 

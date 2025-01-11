@@ -1,4 +1,4 @@
-package models.office.specifications.requests
+package models.office.specifications
 
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.generic.semiauto.deriveEncoder

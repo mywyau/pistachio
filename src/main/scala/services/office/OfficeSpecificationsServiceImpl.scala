@@ -11,18 +11,15 @@ import models.database.CreateSuccess
 import models.database.DatabaseErrors
 import models.database.DatabaseSuccess
 import models.office.address_details.errors.OfficeAddressErrors
-import models.office.address_details.requests.UpdateOfficeAddressRequest
+import models.office.address_details.UpdateOfficeAddressRequest
 import models.office.specifications.errors.*
-import models.office.specifications.requests.CreateOfficeSpecificationsRequest
-import models.office.specifications.requests.UpdateOfficeSpecificationsRequest
+import models.office.specifications.UpdateOfficeSpecificationsRequest
 import models.office.specifications.OfficeSpecificationsPartial
 import repositories.office.OfficeSpecificationsRepositoryAlgebra
 
 trait OfficeSpecificationsServiceAlgebra[F[_]] {
 
   def getByOfficeId(officeId: String): F[Either[OfficeSpecificationsErrors, OfficeSpecificationsPartial]]
-
-  def create(createOfficeSpecificationsRequest: CreateOfficeSpecificationsRequest): F[ValidatedNel[OfficeSpecificationsErrors, DatabaseSuccess]]
 
   def update(officeId: String, officeSpecifications: UpdateOfficeSpecificationsRequest): F[ValidatedNel[OfficeSpecificationsErrors, DatabaseSuccess]]
 
@@ -40,25 +37,6 @@ class OfficeSpecificationsServiceImpl[F[_] : Concurrent : NonEmptyParallel : Mon
       case None =>
         Concurrent[F].pure(Left(OfficeSpecificationsNotFound))
     }
-
-  override def create(createOfficeSpecificationsRequest: CreateOfficeSpecificationsRequest): F[ValidatedNel[OfficeSpecificationsErrors, DatabaseSuccess]] = {
-
-    val specificationsCreation =
-      officeSpecificationsRepo.create(createOfficeSpecificationsRequest)
-
-    specificationsCreation
-      .map {
-        case Validated.Valid(i) =>
-          Valid(i)
-        case officeSpecificationsResult =>
-          val errors =
-            List(officeSpecificationsResult.toEither.left.getOrElse(Nil))
-          OfficeSpecificationsNotCreated.invalidNel
-      }
-      .handleErrorWith { e =>
-        Concurrent[F].pure(OfficeSpecificationsDatabaseError.invalidNel)
-      }
-  }
 
   override def update(officeId: String, request: UpdateOfficeSpecificationsRequest): F[ValidatedNel[OfficeSpecificationsErrors, DatabaseSuccess]] = {
 

@@ -11,15 +11,32 @@ import models.database.DeleteSuccess
 import models.database.UpdateSuccess
 import models.office.address_details.errors.OfficeAddressNotFound
 import models.office.address_details.requests.CreateOfficeAddressRequest
-import models.office.address_details.requests.UpdateOfficeAddressRequest
 import models.office.address_details.OfficeAddress
 import models.office.address_details.OfficeAddressPartial
+import models.office.address_details.UpdateOfficeAddressRequest
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 import org.typelevel.log4cats.SelfAwareStructuredLogger
 import repositories.office.OfficeAddressRepositoryAlgebra
-import services.office.address.OfficeAddressService
-import services.office.address.OfficeAddressServiceImpl
+import services.office.OfficeAddressService
+import services.office.OfficeAddressServiceImpl
 import weaver.SimpleIOSuite
+
+class MockOfficeAddressRepository(
+  existingOfficeAddress: Map[String, OfficeAddressPartial] = Map.empty
+) extends OfficeAddressRepositoryAlgebra[IO] {
+
+  def showAllUsers: IO[Map[String, OfficeAddressPartial]] = IO.pure(existingOfficeAddress)
+
+  override def deleteAllByBusinessId(businessId: String): IO[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = IO(Valid(DeleteSuccess))
+
+  override def findByOfficeId(officeId: String): IO[Option[OfficeAddressPartial]] = IO.pure(existingOfficeAddress.get(officeId))
+
+  override def create(officeAddressRequest: CreateOfficeAddressRequest): IO[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = IO(Valid(CreateSuccess))
+
+  override def update(officeId: String, request: UpdateOfficeAddressRequest): IO[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = IO(Valid(UpdateSuccess))
+
+  override def delete(officeId: String): IO[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = IO(Valid(DeleteSuccess))
+}
 
 object OfficeAddressServiceSpec extends SimpleIOSuite {
 
@@ -55,22 +72,6 @@ object OfficeAddressServiceSpec extends SimpleIOSuite {
       longitude = Some(-100.1)
     )
 
-  class MockOfficeAddressRepository(
-    existingOfficeAddress: Map[String, OfficeAddressPartial] = Map.empty
-  ) extends OfficeAddressRepositoryAlgebra[IO] {
-
-    def showAllUsers: IO[Map[String, OfficeAddressPartial]] = IO.pure(existingOfficeAddress)
-
-    override def deleteAllByBusinessId(businessId: String): IO[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = IO(Valid(DeleteSuccess))
-
-    override def findByOfficeId(officeId: String): IO[Option[OfficeAddressPartial]] = IO.pure(existingOfficeAddress.get(officeId))
-    override def create(officeAddressRequest: CreateOfficeAddressRequest): IO[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = IO(Valid(CreateSuccess))
-
-    override def update(officeId: String, request: UpdateOfficeAddressRequest): IO[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = IO(Valid(UpdateSuccess))
-
-    override def delete(officeId: String): IO[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = IO(Valid(DeleteSuccess))
-  }
-
   test(".getAddressByBusinessId() - when there is an existing user address details given a user_id should return the correct address details - Right(address)") {
 
     val existingAddressForUser = testOfficeAddressPartial("business_1", "office_1")
@@ -95,15 +96,4 @@ object OfficeAddressServiceSpec extends SimpleIOSuite {
     } yield expect(result == Left(OfficeAddressNotFound))
   }
 
-  test(".createOfficeAddress() - when given a OfficeAddress successfully create the address") {
-
-    val sampleAddress = testAddressRequest("business_1", "office_1")
-
-    val mockOfficeAddressRepository = new MockOfficeAddressRepository(Map())
-    val service = OfficeAddressService(mockOfficeAddressRepository)
-
-    for {
-      result <- service.create(sampleAddress)
-    } yield expect(result == Valid(CreateSuccess))
-  }
 }

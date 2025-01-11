@@ -21,8 +21,6 @@ trait BusinessContactDetailsServiceAlgebra[F[_]] {
 
   def getByBusinessId(businessId: String): F[Either[BusinessContactDetailsErrors, BusinessContactDetailsPartial]]
 
-  def create(businessContactDetails: CreateBusinessContactDetailsRequest): F[ValidatedNel[BusinessContactDetailsErrors, DatabaseSuccess]]
-
   def update(businessId: String, request: UpdateBusinessContactDetailsRequest): F[ValidatedNel[BusinessContactDetailsErrors, DatabaseSuccess]]
 
   def delete(businessId: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
@@ -40,25 +38,6 @@ class BusinessContactDetailsServiceImpl[F[_] : Concurrent : NonEmptyParallel : M
       case None =>
         Concurrent[F].pure(Left(BusinessContactDetailsNotFound))
     }
-
-  override def create(businessContactDetails: CreateBusinessContactDetailsRequest): F[ValidatedNel[BusinessContactDetailsErrors, DatabaseSuccess]] = {
-
-    val contactDetailsCreation: F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
-      businessContactDetailsRepo.create(businessContactDetails)
-
-    contactDetailsCreation
-      .map {
-        case Validated.Valid(result) =>
-          Valid(result)
-        case contactDetailsResult =>
-          val errors =
-            List(contactDetailsResult.toEither.left.getOrElse(Nil))
-          BusinessContactDetailsNotCreated.invalidNel
-      }
-      .handleErrorWith { e =>
-        Concurrent[F].pure(BusinessContactDetailsDatabaseError.invalidNel)
-      }
-  }
 
   override def update(businessId: String, request: UpdateBusinessContactDetailsRequest): F[ValidatedNel[BusinessContactDetailsErrors, DatabaseSuccess]] = {
 

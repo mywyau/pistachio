@@ -11,7 +11,7 @@ import models.database.DeleteSuccess
 import models.database.UpdateSuccess
 import models.office.address_details.OfficeAddress
 import models.office.address_details.requests.CreateOfficeAddressRequest
-import models.office.address_details.requests.UpdateOfficeAddressRequest
+import models.office.address_details.UpdateOfficeAddressRequest
 import models.office.office_listing.requests.OfficeListingRequest
 import models.office.specifications.OfficeAvailability
 import repositories.office.OfficeAddressRepositoryImpl

@@ -36,16 +36,5 @@ object BusinessAddressServiceSpec extends SimpleIOSuite {
       result <- service.getByBusinessId("businessId_1")
     } yield expect(result == Left(BusinessAddressNotFound))
   }
-
-  test(".created() - when given a BusinessAddress successfully create the address") {
-
-    val testAddressRequest = testBusinessAddressRequest("userId_1", "businessId_1")
-
-    val mockBusinessAddressRepository = new MockBusinessAddressRepository(Map())
-    val service = BusinessAddressService(mockBusinessAddressRepository)
-
-    for {
-      result <- service.createAddress(testAddressRequest)
-    } yield expect(result == Valid(CreateSuccess))
-  }
+  
 }
