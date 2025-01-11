@@ -17,6 +17,7 @@ import java.sql.Timestamp
 import java.time.LocalDateTime
 import models.database.*
 import models.desk_listing.DeskListingPartial
+import models.desk_listing.requests.DeskListingRequest
 import models.desk_listing.DeskType
 
 trait DeskListingRepositoryAlgebra[F[_]] {
@@ -25,9 +26,9 @@ trait DeskListingRepositoryAlgebra[F[_]] {
 
   def findByOfficeId(officeId: String): F[List[DeskListingPartial]]
 
-  def create(request: DeskListingPartial): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
+  def create(request: DeskListingRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
-  def update(deskId: String, request: DeskListingPartial): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
+  def update(deskId: String, request: DeskListingRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
   def delete(deskId: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
@@ -60,7 +61,7 @@ class DeskListingRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transacto
     findQuery
   }
 
-    override def findByOfficeId(officeId: String): F[List[DeskListingPartial]] = {
+  override def findByOfficeId(officeId: String): F[List[DeskListingPartial]] = {
     val findQuery: F[List[DeskListingPartial]] =
       sql"""
          SELECT 
@@ -117,9 +118,9 @@ class DeskListingRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transacto
     }
 
   override def update(
-                      officeId: String,
-                      request: DeskListingPartial
-                      ): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
+    officeId: String,
+    request: DeskListingPartial
+  ): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
     sql"""
       UPDATE desk_listings
       SET

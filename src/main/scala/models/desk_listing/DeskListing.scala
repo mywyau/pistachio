@@ -5,8 +5,8 @@ import io.circe.generic.semiauto.deriveEncoder
 import io.circe.Decoder
 import io.circe.Encoder
 import java.time.LocalDateTime
-import models.business.adts.DeskType
-import models.business.desk_listing.Availability
+import models.desk_listing.DeskType
+import models.desk_listing.Availability
 
 case class DeskListing(
   id: Option[Int],
