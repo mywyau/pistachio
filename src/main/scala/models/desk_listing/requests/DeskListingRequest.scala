@@ -12,13 +12,13 @@ import models.desk_listing.DeskType
 case class DeskListingRequest(
   deskName: String,
   description: Option[String],
-  desk_type: DeskType,
+  deskType: DeskType,
   quantity: Int,
-  price_per_hour: BigDecimal,
-  price_per_day: BigDecimal,
-  rules: Option[String],
+  pricePerHour: BigDecimal,
+  pricePerDay: BigDecimal,
   features: List[String], 
-  availability: Availability
+  availability: Availability,
+  rules: Option[String]
 )
 
 object DeskListingRequest {

@@ -53,7 +53,7 @@ class DeskListingRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transacto
           price_per_day,
           features,
           availability,
-          rules,
+          rules
          FROM desk_listings
          WHERE desk_id = $deskId
        """.query[DeskListingPartial].option.transact(transactor)
@@ -73,7 +73,7 @@ class DeskListingRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transacto
           price_per_day,
           features,
           availability,
-          rules,
+          rules
          FROM desk_listings
          WHERE office_id = $officeId
        """.query[DeskListingPartial].to[List].transact(transactor)
@@ -81,7 +81,7 @@ class DeskListingRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transacto
     findQuery
   }
 
-  override def create(request: DeskListingPartial): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
+  override def create(request: DeskListingRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
     sql"""
       INSERT INTO desk_listings (
           desk_name,
@@ -119,7 +119,7 @@ class DeskListingRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transacto
 
   override def update(
     officeId: String,
-    request: DeskListingPartial
+    request: DeskListingRequest
   ): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
     sql"""
       UPDATE desk_listings
