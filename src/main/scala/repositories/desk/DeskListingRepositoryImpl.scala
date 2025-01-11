@@ -92,7 +92,7 @@ class DeskListingRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transacto
           price_per_day,
           features,
           availability,
-          rules,
+          rules
       ) VALUES (
         ${request.deskName},
         ${request.description},
