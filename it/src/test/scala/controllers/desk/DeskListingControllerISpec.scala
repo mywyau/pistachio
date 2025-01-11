@@ -1,29 +1,31 @@
 package controllers.desk
 
 import cats.effect.*
-import com.comcast.ip4s.{ipv4, port}
+import com.comcast.ip4s.ipv4
+import com.comcast.ip4s.port
+import controllers.constants.DeskListingControllerConstants.testDeskListingRequest
 import controllers.desk_listing.DeskListingController
 import controllers.fragments.DeskListingControllerFragments.*
 import doobie.implicits.*
 import doobie.util.transactor.Transactor
 import io.circe.syntax.*
+import java.time.LocalDateTime
 import models.responses.CreatedResponse
 import org.http4s.*
-import org.http4s.Method.*
-import org.http4s.circe.CirceEntityCodec.circeEntityDecoder
 import org.http4s.circe.jsonEncoder
+import org.http4s.circe.CirceEntityCodec.circeEntityDecoder
 import org.http4s.ember.server.EmberServerBuilder
 import org.http4s.implicits.*
-import org.http4s.server.{Router, Server}
-import org.typelevel.log4cats.SelfAwareStructuredLogger
+import org.http4s.server.Router
+import org.http4s.server.Server
+import org.http4s.Method.*
 import org.typelevel.log4cats.slf4j.Slf4jLogger
+import org.typelevel.log4cats.SelfAwareStructuredLogger
 import repositories.desk.DeskListingRepositoryImpl
 import services.desk_listing.DeskListingServiceImpl
-import shared.{HttpClientResource, TransactorResource}
+import shared.HttpClientResource
+import shared.TransactorResource
 import weaver.*
-
-import java.time.LocalDateTime
-import controllers.constants.DeskListingControllerConstants.testDeskListingRequest
 
 class DeskListingControllerISpec(global: GlobalRead) extends IOSuite {
 
@@ -39,7 +41,7 @@ class DeskListingControllerISpec(global: GlobalRead) extends IOSuite {
       .withHttpApp(router.orNotFound)
       .build
 
-  def sharedResource: Resource[IO, Res] = {
+  def sharedResource: Resource[IO, Res] =
     for {
       transactor <- global.getOrFailR[TransactorResource]()
       _ <- Resource.eval(
@@ -49,7 +51,6 @@ class DeskListingControllerISpec(global: GlobalRead) extends IOSuite {
       )
       client <- global.getOrFailR[HttpClientResource]()
     } yield (transactor, client)
-  }
 
   test(
     "GET - /pistachio/business/desk/listing/create - should generate the user profile associated with the user"
@@ -58,9 +59,8 @@ class DeskListingControllerISpec(global: GlobalRead) extends IOSuite {
     val transactor = sharedResources._1.xa
     val client = sharedResources._2.client
 
-
     val request =
-      Request[IO](POST, uri"http://127.0.0.1:9999/pistachio/business/desk/listing/create")
+      Request[IO](POST, uri"http://127.0.0.1:9999/pistachio/business/desk/listing/details/create")
         .withEntity(testDeskListingRequest.asJson)
 
     val expectedDeskListing = CreatedResponse("Business Desk created successfully")
@@ -69,7 +69,7 @@ class DeskListingControllerISpec(global: GlobalRead) extends IOSuite {
       response.as[CreatedResponse].map { body =>
         expect.all(
           response.status == Status.Created,
-          body == expectedDeskListing
+          body == CreatedResponse("Business Desk created successfully")
         )
       }
     }
