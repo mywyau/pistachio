@@ -29,6 +29,27 @@ class DeskListingControllerImpl[F[_] : Concurrent : Logger](
 
   override val routes: HttpRoutes[F] = HttpRoutes.of[F] {
 
+    case req @ GET -> Root / "business" / "desk" / "listing" / "details" / "find" / deskId =>
+      Logger[F].info(s"[DeskListingControllerImpl] GET - Attempting to retrieve a desk listing for $deskId") *>
+        deskService.findByDeskId(deskId).flatMap {
+          case Some(desk) =>
+            Logger[F].info(s"[DeskListingControllerImpl] GET - Successfully retrieved a desk listing for $deskId") *>
+              Ok(desk.asJson)
+          case _ =>
+            InternalServerError(ErrorResponse("Code", "An error occurred").asJson)
+        }
+
+    case req @ GET -> Root / "business" / "desk" / "listing" / "details" / "find" / "all" / officeId =>
+      Logger[F].info(s"[DeskListingControllerImpl] GET - Attempting to retrieve all desk listings for $officeId") *>
+        deskService.findByOfficeId(officeId).flatMap {
+          case Nil =>
+            InternalServerError(ErrorResponse("Code", "An error occurred").asJson)
+          case desks =>
+            Logger[F].info(s"[DeskListingControllerImpl] GET - Successfully retrieved all desk listings for $officeId") *>
+              Ok(desks.asJson)
+
+        }
+
     case req @ POST -> Root / "business" / "desk" / "listing" / "details" / "create" =>
       Logger[F].info(s"[DeskListingControllerImpl] POST - Creating desk listing") *>
         req.decode[DeskListingRequest] { request =>
