@@ -121,7 +121,7 @@ class DeskListingRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transacto
     }
 
   override def update(
-    officeId: String,
+    deskId: String,
     request: DeskListingRequest
   ): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
     sql"""
@@ -135,8 +135,8 @@ class DeskListingRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transacto
         price_per_day = ${request.pricePerDay},
         features = ${request.features},
         availability = ${request.availability.asJson.noSpaces}::jsonb,
-        rules = ${request.rules},
-      WHERE office_id = ${officeId}
+        rules = ${request.rules}
+      WHERE desk_id = ${deskId}
     """.update.run
       .transact(transactor)
       .attempt

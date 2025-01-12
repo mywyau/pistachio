@@ -33,7 +33,7 @@ import shared.HttpClientResource
 import shared.TransactorResource
 import weaver.*
 
-class DeleteAllDeskListingControllerISpec(global: GlobalRead) extends IOSuite {
+class DeskListingControllerDeleteAllISpec(global: GlobalRead) extends IOSuite {
 
   implicit val testLogger: SelfAwareStructuredLogger[IO] = Slf4jLogger.getLogger[IO]
 

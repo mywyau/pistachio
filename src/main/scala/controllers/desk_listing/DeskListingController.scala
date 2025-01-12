@@ -63,21 +63,21 @@ class DeskListingControllerImpl[F[_] : Concurrent : Logger](
         }
 
     case req @ PUT -> Root / "business" / "desk" / "listing" / "details" / "update" / deskId =>
-      Logger[F].info(s"[DeskListingControllerImpl] POST - Creating desk listing") *>
+      Logger[F].info(s"[DeskListingControllerImpl] POST - Attempting to update desk listing") *>
         req.decode[DeskListingRequest] { request =>
           deskService.update(deskId, request).flatMap {
             case Valid(response) =>
-              Logger[F].info(s"[DeskListingControllerImpl] POST - Successfully created a desk listing") *>
+              Logger[F].info(s"[DeskListingControllerImpl] POST - Successfully updating a desk listing") *>
                 Ok(UpdatedResponse(response.toString, "desk listing updated successfully").asJson)
             case _ =>
               InternalServerError(ErrorResponse("Code", "An error occurred").asJson)
           }
         }
     case DELETE -> Root / "business" / "desk" / "listing" / "details" / "delete" / deskId =>
-      Logger[F].info(s"[DeskListingControllerImpl] DELETE - Attempting to delete all desk listing for desk id: $deskId") *>
+      Logger[F].info(s"[DeskListingControllerImpl] DELETE - Attempting to delete desk listing for desk id: $deskId") *>
         deskService.delete(deskId).flatMap {
           case Valid(_) =>
-            Logger[F].info(s"[DeskListingControllerImpl] POST - Successfully deleted desk listing for desk id: $deskId") *>
+            Logger[F].info(s"[DeskListingControllerImpl] DELETE - Successfully deleted desk listing for desk id: $deskId") *>
               Ok(DeletedResponse("Successfully deleted desk listing").asJson)
           case _ =>
             InternalServerError(ErrorResponse("Code", "An error occurred").asJson)
