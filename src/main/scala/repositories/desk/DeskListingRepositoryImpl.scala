@@ -16,8 +16,8 @@ import io.circe.syntax.*
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import models.database.*
-import models.desk_listing.DeskListingPartial
 import models.desk_listing.requests.DeskListingRequest
+import models.desk_listing.DeskListingPartial
 import models.desk_listing.DeskType
 
 trait DeskListingRepositoryAlgebra[F[_]] {
@@ -76,7 +76,10 @@ class DeskListingRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transacto
           rules
          FROM desk_listings
          WHERE office_id = $officeId
-       """.query[DeskListingPartial].to[List].transact(transactor)
+       """
+        .query[DeskListingPartial]
+        .to[List]
+        .transact(transactor)
 
     findQuery
   }

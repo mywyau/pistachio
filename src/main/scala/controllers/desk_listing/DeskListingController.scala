@@ -43,7 +43,7 @@ class DeskListingControllerImpl[F[_] : Concurrent : Logger](
       Logger[F].info(s"[DeskListingControllerImpl] GET - Attempting to retrieve all desk listings for $officeId") *>
         deskService.findByOfficeId(officeId).flatMap {
           case Nil =>
-            InternalServerError(ErrorResponse("Code", "An error occurred").asJson)
+            InternalServerError(ErrorResponse("Code", "An error occurred did not find any desks for given office id").asJson)
           case desks =>
             Logger[F].info(s"[DeskListingControllerImpl] GET - Successfully retrieved all desk listings for $officeId") *>
               Ok(desks.asJson)
