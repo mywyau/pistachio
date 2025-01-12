@@ -6,12 +6,12 @@ import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import java.time.LocalDateTime
 import java.time.LocalTime
-import models.desk_listing.requests.DeskListingRequest
 import models.desk_listing.Availability
 import models.desk_listing.PrivateDesk
 import weaver.SimpleIOSuite
+import models.desk_listing.DeskListingPartial
 
-object DeskListingRequestSpec extends SimpleIOSuite {
+object DeskListingPartialSpec extends SimpleIOSuite {
 
   val availability: Availability =
     Availability(
@@ -20,8 +20,8 @@ object DeskListingRequestSpec extends SimpleIOSuite {
       endTime = LocalTime.of(10, 30, 0)
     )
 
-  val sampleDeskListingRequest: DeskListingRequest =
-    DeskListingRequest(
+  val sampleDeskListingPartial: DeskListingPartial =
+    DeskListingPartial(
       deskName = "Private Office Desk",
       description = Some("A comfortable desk in a private office space with all amenities included."),
       deskType = PrivateDesk,
@@ -33,9 +33,9 @@ object DeskListingRequestSpec extends SimpleIOSuite {
       availability = availability
     )
 
-  test("DeskListingRequest model encodes correctly to JSON") {
+  test("DeskListingPartial model encodes correctly to JSON") {
 
-    val jsonResult = sampleDeskListingRequest.asJson
+    val jsonResult = sampleDeskListingPartial.asJson
 
     val expectedJson =
       """
