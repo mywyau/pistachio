@@ -3,17 +3,17 @@ package controllers.desk
 import cats.effect.*
 import controllers.ControllerISpecBase
 import controllers.constants.DeskListingControllerConstants.testDeskListingRequest
-import controllers.desk_listing.DeskListingController
+import controllers.desk.DeskListingController
 import controllers.fragments.DeskListingControllerFragments.*
 import doobie.implicits.*
 import doobie.util.transactor.Transactor
 import io.circe.syntax.*
 import models.database.CreateSuccess
 import models.database.UpdateSuccess
-import models.desk_listing.Availability
-import models.desk_listing.DeskListingPartial
-import models.desk_listing.PrivateDesk
-import models.desk_listing.requests.DeskListingRequest
+import models.desk.deskListing.Availability
+import models.desk.deskListing.DeskListingPartial
+import models.desk.deskListing.PrivateDesk
+import models.desk.deskListing.requests.UpdateDeskListingRequest
 import models.responses.CreatedResponse
 import models.responses.DeletedResponse
 import models.responses.UpdatedResponse
@@ -23,7 +23,7 @@ import org.http4s.circe.CirceEntityCodec.circeEntityDecoder
 import org.http4s.circe.jsonEncoder
 import org.http4s.implicits.*
 import repositories.desk.DeskListingRepositoryImpl
-import services.desk_listing.DeskListingServiceImpl
+import services.desk.DeskListingServiceImpl
 import shared.HttpClientResource
 import shared.TransactorResource
 import weaver.*
@@ -60,8 +60,6 @@ class DeskListingControllerISpec(global: GlobalRead) extends IOSuite with Contro
         description = Some("A shared desk in a collaborative space with easy access to team members."),
         deskType = PrivateDesk,
         quantity = 3,
-        pricePerHour = 18.0,
-        pricePerDay = 90.0,
         features = List("Wi-Fi", "Power Outlets", "Whiteboard", "Projector"),
         availability = Availability(
           List("Monday", "Wednesday", "Friday"),
@@ -89,13 +87,11 @@ class DeskListingControllerISpec(global: GlobalRead) extends IOSuite with Contro
     val client = sharedResources._2.client
 
     val updateRequest =
-      DeskListingRequest(
+      UpdateDeskListingRequest(
         deskName = "Updated desk 1",
         description = Some("Updated desk listing"),
         deskType = PrivateDesk,
-        quantity = 5,
-        pricePerHour = 20.0,
-        pricePerDay = 100.0,
+        quantity = 5, 
         features = List("Wi-Fi", "Power Outlets", "Ergonomic Chair", "Desk Lamp"),
         availability = Availability(
           List("Monday", "Tuesday", "Wednesday"),

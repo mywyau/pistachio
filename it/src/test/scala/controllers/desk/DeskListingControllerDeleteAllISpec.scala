@@ -5,14 +5,14 @@ import com.comcast.ip4s.ipv4
 import com.comcast.ip4s.port
 import controllers.ControllerISpecBase
 import controllers.constants.DeskListingControllerConstants.testDeskListingRequest
-import controllers.desk_listing.DeskListingController
+import controllers.desk.DeskListingController
 import controllers.fragments.DeskListingControllerFragments.*
 import doobie.implicits.*
 import doobie.util.transactor.Transactor
 import io.circe.syntax.*
-import models.desk_listing.Availability
-import models.desk_listing.DeskListingPartial
-import models.desk_listing.PrivateDesk
+import models.desk.deskListing.Availability
+import models.desk.deskListing.DeskListingPartial
+import models.desk.deskListing.PrivateDesk
 import models.responses.CreatedResponse
 import models.responses.DeletedResponse
 import models.responses.ErrorResponse
@@ -27,7 +27,7 @@ import org.http4s.server.Server
 import org.typelevel.log4cats.SelfAwareStructuredLogger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 import repositories.desk.DeskListingRepositoryImpl
-import services.desk_listing.DeskListingServiceImpl
+import services.desk.DeskListingServiceImpl
 import shared.HttpClientResource
 import shared.TransactorResource
 import weaver.*

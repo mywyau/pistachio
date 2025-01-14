@@ -1,11 +1,11 @@
-package controllers.desk_listing
+package controllers.desk
 
 import cats.data.Validated.Valid
 import cats.effect.Concurrent
 import cats.effect.IO
 import cats.implicits.*
 import io.circe.syntax.*
-import models.desk_listing.requests.DeskListingRequest
+import models.desk.deskListing.requests.InitiateDeskListingRequest
 import models.responses.CreatedResponse
 import models.responses.DeletedResponse
 import models.responses.ErrorResponse
@@ -14,7 +14,8 @@ import org.http4s.*
 import org.http4s.circe.*
 import org.http4s.dsl.Http4sDsl
 import org.typelevel.log4cats.Logger
-import services.desk_listing.DeskListingServiceAlgebra
+import services.desk.DeskListingServiceAlgebra
+import models.database.CreateSuccess
 
 trait DeskListingController[F[_]] {
   def routes: HttpRoutes[F]
@@ -25,7 +26,7 @@ class DeskListingControllerImpl[F[_] : Concurrent : Logger](
 ) extends DeskListingController[F]
     with Http4sDsl[F] {
 
-  implicit val deskListingRequestDecoder: EntityDecoder[F, DeskListingRequest] = jsonOf[F, DeskListingRequest]
+  implicit val initiateRequestDecoder: EntityDecoder[F, InitiateDeskListingRequest] = jsonOf[F, InitiateDeskListingRequest]
 
   override val routes: HttpRoutes[F] = HttpRoutes.of[F] {
 
@@ -39,39 +40,29 @@ class DeskListingControllerImpl[F[_] : Concurrent : Logger](
             InternalServerError(ErrorResponse("Code", "An error occurred").asJson)
         }
 
-    case req @ GET -> Root / "business" / "desk" / "listing" / "details" / "find" / "all" / officeId =>
-      Logger[F].info(s"[DeskListingControllerImpl] GET - Attempting to retrieve all desk listings for $officeId") *>
-        deskService.findByOfficeId(officeId).flatMap {
+    case GET -> Root / "business" / "desk" / "listing" / "cards" / "find" / "all" / officeId =>
+      Logger[F].info(s"[OfficeListingControllerImpl] GET - Find all desk listing card details") *>
+        deskService.findAllListingCardDetails(officeId).flatMap {
           case Nil =>
-            BadRequest(ErrorResponse("Code", "An error occurred did not find any desks for given office id").asJson)
-          case desks =>
-            Logger[F].info(s"[DeskListingControllerImpl] GET - Successfully retrieved all desk listings for $officeId") *>
-              Ok(desks.asJson)
+            Logger[F].info(s"[OfficeListingControllerImpl] GET - No desk listing card details found, returning empty list") *>
+              Ok(List.empty.asJson)
+          case listingCards =>
+            Logger[F].info(s"[OfficeListingControllerImpl] GET - Successfully retrieved all desk listing card details") *>
+              Ok(listingCards.asJson)
         }
 
-    case req @ POST -> Root / "business" / "desk" / "listing" / "details" / "create" =>
-      Logger[F].info(s"[DeskListingControllerImpl] POST - Creating desk listing") *>
-        req.decode[DeskListingRequest] { request =>
-          deskService.create(request).flatMap {
-            case Valid(response) =>
-              Logger[F].info(s"[DeskListingControllerImpl] POST - Successfully created a desk listing") *>
-                Created(CreatedResponse(response.toString, "Business Desk created successfully").asJson)
+    case req @ POST -> Root / "business" / "desk" / "listing" / "initiate" =>
+      Logger[F].info(s"[DeskListingControllerImpl] POST - Initiating desk listing") *>
+        req.decode[InitiateDeskListingRequest] { request =>
+          deskService.initiate(request).flatMap {
+            case Valid(deskListingCard) =>
+              Logger[F].info(s"[DeskListingControllerImpl] POST - Successfully created an initial desk listing") *>
+                Created(CreatedResponse(CreateSuccess.toString, "Successfully created an initial desk listing").asJson)
             case _ =>
-              InternalServerError(ErrorResponse("Code", "An error occurred").asJson)
+              InternalServerError(ErrorResponse(code = "CreateFailure", message = "Could not create DeskListingCard").asJson)
           }
         }
 
-    case req @ PUT -> Root / "business" / "desk" / "listing" / "details" / "update" / deskId =>
-      Logger[F].info(s"[DeskListingControllerImpl] POST - Attempting to update desk listing") *>
-        req.decode[DeskListingRequest] { request =>
-          deskService.update(deskId, request).flatMap {
-            case Valid(response) =>
-              Logger[F].info(s"[DeskListingControllerImpl] POST - Successfully updating a desk listing") *>
-                Ok(UpdatedResponse(response.toString, "desk listing updated successfully").asJson)
-            case _ =>
-              InternalServerError(ErrorResponse("Code", "An error occurred").asJson)
-          }
-        }
     case DELETE -> Root / "business" / "desk" / "listing" / "details" / "delete" / deskId =>
       Logger[F].info(s"[DeskListingControllerImpl] DELETE - Attempting to delete desk listing for desk id: $deskId") *>
         deskService.delete(deskId).flatMap {

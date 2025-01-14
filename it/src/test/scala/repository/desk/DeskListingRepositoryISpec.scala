@@ -8,12 +8,12 @@ import doobie.*
 import doobie.implicits.*
 import models.database.CreateSuccess
 import models.database.DeleteSuccess
-import models.desk_listing.Availability
-import models.desk_listing.DeskListingPartial
-import models.desk_listing.PrivateDesk
-import models.desk_listing.requests.DeskListingRequest
+import models.desk.deskListing.Availability
+import models.desk.deskListing.DeskListingPartial
+import models.desk.deskListing.PrivateDesk
+import models.desk.deskListing.requests.UpdateDeskListingRequest
 import repositories.desk.DeskListingRepositoryImpl
-import repository.fragments.DeskListingRepoFragments.*
+import repository.fragments.desk.DeskListingRepoFragments.*
 import shared.TransactorResource
 import weaver.GlobalRead
 import weaver.IOSuite
@@ -58,8 +58,6 @@ class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
         description = Some("A quiet, private desk perfect for focused work with a comfortable chair and good lighting."),
         deskType = PrivateDesk,
         quantity = 5,
-        pricePerHour = 20.00,
-        pricePerDay = 100.00,
         features = List("Wi-Fi", "Power Outlets", "Ergonomic Chair", "Desk Lamp"),
         availability = Availability(
           days = List("Monday", "Tuesday", "Wednesday"),
@@ -82,8 +80,6 @@ class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
         description = Some("A quiet, private desk perfect for focused work with a comfortable chair and good lighting."),
         deskType = PrivateDesk,
         quantity = 5,
-        pricePerHour = 20.00,
-        pricePerDay = 100.00,
         features = List("Wi-Fi", "Power Outlets", "Ergonomic Chair", "Desk Lamp"),
         availability = Availability(
           days = List("Monday", "Tuesday", "Wednesday"),
@@ -101,13 +97,11 @@ class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
   test(".create() - should return CreateSuccess for successfuly creating a desk listing") { businessDeskRepo =>
 
     val createRequest =
-      DeskListingRequest(
+      UpdateDeskListingRequest(
         deskName = "Mikey Desk 1",
         description = Some("A quiet, private desk perfect for focused work with a comfortable chair and good lighting."),
         deskType = PrivateDesk,
         quantity = 5,
-        pricePerHour = 20.00,
-        pricePerDay = 100.00,
         features = List("Wi-Fi", "Power Outlets", "Ergonomic Chair", "Desk Lamp"),
         availability = Availability(
           days = List("Monday", "Tuesday", "Wednesday"),

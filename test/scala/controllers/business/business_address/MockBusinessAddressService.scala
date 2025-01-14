@@ -1,16 +1,14 @@
-package controllers.business.business_address.mocks
+package controllers.business.business_address
 
 import cats.data.Validated.Valid
 import cats.data.ValidatedNel
 import cats.effect.IO
+import models.business.address.BusinessAddressPartial
 import models.business.address.errors.BusinessAddressErrors
 import models.business.address.errors.BusinessUserNotFound
 import models.business.address.requests.CreateBusinessAddressRequest
 import models.business.address.requests.UpdateBusinessAddressRequest
-import models.business.address.BusinessAddressPartial
-import models.database.CreateSuccess
-import models.database.DatabaseErrors
-import models.database.DatabaseSuccess
+import models.database.*
 import services.business.BusinessAddressServiceAlgebra
 
 class MockBusinessAddressService(userAddressData: Map[String, BusinessAddressPartial]) extends BusinessAddressServiceAlgebra[IO] {
@@ -24,7 +22,9 @@ class MockBusinessAddressService(userAddressData: Map[String, BusinessAddressPar
   override def createAddress(request: CreateBusinessAddressRequest): IO[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
     IO.pure(Valid(CreateSuccess))
 
-  override def update(businessId: String, request: UpdateBusinessAddressRequest): IO[ValidatedNel[BusinessAddressErrors, DatabaseSuccess]] = ???
+  override def update(businessId: String, request: UpdateBusinessAddressRequest): IO[ValidatedNel[BusinessAddressErrors, DatabaseSuccess]] =
+    IO.pure(Valid(UpdateSuccess))
 
-  override def delete(businessId: String): IO[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = ???
+  override def delete(businessId: String): IO[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
+    IO.pure(Valid(DeleteSuccess))
 }

@@ -1,4 +1,4 @@
-package models.desk_listing
+package models.desk.deskSpecifications
 
 import io.circe.Decoder
 import io.circe.Encoder
