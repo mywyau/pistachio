@@ -6,10 +6,10 @@ import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import java.time.LocalDateTime
 import java.time.LocalTime
-import models.desk_listing.Availability
-import models.desk_listing.PrivateDesk
+import models.deskListing.Availability
+import models.desk.PrivateDesk
 import weaver.SimpleIOSuite
-import models.desk_listing.DeskListingPartial
+import models.desk.DeskListingPartial
 
 object DeskListingPartialSpec extends SimpleIOSuite {
 

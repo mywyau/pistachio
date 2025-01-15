@@ -8,9 +8,9 @@ import doobie.*
 import doobie.implicits.*
 import models.database.CreateSuccess
 import models.database.DeleteSuccess
-import models.desk_listing.Availability
-import models.desk_listing.DeskListingPartial
-import models.desk_listing.PrivateDesk
+import models.deskListing.Availability
+import models.desk.DeskListingPartial
+import models.desk.PrivateDesk
 import models.desk_listing.requests.DeskListingRequest
 import repositories.desk.DeskListingRepositoryImpl
 import repository.fragments.DeskListingRepoFragments.*

@@ -10,9 +10,9 @@ import doobie.util.transactor.Transactor
 import io.circe.syntax.*
 import models.database.CreateSuccess
 import models.database.UpdateSuccess
-import models.desk_listing.Availability
-import models.desk_listing.DeskListingPartial
-import models.desk_listing.PrivateDesk
+import models.deskListing.Availability
+import models.desk.DeskListingPartial
+import models.desk.PrivateDesk
 import models.desk_listing.requests.DeskListingRequest
 import models.responses.CreatedResponse
 import models.responses.DeletedResponse

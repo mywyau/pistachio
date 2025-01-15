@@ -1,4 +1,4 @@
-package models.desk_listing
+package models.deskListing
 
 import doobie.util.meta.Meta
 import io.circe.Decoder

@@ -10,9 +10,9 @@ import controllers.fragments.DeskListingControllerFragments.*
 import doobie.implicits.*
 import doobie.util.transactor.Transactor
 import io.circe.syntax.*
-import models.desk_listing.Availability
-import models.desk_listing.DeskListingPartial
-import models.desk_listing.PrivateDesk
+import models.deskListing.Availability
+import models.desk.DeskListingPartial
+import models.desk.PrivateDesk
 import models.responses.CreatedResponse
 import models.responses.DeletedResponse
 import models.responses.ErrorResponse

@@ -3,8 +3,8 @@ package controllers.constants
 import java.time.LocalDateTime
 import java.time.LocalTime
 import models.desk_listing.requests.DeskListingRequest
-import models.desk_listing.Availability
-import models.desk_listing.PrivateDesk
+import models.deskListing.Availability
+import models.desk.PrivateDesk
 import models.responses.CreatedResponse
 import org.http4s.circe.jsonEncoder
 import org.http4s.circe.CirceEntityCodec.circeEntityEncoder

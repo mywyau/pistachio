@@ -5,7 +5,7 @@ import cats.effect.Concurrent
 import cats.effect.IO
 import cats.implicits.*
 import io.circe.syntax.*
-import models.desk_listing.requests.DeskListingRequest
+import models.deskListing.requests.UpdateDeskListingRequest
 import models.responses.CreatedResponse
 import models.responses.DeletedResponse
 import models.responses.ErrorResponse
@@ -25,7 +25,7 @@ class DeskListingControllerImpl[F[_] : Concurrent : Logger](
 ) extends DeskListingController[F]
     with Http4sDsl[F] {
 
-  implicit val deskListingRequestDecoder: EntityDecoder[F, DeskListingRequest] = jsonOf[F, DeskListingRequest]
+  implicit val deskListingRequestDecoder: EntityDecoder[F, UpdateDeskListingRequest] = jsonOf[F, UpdateDeskListingRequest]
 
   override val routes: HttpRoutes[F] = HttpRoutes.of[F] {
 
@@ -51,7 +51,7 @@ class DeskListingControllerImpl[F[_] : Concurrent : Logger](
 
     case req @ POST -> Root / "business" / "desk" / "listing" / "details" / "create" =>
       Logger[F].info(s"[DeskListingControllerImpl] POST - Creating desk listing") *>
-        req.decode[DeskListingRequest] { request =>
+        req.decode[UpdateDeskListingRequest] { request =>
           deskService.create(request).flatMap {
             case Valid(response) =>
               Logger[F].info(s"[DeskListingControllerImpl] POST - Successfully created a desk listing") *>
@@ -63,7 +63,7 @@ class DeskListingControllerImpl[F[_] : Concurrent : Logger](
 
     case req @ PUT -> Root / "business" / "desk" / "listing" / "details" / "update" / deskId =>
       Logger[F].info(s"[DeskListingControllerImpl] POST - Attempting to update desk listing") *>
-        req.decode[DeskListingRequest] { request =>
+        req.decode[UpdateDeskListingRequest] { request =>
           deskService.update(deskId, request).flatMap {
             case Valid(response) =>
               Logger[F].info(s"[DeskListingControllerImpl] POST - Successfully updating a desk listing") *>

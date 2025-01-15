@@ -7,8 +7,8 @@ import io.circe.syntax.EncoderOps
 import java.time.LocalDateTime
 import java.time.LocalTime
 import models.desk_listing.requests.DeskListingRequest
-import models.desk_listing.Availability
-import models.desk_listing.PrivateDesk
+import models.deskListing.Availability
+import models.desk.PrivateDesk
 import weaver.SimpleIOSuite
 
 object DeskListingRequestSpec extends SimpleIOSuite {

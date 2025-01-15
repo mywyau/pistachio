@@ -16,118 +16,73 @@ import io.circe.syntax.*
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import models.database.*
-import models.deskListing.requests.UpdateDeskListingRequest
-import models.deskListing.DeskListingPartial
-import models.deskListing.DeskType
+import models.deskPricing.requests.UpdateDeskPricingRequest
+import models.deskPricing.RetrievedDeskPricing
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 import org.typelevel.log4cats.Logger
 
-trait DeskListingRepositoryAlgebra[F[_]] {
+trait DeskPricingRepositoryAlgebra[F[_]] {
 
-  def findByDeskId(deskId: String): F[Option[DeskListingPartial]]
+  def findByDeskId(deskId: String): F[Option[RetrievedDeskPricing]]
 
-  def findByOfficeId(officeId: String): F[List[DeskListingPartial]]
+  def findByOfficeId(officeId: String): F[List[RetrievedDeskPricing]]
 
-  def create(request: UpdateDeskListingRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
-
-  def update(deskId: String, request: UpdateDeskListingRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
+  def update(deskId: String, request: UpdateDeskPricingRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
   def delete(deskId: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
   def deleteAllByOfficeId(officeId: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 }
 
-class DeskListingRepositoryImpl[F[_] : Concurrent : Monad : Logger](transactor: Transactor[F]) extends DeskListingRepositoryAlgebra[F] {
+class DeskPricingRepositoryImpl[F[_] : Concurrent : Monad : Logger](transactor: Transactor[F]) extends DeskPricingRepositoryAlgebra[F] {
 
-  implicit val localDateTimeMeta: Meta[LocalDateTime] = Meta[Timestamp].imap(_.toLocalDateTime)(Timestamp.valueOf)
-
-  implicit val deskTypeMeta: Meta[DeskType] = Meta[String].imap(DeskType.fromString)(_.toString)
-
-  override def findByDeskId(deskId: String): F[Option[DeskListingPartial]] = {
-    val findQuery: F[Option[DeskListingPartial]] =
+  override def findByDeskId(deskId: String): F[Option[RetrievedDeskPricing]] = {
+    val findQuery: F[Option[RetrievedDeskPricing]] =
       sql"""
          SELECT 
-          desk_name,
-          description,
-          desk_type,
-          quantity,
-          features,
-          availability,
-          rules
-         FROM desk_listings
+          price_per_hour,
+          price_per_day,
+          price_per_week,
+          price_per_month,
+          price_per_year
+         FROM desk_pricing
          WHERE desk_id = $deskId
-       """.query[DeskListingPartial].option.transact(transactor)
+       """.query[RetrievedDeskPricing].option.transact(transactor)
 
     findQuery
   }
 
-  override def findByOfficeId(officeId: String): F[List[DeskListingPartial]] = {
-    val findQuery: F[List[DeskListingPartial]] =
+  override def findByOfficeId(officeId: String): F[List[RetrievedDeskPricing]] = {
+    val findQuery: F[List[RetrievedDeskPricing]] =
       sql"""
          SELECT 
-          desk_name,
-          description,
-          desk_type,
-          quantity,
-          features,
-          availability,
-          rules
-         FROM desk_listings
+          price_per_hour,
+          price_per_day,
+          price_per_week,
+          price_per_month,
+          price_per_year
+         FROM desk_pricing
          WHERE office_id = $officeId
        """
-        .query[DeskListingPartial]
+        .query[RetrievedDeskPricing]
         .to[List]
         .transact(transactor)
 
     findQuery
   }
 
-  override def create(request: UpdateDeskListingRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
-    sql"""
-      INSERT INTO desk_listings (
-          desk_name,
-          description,
-          desk_type,
-          quantity,
-          features,
-          availability,
-          rules
-      ) VALUES (
-        ${request.deskName},
-        ${request.description},
-        ${request.deskType},
-        ${request.quantity},
-        ${request.features},
-        ${request.availability.asJson.noSpaces}::jsonb,
-        ${request.rules}
-      )
-    """.update.run.transact(transactor).attempt.map {
-      case Right(affectedRows) if affectedRows == 1 =>
-        CreateSuccess.validNel
-      case Left(e: java.sql.SQLIntegrityConstraintViolationException) =>
-        ConstraintViolation.invalidNel
-      case Left(e: java.sql.SQLException) =>
-        DatabaseError.invalidNel
-      case Left(ex) =>
-        UnknownError(s"Unexpected error: ${ex.getMessage}").invalidNel
-      case _ =>
-        UnexpectedResultError.invalidNel
-    }
-
   override def update(
     deskId: String,
-    request: UpdateDeskListingRequest
+    request: UpdateDeskPricingRequest
   ): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
     sql"""
-      UPDATE desk_listings
+      UPDATE desk_pricing
       SET
-        desk_name = ${request.deskName},
-        description = ${request.description},
-        desk_type = ${request.deskType},
-        quantity = ${request.quantity},
-        features = ${request.features},
-        availability = ${request.availability.asJson.noSpaces}::jsonb,
-        rules = ${request.rules}
+        price_per_hour = ${request.pricePerHour},
+        price_per_day = ${request.pricePerDay},
+        price_per_week = ${request.pricePerWeek},
+        price_per_month = ${request.pricePerMonth},
+        price_per_year = ${request.pricePerYear}
       WHERE desk_id = ${deskId}
     """.update.run
       .transact(transactor)
@@ -138,13 +93,13 @@ class DeskListingRepositoryImpl[F[_] : Concurrent : Monad : Logger](transactor: 
         case Right(affectedRows) if affectedRows == 0 =>
           NotFoundError.invalidNel
         case Left(ex: java.sql.SQLException) if ex.getSQLState == "23503" =>
-          ForeignKeyViolationError.invalidNel // Foreign key constraint violation
+          ForeignKeyViolationError.invalidNel
         case Left(ex: java.sql.SQLException) if ex.getSQLState == "08001" =>
-          DatabaseConnectionError.invalidNel // Database connection issue
+          DatabaseConnectionError.invalidNel
         case Left(ex: java.sql.SQLException) if ex.getSQLState == "22001" =>
-          DataTooLongError.invalidNel // Data length exceeds column limit
+          DataTooLongError.invalidNel
         case Left(ex: java.sql.SQLException) =>
-          SqlExecutionError(ex.getMessage).invalidNel // General SQL execution error
+          SqlExecutionError(ex.getMessage).invalidNel
         case Left(ex) =>
           UnknownError(s"Unexpected error: ${ex.getMessage}").invalidNel
         case _ =>
@@ -154,7 +109,7 @@ class DeskListingRepositoryImpl[F[_] : Concurrent : Monad : Logger](transactor: 
   override def delete(deskId: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = {
     val deleteQuery: Update0 =
       sql"""
-         DELETE FROM desk_listings
+         DELETE FROM desk_pricing
          WHERE desk_id = $deskId
        """.update
 
@@ -179,7 +134,7 @@ class DeskListingRepositoryImpl[F[_] : Concurrent : Monad : Logger](transactor: 
   override def deleteAllByOfficeId(officeId: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = {
     val deleteQuery: Update0 =
       sql"""
-         DELETE FROM desk_listings
+         DELETE FROM desk_pricing
          WHERE office_id = $officeId
        """.update
 
@@ -202,7 +157,7 @@ class DeskListingRepositoryImpl[F[_] : Concurrent : Monad : Logger](transactor: 
   }
 }
 
-object DeskListingRepository {
-  def apply[F[_] : Concurrent : Monad : Logger](transactor: Transactor[F]): DeskListingRepositoryImpl[F] =
-    new DeskListingRepositoryImpl[F](transactor)
+object DeskPricingRepository {
+  def apply[F[_] : Concurrent : Monad : Logger](transactor: Transactor[F]): DeskPricingRepositoryImpl[F] =
+    new DeskPricingRepositoryImpl[F](transactor)
 }
