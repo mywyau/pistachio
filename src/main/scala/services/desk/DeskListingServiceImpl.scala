@@ -1,4 +1,4 @@
-package services.desk_listing
+package services.desk
 
 import cats.data.ValidatedNel
 import cats.effect.Concurrent

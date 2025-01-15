@@ -16,7 +16,7 @@ import io.circe.syntax.*
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import models.database.*
-import models.deskPricing.requests.UpdateDeskPricingRequest
+import models.deskPricing.UpdateDeskPricingRequest
 import models.deskPricing.RetrievedDeskPricing
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 import org.typelevel.log4cats.Logger

@@ -8,7 +8,7 @@ import controllers.business.BusinessContactDetailsController
 import controllers.business.BusinessListingController
 import controllers.business.BusinessListingControllerImpl
 import controllers.business.BusinessSpecificationsController
-import controllers.desk_listing.DeskListingControllerImpl
+import controllers.desk.DeskListingControllerImpl
 import controllers.office.OfficeAddressController
 import controllers.office.OfficeContactDetailsController
 import controllers.office.OfficeSpecificationsController
@@ -31,7 +31,7 @@ import services.business.BusinessAddressService
 import services.business.BusinessListingService
 import services.business.BusinessContactDetailsService
 import services.business.BusinessSpecificationsService
-import services.desk_listing.DeskListingService
+import services.desk.DeskListingService
 import services.office.OfficeAddressService
 import services.office.OfficeContactDetailsService
 import services.office.OfficeListingService

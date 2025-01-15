@@ -1,4 +1,4 @@
-package controllers.desk_listing
+package controllers.desk
 
 import cats.data.Validated.Valid
 import cats.effect.Concurrent
@@ -14,7 +14,7 @@ import org.http4s.*
 import org.http4s.circe.*
 import org.http4s.dsl.Http4sDsl
 import org.typelevel.log4cats.Logger
-import services.desk_listing.DeskListingServiceAlgebra
+import services.desk.DeskListingServiceAlgebra
 
 trait DeskListingController[F[_]] {
   def routes: HttpRoutes[F]

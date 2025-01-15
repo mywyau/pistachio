@@ -1,4 +1,4 @@
-package models.deskListing.requests
+package models.deskPricing
 
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.generic.semiauto.deriveEncoder
