@@ -7,9 +7,9 @@ import io.circe.syntax.EncoderOps
 import java.time.LocalDateTime
 import java.time.LocalTime
 import models.deskListing.Availability
-import models.desk.PrivateDesk
+import models.deskListing.PrivateDesk
 import weaver.SimpleIOSuite
-import models.desk.DeskListingPartial
+import models.deskListing.DeskListingPartial
 
 object DeskListingPartialSpec extends SimpleIOSuite {
 
@@ -26,8 +26,6 @@ object DeskListingPartialSpec extends SimpleIOSuite {
       description = Some("A comfortable desk in a private office space with all amenities included."),
       deskType = PrivateDesk,
       quantity = 5,
-      pricePerHour = BigDecimal(15.50),
-      pricePerDay = BigDecimal(120.00),
       rules = Some("Please keep the desk clean and quiet."),
       features = List("Wi-Fi", "Power Outlets", "Monitor", "Ergonomic Chair"),
       availability = availability
@@ -44,8 +42,6 @@ object DeskListingPartialSpec extends SimpleIOSuite {
         |  "description": "A comfortable desk in a private office space with all amenities included.",
         |  "deskType": "PrivateDesk",
         |  "quantity": 5,
-        |  "pricePerHour": 15.50,
-        |  "pricePerDay": 120.00,
         |  "rules": "Please keep the desk clean and quiet.",
         |  "features": ["Wi-Fi", "Power Outlets", "Monitor", "Ergonomic Chair"],
         |  "availability": {
