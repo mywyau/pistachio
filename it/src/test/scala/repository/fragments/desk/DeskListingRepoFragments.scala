@@ -1,4 +1,4 @@
-package repository.fragments
+package repository.fragments.desk
 
 import doobie.implicits.*
 import doobie.util.fragment

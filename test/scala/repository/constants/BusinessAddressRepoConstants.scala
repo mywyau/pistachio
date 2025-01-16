@@ -8,7 +8,7 @@ import models.business.address.requests.CreateBusinessAddressRequest
 import models.business.address.BusinessAddressPartial
 import mocks.MockBusinessAddressRepository
 
-object BusinessAddressRepositoryConstants {
+object BusinessAddressRepoConstants {
 
   def createMockRepo(initialUsers: List[BusinessAddressPartial]): IO[MockBusinessAddressRepository] =
     Ref.of[IO, List[BusinessAddressPartial]](initialUsers).map(MockBusinessAddressRepository.apply)

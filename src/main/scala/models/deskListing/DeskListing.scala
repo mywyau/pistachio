@@ -1,12 +1,12 @@
-package models.desk_listing
+package models.deskListing
 
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.generic.semiauto.deriveEncoder
 import io.circe.Decoder
 import io.circe.Encoder
 import java.time.LocalDateTime
-import models.desk_listing.DeskType
-import models.desk_listing.Availability
+import models.deskListing.DeskType
+import models.deskListing.Availability
 
 case class DeskListing(
   id: Option[Int],
@@ -16,8 +16,6 @@ case class DeskListing(
   description: Option[String],
   deskType: DeskType,
   quantity: Int,
-  pricePerHour: BigDecimal,
-  pricePerDay: BigDecimal,
   features: List[String],
   availability: Availability,
   rules: Option[String],

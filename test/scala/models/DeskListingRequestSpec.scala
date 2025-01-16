@@ -6,9 +6,9 @@ import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import java.time.LocalDateTime
 import java.time.LocalTime
-import models.desk_listing.requests.DeskListingRequest
-import models.desk_listing.Availability
-import models.desk_listing.PrivateDesk
+import models.deskListing.PrivateDesk
+import models.deskListing.requests.UpdateDeskListingRequest
+import models.deskListing.Availability
 import weaver.SimpleIOSuite
 
 object DeskListingRequestSpec extends SimpleIOSuite {
@@ -20,14 +20,12 @@ object DeskListingRequestSpec extends SimpleIOSuite {
       endTime = LocalTime.of(10, 30, 0)
     )
 
-  val sampleDeskListingRequest: DeskListingRequest =
-    DeskListingRequest(
+  val sampleDeskListingRequest: UpdateDeskListingRequest =
+    UpdateDeskListingRequest(
       deskName = "Private Office Desk",
       description = Some("A comfortable desk in a private office space with all amenities included."),
       deskType = PrivateDesk,
       quantity = 5,
-      pricePerHour = BigDecimal(15.50),
-      pricePerDay = BigDecimal(120.00),
       rules = Some("Please keep the desk clean and quiet."),
       features = List("Wi-Fi", "Power Outlets", "Monitor", "Ergonomic Chair"),
       availability = availability
@@ -44,8 +42,6 @@ object DeskListingRequestSpec extends SimpleIOSuite {
         |  "description": "A comfortable desk in a private office space with all amenities included.",
         |  "deskType": "PrivateDesk",
         |  "quantity": 5,
-        |  "pricePerHour": 15.50,
-        |  "pricePerDay": 120.00,
         |  "rules": "Please keep the desk clean and quiet.",
         |  "features": ["Wi-Fi", "Power Outlets", "Monitor", "Ergonomic Chair"],
         |  "availability": {

@@ -3,8 +3,6 @@ package controllers.business.business_address
 import cats.effect.IO
 import controllers.ControllerSpecBase
 import controllers.business.BusinessAddressController
-import controllers.business.business_address.constants.BusinessAddressControllerConstants.sampleBusinessAddress1
-import controllers.business.business_address.mocks.MockBusinessAddressService
 import models.business.address.errors.BusinessUserNotFound
 import models.responses.ErrorResponse
 import org.http4s.*

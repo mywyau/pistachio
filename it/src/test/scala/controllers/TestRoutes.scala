@@ -7,11 +7,12 @@ import controllers.business.BusinessAddressController
 import controllers.business.BusinessContactDetailsController
 import controllers.business.BusinessListingController
 import controllers.business.BusinessSpecificationsController
-import controllers.desk_listing.DeskListingController
+import controllers.desk.DeskListingController
+import controllers.desk.DeskPricingController
 import controllers.office.OfficeAddressController
 import controllers.office.OfficeContactDetailsController
-import controllers.office.OfficeSpecificationsController
 import controllers.office.OfficeListingController
+import controllers.office.OfficeSpecificationsController
 import doobie.hikari.HikariTransactor
 import doobie.implicits.*
 import doobie.util.transactor.Transactor
@@ -26,6 +27,7 @@ import repositories.business.BusinessContactDetailsRepository
 import repositories.business.BusinessListingRepository
 import repositories.business.BusinessSpecificationsRepository
 import repositories.desk.DeskListingRepository
+import repositories.desk.DeskPricingRepository
 import repositories.office.OfficeAddressRepository
 import repositories.office.OfficeContactDetailsRepository
 import repositories.office.OfficeListingRepository
@@ -34,7 +36,8 @@ import services.business.BusinessAddressService
 import services.business.BusinessContactDetailsService
 import services.business.BusinessListingService
 import services.business.BusinessSpecificationsService
-import services.desk_listing.DeskListingService
+import services.desk.DeskListingService
+import services.desk.DeskPricingService
 import services.office.OfficeAddressService
 import services.office.OfficeContactDetailsService
 import services.office.OfficeListingService
@@ -93,6 +96,15 @@ object TestRoutes {
     deskListingController.routes
   }
 
+  def deskPricingRoutes(transactor: Transactor[IO]): HttpRoutes[IO] = {
+
+    val deskPricingRepository = DeskPricingRepository(transactor)
+    val deskPricingService = DeskPricingService(deskPricingRepository)
+    val deskPricingController = DeskPricingController(deskPricingService)
+
+    deskPricingController.routes
+  }
+
   def officeAddressRoutes(transactor: Transactor[IO]): HttpRoutes[IO] = {
 
     val officeAddressRepository = OfficeAddressRepository(transactor)
@@ -143,7 +155,8 @@ object TestRoutes {
           officeContactDetailsRoutes(transactor) <+>
           officeSpecificationsRoutes(transactor) <+>
           officeListingRoutes(transactor) <+>
-          deskListingRoutes(transactor)
+          deskListingRoutes(transactor) <+>
+          deskPricingRoutes(transactor)
       )
     )
 }

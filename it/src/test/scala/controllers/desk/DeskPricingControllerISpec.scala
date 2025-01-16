@@ -2,18 +2,18 @@ package controllers.desk
 
 import cats.effect.*
 import controllers.ControllerISpecBase
-import controllers.constants.DeskListingControllerConstants.testDeskListingRequest
-import controllers.desk.DeskListingController
-import controllers.fragments.DeskListingControllerFragments.*
+import controllers.constants.DeskPricingControllerConstants.testUpdateRequest
+import controllers.desk.DeskPricingController
+import controllers.fragments.DeskPricingControllerFragments.*
 import doobie.implicits.*
 import doobie.util.transactor.Transactor
 import io.circe.syntax.*
 import models.database.CreateSuccess
 import models.database.UpdateSuccess
-import models.deskListing.Availability
-import models.deskListing.DeskListingPartial
-import models.deskListing.PrivateDesk
-import models.deskListing.requests.UpdateDeskListingRequest
+import models.deskPricing.Availability
+import models.deskPricing.DeskPricingPartial
+import models.deskPricing.PrivateDesk
+import models.deskPricing.requests.UpdateDeskPricingRequest
 import models.responses.CreatedResponse
 import models.responses.DeletedResponse
 import models.responses.UpdatedResponse
@@ -22,8 +22,8 @@ import org.http4s.Method.*
 import org.http4s.circe.CirceEntityCodec.circeEntityDecoder
 import org.http4s.circe.jsonEncoder
 import org.http4s.implicits.*
-import repositories.desk.DeskListingRepositoryImpl
-import services.desk.DeskListingServiceImpl
+import repositories.desk.DeskPricingRepositoryImpl
+import services.desk.DeskPricingServiceImpl
 import shared.HttpClientResource
 import shared.TransactorResource
 import weaver.*
@@ -31,15 +31,15 @@ import weaver.*
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class DeskListingControllerISpec(global: GlobalRead) extends IOSuite with ControllerISpecBase {
+class DeskPricingControllerISpec(global: GlobalRead) extends IOSuite with ControllerISpecBase {
   type Res = (TransactorResource, HttpClientResource)
   def sharedResource: Resource[IO, Res] =
     for {
       transactor <- global.getOrFailR[TransactorResource]()
       _ <- Resource.eval(
-        createDeskListingsTable.update.run.transact(transactor.xa).void *>
-          resetDeskListingTable.update.run.transact(transactor.xa).void *>
-          insertDeskListings.update.run.transact(transactor.xa).void
+        createDeskPricingsTable.update.run.transact(transactor.xa).void *>
+          resetDeskPricingTable.update.run.transact(transactor.xa).void *>
+          insertDeskPricings.update.run.transact(transactor.xa).void
       )
       client <- global.getOrFailR[HttpClientResource]()
     } yield (transactor, client)
@@ -54,8 +54,8 @@ class DeskListingControllerISpec(global: GlobalRead) extends IOSuite with Contro
     val request =
       Request[IO](GET, uri"http://127.0.0.1:9999/pistachio/business/desk/listing/details/find/desk002")
 
-    val expectedDeskListing =
-      DeskListingPartial(
+    val expectedDeskPricing =
+      DeskPricingPartial(
         deskName = "Mikey Desk 2",
         description = Some("A shared desk in a collaborative space with easy access to team members."),
         deskType = PrivateDesk,
@@ -70,10 +70,10 @@ class DeskListingControllerISpec(global: GlobalRead) extends IOSuite with Contro
       )
 
     client.run(request).use { response =>
-      response.as[DeskListingPartial].map { body =>
+      response.as[DeskPricingPartial].map { body =>
         expect.all(
           response.status == Status.Ok,
-          body == expectedDeskListing
+          body == expectedDeskPricing
         )
       }
     }
@@ -87,7 +87,7 @@ class DeskListingControllerISpec(global: GlobalRead) extends IOSuite with Contro
     val client = sharedResources._2.client
 
     val updateRequest =
-      UpdateDeskListingRequest(
+      UpdateDeskPricingRequest(
         deskName = "Updated desk 1",
         description = Some("Updated desk listing"),
         deskType = PrivateDesk,
@@ -129,20 +129,20 @@ class DeskListingControllerISpec(global: GlobalRead) extends IOSuite with Contro
 
     val createRequest =
       Request[IO](POST, uri"http://127.0.0.1:9999/pistachio/business/desk/listing/details/create")
-        .withEntity(testDeskListingRequest.asJson)
+        .withEntity(testDeskPricingRequest.asJson)
 
     val deleteRequest =
       Request[IO](DELETE, uri"http://127.0.0.1:9999/pistachio/business/desk/listing/details/delete/desk003")
 
-    val expectedDeskListing = CreatedResponse(CreateSuccess.toString, "Business Desk created successfully")
+    val expectedDeskPricing = CreatedResponse(CreateSuccess.toString, "Business Desk created successfully")
 
     for {
-      findAllResponseBefore <- client.run(findAllRequest).use(_.as[List[DeskListingPartial]])
+      findAllResponseBefore <- client.run(findAllRequest).use(_.as[List[DeskPricingPartial]])
       _ <- IO(expect(findAllResponseBefore.size == 5))
       createResponse <- client.run(createRequest).use(_.as[CreatedResponse])
       deleteResponse <- client.run(deleteRequest).use(_.as[DeletedResponse])
       _ <- IO(expect(deleteResponse.message == "Successfully deleted desk listing"))
-      findAllResponseAfter <- client.run(findAllRequest).use(_.as[List[DeskListingPartial]])
+      findAllResponseAfter <- client.run(findAllRequest).use(_.as[List[DeskPricingPartial]])
       _ <- IO(expect(findAllResponseAfter.isEmpty))
     } yield success
 
