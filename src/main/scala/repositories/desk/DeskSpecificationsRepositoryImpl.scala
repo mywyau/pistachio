@@ -55,7 +55,7 @@ class DeskSpecificationsRepositoryImpl[F[_] : Concurrent : Monad : Logger](trans
           features,
           availability,
           rules
-         FROM desk_listings
+         FROM desk_specifications
          WHERE desk_id = $deskId
        """.query[DeskSpecificationsPartial].option.transact(transactor)
 
@@ -74,7 +74,7 @@ class DeskSpecificationsRepositoryImpl[F[_] : Concurrent : Monad : Logger](trans
           features,
           availability,
           rules
-         FROM desk_listings
+         FROM desk_specifications
          WHERE office_id = $officeId
        """
         .query[DeskSpecificationsPartial]
@@ -86,7 +86,7 @@ class DeskSpecificationsRepositoryImpl[F[_] : Concurrent : Monad : Logger](trans
 
   override def create(request: UpdateDeskSpecificationsRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
     sql"""
-      INSERT INTO desk_listings (
+      INSERT INTO desk_specifications (
           desk_name,
           description,
           desk_type,
@@ -121,7 +121,7 @@ class DeskSpecificationsRepositoryImpl[F[_] : Concurrent : Monad : Logger](trans
     request: UpdateDeskSpecificationsRequest
   ): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
     sql"""
-      UPDATE desk_listings
+      UPDATE desk_specifications
       SET
         desk_name = ${request.deskName},
         description = ${request.description},
@@ -156,7 +156,7 @@ class DeskSpecificationsRepositoryImpl[F[_] : Concurrent : Monad : Logger](trans
   override def delete(deskId: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = {
     val deleteQuery: Update0 =
       sql"""
-         DELETE FROM desk_listings
+         DELETE FROM desk_specifications
          WHERE desk_id = $deskId
        """.update
 
@@ -181,7 +181,7 @@ class DeskSpecificationsRepositoryImpl[F[_] : Concurrent : Monad : Logger](trans
   override def deleteAllByOfficeId(officeId: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = {
     val deleteQuery: Update0 =
       sql"""
-         DELETE FROM desk_listings
+         DELETE FROM desk_specifications
          WHERE office_id = $officeId
        """.update
 

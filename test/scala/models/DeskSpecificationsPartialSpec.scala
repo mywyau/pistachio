@@ -6,12 +6,12 @@ import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import java.time.LocalDateTime
 import java.time.LocalTime
-import models.deskListing.PrivateDesk
-import models.deskListing.requests.UpdateDeskListingRequest
-import models.deskListing.Availability
+import models.desk.deskSpecifications.Availability
+import models.desk.deskSpecifications.DeskSpecificationsPartial
+import models.desk.deskSpecifications.PrivateDesk
 import weaver.SimpleIOSuite
 
-object DeskListingRequestSpec extends SimpleIOSuite {
+object DeskSpecificationsPartialSpec extends SimpleIOSuite {
 
   val availability: Availability =
     Availability(
@@ -20,24 +20,26 @@ object DeskListingRequestSpec extends SimpleIOSuite {
       endTime = LocalTime.of(10, 30, 0)
     )
 
-  val sampleDeskListingRequest: UpdateDeskListingRequest =
-    UpdateDeskListingRequest(
+  val sampleDeskSpecificationsPartial: DeskSpecificationsPartial =
+    DeskSpecificationsPartial(
+      deskId = "desk-001",
       deskName = "Private Office Desk",
       description = Some("A comfortable desk in a private office space with all amenities included."),
       deskType = PrivateDesk,
       quantity = 5,
-      rules = Some("Please keep the desk clean and quiet."),
       features = List("Wi-Fi", "Power Outlets", "Monitor", "Ergonomic Chair"),
-      availability = availability
+      availability = availability,
+      rules = Some("Please keep the desk clean and quiet.")
     )
 
-  test("DeskListingRequest model encodes correctly to JSON") {
+  test("DeskSpecificationsPartial model encodes correctly to JSON") {
 
-    val jsonResult = sampleDeskListingRequest.asJson
+    val jsonResult = sampleDeskSpecificationsPartial.asJson
 
     val expectedJson =
       """
         |{
+        |  "deskId": "desk-001",
         |  "deskName": "Private Office Desk",
         |  "description": "A comfortable desk in a private office space with all amenities included.",
         |  "deskType": "PrivateDesk",

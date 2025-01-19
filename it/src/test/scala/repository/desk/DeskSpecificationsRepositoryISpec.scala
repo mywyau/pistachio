@@ -8,12 +8,12 @@ import doobie.*
 import doobie.implicits.*
 import models.database.CreateSuccess
 import models.database.DeleteSuccess
-import models.desk.deskListing.Availability
-import models.desk.deskListing.DeskListingPartial
-import models.desk.deskListing.PrivateDesk
-import models.desk.deskListing.requests.UpdateDeskListingRequest
-import repositories.desk.DeskListingRepositoryImpl
-import repository.fragments.desk.DeskListingRepoFragments.*
+import models.desk.deskSpecifications.Availability
+import models.desk.deskSpecifications.DeskSpecificationsPartial
+import models.desk.deskSpecifications.PrivateDesk
+import models.desk.deskSpecifications.requests.UpdateDeskSpecificationsRequest
+import repositories.desk.DeskSpecificationsRepositoryImpl
+import repository.fragments.desk.DeskSpecificationsRepoFragments.*
 import shared.TransactorResource
 import weaver.GlobalRead
 import weaver.IOSuite
@@ -22,15 +22,15 @@ import weaver.ResourceTag
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with RepositoryISpecBase {
+class DeskSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite with RepositoryISpecBase {
 
-  type Res = DeskListingRepositoryImpl[IO]
+  type Res = DeskSpecificationsRepositoryImpl[IO]
 
   private def initializeSchema(transactor: TransactorResource): Resource[IO, Unit] =
     Resource.eval(
-      createDeskListingsTable.update.run.transact(transactor.xa).void *>
-        resetDeskListingsTable.update.run.transact(transactor.xa).void *>
-        insertDeskListings.update.run.transact(transactor.xa).void
+      createDeskSpecificationssTable.update.run.transact(transactor.xa).void *>
+        resetDeskSpecificationssTable.update.run.transact(transactor.xa).void *>
+        insertDeskSpecificationss.update.run.transact(transactor.xa).void
     )
 
   val availability =
@@ -40,10 +40,10 @@ class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
       endTime = LocalTime.of(17, 0, 0)
     )
 
-  def sharedResource: Resource[IO, DeskListingRepositoryImpl[IO]] = {
+  def sharedResource: Resource[IO, DeskSpecificationsRepositoryImpl[IO]] = {
     val setup = for {
       transactor <- global.getOrFailR[TransactorResource]()
-      businessDeskRepo = new DeskListingRepositoryImpl[IO](transactor.xa)
+      businessDeskRepo = new DeskSpecificationsRepositoryImpl[IO](transactor.xa)
       createSchemaIfNotPresent <- initializeSchema(transactor)
     } yield businessDeskRepo
 
@@ -53,7 +53,8 @@ class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
   test(".findByDeskId() - should return the desk listing details for a given deskId") { businessDeskRepo =>
 
     val expectedResult =
-      DeskListingPartial(
+      DeskSpecificationsPartial(
+        deskId = "desk001",
         deskName = "Mikey Desk 1",
         description = Some("A quiet, private desk perfect for focused work with a comfortable chair and good lighting."),
         deskType = PrivateDesk,
@@ -68,14 +69,15 @@ class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
       )
 
     for {
-      deskListingOpt <- businessDeskRepo.findByDeskId("desk001")
-    } yield expect(deskListingOpt == Some(expectedResult))
+      deskSpecificationsOpt <- businessDeskRepo.findByDeskId("desk001")
+    } yield expect(deskSpecificationsOpt == Some(expectedResult))
   }
 
   test(".findByOfficeId() - should return the all desk listing for a given officeId") { businessDeskRepo =>
 
     val expectedResult =
-      DeskListingPartial(
+      DeskSpecificationsPartial(
+        deskId = "desk001",
         deskName = "Mikey Desk 1",
         description = Some("A quiet, private desk perfect for focused work with a comfortable chair and good lighting."),
         deskType = PrivateDesk,
@@ -90,14 +92,14 @@ class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
       )
 
     for {
-      deskListingOpt <- businessDeskRepo.findByOfficeId("office01")
-    } yield expect(deskListingOpt == List(expectedResult))
+      deskSpecificationsOpt <- businessDeskRepo.findByOfficeId("office01")
+    } yield expect(deskSpecificationsOpt == List(expectedResult))
   }
 
   test(".create() - should return CreateSuccess for successfuly creating a desk listing") { businessDeskRepo =>
 
     val createRequest =
-      UpdateDeskListingRequest(
+      UpdateDeskSpecificationsRequest(
         deskName = "Mikey Desk 1",
         description = Some("A quiet, private desk perfect for focused work with a comfortable chair and good lighting."),
         deskType = PrivateDesk,
@@ -112,13 +114,13 @@ class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
       )
 
     for {
-      deskListingOpt <- businessDeskRepo.create(createRequest)
-    } yield expect(deskListingOpt == Valid(CreateSuccess))
+      deskSpecificationsOpt <- businessDeskRepo.create(createRequest)
+    } yield expect(deskSpecificationsOpt == Valid(CreateSuccess))
   }
 
   test(".delete() - should return DeleteSuccess for successfuly deleting the desk based on the deskId") { businessDeskRepo =>
     for {
-      deskListingOpt <- businessDeskRepo.delete("desk002")
-    } yield expect(deskListingOpt == Valid(DeleteSuccess))
+      deskSpecificationsOpt <- businessDeskRepo.delete("desk002")
+    } yield expect(deskSpecificationsOpt == Valid(DeleteSuccess))
   }
 }

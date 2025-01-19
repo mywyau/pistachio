@@ -2,14 +2,14 @@ package controllers.constants
 
 import java.time.LocalDateTime
 import java.time.LocalTime
-import models.desk.deskListing.requests.UpdateDeskListingRequest
-import models.desk.deskListing.Availability
-import models.desk.deskListing.PrivateDesk
+import models.desk.deskSpecifications.requests.UpdateDeskSpecificationsRequest
+import models.desk.deskSpecifications.Availability
+import models.desk.deskSpecifications.PrivateDesk
 import models.responses.CreatedResponse
 import org.http4s.circe.jsonEncoder
 import org.http4s.circe.CirceEntityCodec.circeEntityEncoder
 
-object DeskListingControllerConstants {
+object DeskSpecificationsControllerConstants {
 
   val availability =
     Availability(
@@ -18,8 +18,8 @@ object DeskListingControllerConstants {
       endTime = LocalTime.of(10, 30, 0)
     )
 
-  val testDeskListingRequest =
-    UpdateDeskListingRequest(
+  val testDeskSpecificationsRequest =
+    UpdateDeskSpecificationsRequest(
       deskName = "Private Office Desk",
       description = Some("A comfortable desk in a private office space with all amenities included."),
       deskType = PrivateDesk,

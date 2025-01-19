@@ -3,14 +3,14 @@ package controllers.fragments
 import doobie.implicits.*
 import doobie.util.fragment
 
-object DeskListingControllerFragments {
+object DeskSpecificationsControllerFragments {
 
-  val resetDeskListingTable: fragment.Fragment =
-    sql"TRUNCATE TABLE desk_listings RESTART IDENTITY"
+  val resetDeskSpecificationsTable: fragment.Fragment =
+    sql"TRUNCATE TABLE desk_specifications RESTART IDENTITY"
 
-  val createDeskListingsTable: fragment.Fragment =
+  val createDeskSpecificationssTable: fragment.Fragment =
     sql"""
-        CREATE TABLE IF NOT EXISTS desk_listings (
+        CREATE TABLE IF NOT EXISTS desk_specifications (
           id SERIAL PRIMARY KEY,
           user_id VARCHAR(255),
           business_id VARCHAR(255),
@@ -30,9 +30,9 @@ object DeskListingControllerFragments {
         );
       """
 
-  val insertDeskListings: fragment.Fragment =
+  val insertDeskSpecificationss: fragment.Fragment =
     sql"""
-      INSERT INTO desk_listings (
+      INSERT INTO desk_specifications (
         user_id, business_id, office_id, desk_id, desk_name, description, desk_type, 
         quantity, price_per_hour, price_per_day, features, availability, rules, created_at, updated_at
       ) VALUES
@@ -73,9 +73,9 @@ object DeskListingControllerFragments {
          '2025-01-01 00:00:00', '2025-01-01 00:00:00');
   """
 
-  val sameOfficeIdInsertDeskListings: fragment.Fragment =
+  val sameOfficeIdInsertDeskSpecificationss: fragment.Fragment =
     sql"""
-      INSERT INTO desk_listings (
+      INSERT INTO desk_specifications (
         user_id, business_id, office_id, desk_id, desk_name, description, desk_type, 
         quantity, price_per_hour, price_per_day, features, availability, rules, created_at, updated_at
       ) VALUES
