@@ -1,4 +1,4 @@
-package models
+package models.desk
 
 import cats.effect.IO
 import io.circe.*

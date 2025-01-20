@@ -1,4 +1,4 @@
-package models
+package models.desk
 
 import cats.effect.IO
 import io.circe.*
@@ -6,13 +6,13 @@ import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import java.time.LocalDateTime
 import java.time.LocalTime
-import models.desk.deskPricing.DeskPricingPartial
+import models.desk.deskPricing.RetrievedDeskPricing
 import weaver.SimpleIOSuite
 
-object DeskPricingPartialSpec extends SimpleIOSuite {
+object RetrievedDeskPricingSpec extends SimpleIOSuite {
 
-  val sampleDeskPricingPartial: DeskPricingPartial =
-    DeskPricingPartial(
+  val sampleRetrievedDeskPricing: RetrievedDeskPricing =
+    RetrievedDeskPricing(
       pricePerHour = 30.00,
       pricePerDay = Some(180.00),
       pricePerWeek = Some(450.00),
@@ -20,9 +20,9 @@ object DeskPricingPartialSpec extends SimpleIOSuite {
       pricePerYear = Some(9000.00)
     )
 
-  test("DeskPricingPartial model encodes correctly to JSON") {
+  test("RetrievedDeskPricing model encodes correctly to JSON") {
 
-    val jsonResult = sampleDeskPricingPartial.asJson
+    val jsonResult = sampleRetrievedDeskPricing.asJson
 
     val expectedJson =
       """
