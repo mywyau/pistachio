@@ -3,7 +3,7 @@ package controllers.desk
 import cats.effect.*
 import controllers.ControllerISpecBase
 import controllers.desk.DeskSpecificationsController
-import controllers.fragments.DeskSpecificationsControllerFragments.*
+import controllers.fragments.desk.DeskSpecificationsControllerFragments.*
 import doobie.implicits.*
 import doobie.util.transactor.Transactor
 import io.circe.syntax.*

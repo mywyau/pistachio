@@ -6,7 +6,7 @@ import com.comcast.ip4s.port
 import controllers.ControllerISpecBase
 import controllers.constants.DeskSpecificationsControllerConstants.testDeskSpecificationsRequest
 import controllers.desk.DeskSpecificationsController
-import controllers.fragments.DeskSpecificationsControllerFragments.*
+import controllers.fragments.desk.DeskSpecificationsControllerFragments.*
 import doobie.implicits.*
 import doobie.util.transactor.Transactor
 import io.circe.syntax.*
