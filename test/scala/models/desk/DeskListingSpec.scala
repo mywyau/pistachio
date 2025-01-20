@@ -26,11 +26,11 @@ object DeskListingSpec extends SimpleIOSuite {
       deskId = "desk001",
       deskName = "Private Office Desk",
       description = Some("A comfortable desk in a private office space with all amenities included."),
-      deskType = PrivateDesk,
-      quantity = 5,
+      deskType = Some(PrivateDesk),
+      quantity = Some(5),
+      features = Some(List("Wi-Fi", "Power Outlets", "Monitor", "Ergonomic Chair")),
+      availability = Some(availability),
       rules = Some("Please keep the desk clean and quiet."),
-      features = List("Wi-Fi", "Power Outlets", "Monitor", "Ergonomic Chair"),
-      availability = availability
     )
 
   val sampleDeskPricingPartial: DeskPricingPartial =

@@ -13,7 +13,7 @@ object RetrievedDeskPricingSpec extends SimpleIOSuite {
 
   val sampleRetrievedDeskPricing: RetrievedDeskPricing =
     RetrievedDeskPricing(
-      pricePerHour = 30.00,
+      pricePerHour = Some(30.00),
       pricePerDay = Some(180.00),
       pricePerWeek = Some(450.00),
       pricePerMonth = Some(1000.00),
