@@ -138,7 +138,7 @@ class DeskListingControllerISpec(global: GlobalRead) extends IOSuite with Contro
 
     val expectedDeskListing =
       DeskListing(
-        deskId = "desk002",
+        deskId = "desk005",
         specifications = expectedDeskSpec,
         pricing = expectedDeskPricing
       )

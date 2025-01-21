@@ -9,7 +9,7 @@ import weaver.SimpleIOSuite
 
 object UpdateDeskPricingRequestSpec extends SimpleIOSuite {
 
-  test("UpdateDeskPricingRequest model encodes correctly to JSON") {
+  test("UpdateDeskPricingRequest MAX model encodes correctly to JSON") {
 
     val sampleUpdateRequest: UpdateDeskPricingRequest =
       UpdateDeskPricingRequest(
@@ -25,11 +25,11 @@ object UpdateDeskPricingRequestSpec extends SimpleIOSuite {
     val expectedJson =
       """
         |{
-        |  "pricePerHour": 30.00,
-        |  "pricePerDay": 180.00,
-        |  "pricePerWeek": 450.00,
-        |  "pricePerMonth": 1000.00,
-        |  "pricePerYear": 9000.00
+        |  "pricePerHour": 30.0,
+        |  "pricePerDay": 180.0,
+        |  "pricePerWeek": 450.0,
+        |  "pricePerMonth": 1000.0,
+        |  "pricePerYear": 9000.0
         |}
         |""".stripMargin
 
@@ -40,7 +40,7 @@ object UpdateDeskPricingRequestSpec extends SimpleIOSuite {
     } yield expect(jsonResult == expectedResult)
   }
 
-    test("UpdateDeskPricingRequest model encodes correctly to JSON") {
+  test("UpdateDeskPricingRequest MIN model encodes correctly to JSON") {
 
     val sampleUpdateRequestMin: UpdateDeskPricingRequest =
       UpdateDeskPricingRequest(
@@ -48,7 +48,7 @@ object UpdateDeskPricingRequestSpec extends SimpleIOSuite {
         pricePerDay = None,
         pricePerWeek = None,
         pricePerMonth = None,
-        pricePerYear = None,
+        pricePerYear = None
       )
 
     val jsonResult = sampleUpdateRequestMin.asJson
@@ -56,7 +56,11 @@ object UpdateDeskPricingRequestSpec extends SimpleIOSuite {
     val expectedJson =
       """
         |{
-        |  "pricePerHour": 30.00
+        |  "pricePerHour": 30.0,
+        |  "pricePerDay": null,
+        |  "pricePerWeek": null,
+        |  "pricePerMonth": null,
+        |  "pricePerYear": null
         |}
         |""".stripMargin
 

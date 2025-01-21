@@ -11,6 +11,7 @@ import models.desk.deskSpecifications.Availability
 import models.desk.deskSpecifications.DeskSpecificationsPartial
 import models.desk.deskSpecifications.PrivateDesk
 import weaver.SimpleIOSuite
+import models.desk.deskPricing.RetrievedDeskPricing
 
 object DeskListingSpec extends SimpleIOSuite {
 
@@ -33,9 +34,9 @@ object DeskListingSpec extends SimpleIOSuite {
       rules = Some("Please keep the desk clean and quiet."),
     )
 
-  val sampleDeskPricingPartial: DeskPricingPartial =
-    DeskPricingPartial(
-      pricePerHour = 30.00,
+  val sampleDeskPricingPartial: RetrievedDeskPricing =
+    RetrievedDeskPricing(
+      pricePerHour = Some(30.00),
       pricePerDay = Some(180.00),
       pricePerWeek = Some(450.00),
       pricePerMonth = Some(1000.00),
