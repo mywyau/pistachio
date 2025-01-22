@@ -9,6 +9,7 @@ import java.time.LocalTime
 import models.desk.deskListing.requests.InitiateDeskListingRequest
 import models.desk.deskListing.DeskListing
 import models.desk.deskPricing.DeskPricingPartial
+import models.desk.deskPricing.RetrievedDeskPricing
 import models.desk.deskSpecifications.requests.UpdateDeskSpecificationsRequest
 import models.desk.deskSpecifications.Availability
 import models.desk.deskSpecifications.DeskSpecificationsPartial
@@ -29,16 +30,16 @@ object DeskListingSpec extends SimpleIOSuite {
       deskId = "desk001",
       deskName = "Private Office Desk",
       description = Some("A comfortable desk in a private office space with all amenities included."),
-      deskType = PrivateDesk,
-      quantity = 5,
+      deskType = Some(PrivateDesk),
+      quantity = Some(5),
       rules = Some("Please keep the desk clean and quiet."),
-      features = List("Wi-Fi", "Power Outlets", "Monitor", "Ergonomic Chair"),
-      availability = availability
+      features = Some(List("Wi-Fi", "Power Outlets", "Monitor", "Ergonomic Chair")),
+      availability = Some(availability)
     )
 
-  val sampleDeskPricingPartial: DeskPricingPartial =
-    DeskPricingPartial(
-      pricePerHour = 30.00,
+  val sampleDeskPricingPartial: RetrievedDeskPricing =
+    RetrievedDeskPricing(
+      pricePerHour = Some(30.00),
       pricePerDay = Some(180.00),
       pricePerWeek = Some(450.00),
       pricePerMonth = Some(1000.00),

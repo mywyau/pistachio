@@ -11,6 +11,7 @@ object InitiateDeskListingRequestSpec extends SimpleIOSuite {
 
   val sampleInitiateDeskListingRequest: InitiateDeskListingRequest =
     InitiateDeskListingRequest(
+      businessId = "business001",
       officeId = "office001",
       deskId = "desk001",
       deskName = "Coffee desk",
@@ -24,6 +25,7 @@ object InitiateDeskListingRequestSpec extends SimpleIOSuite {
     val expectedJson =
       """
         |{
+        |  "businessId" : "business001",
         |  "officeId" : "office001",
         |  "deskId" : "desk001",
         |  "deskName" : "Coffee desk",
