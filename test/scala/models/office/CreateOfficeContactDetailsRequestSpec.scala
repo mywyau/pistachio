@@ -20,8 +20,8 @@ object CreateOfficeContactDetailsRequestSpec extends SimpleIOSuite {
     val expectedJson =
       """
         |{
-        |   "businessId": "business_id_1",
-        |   "officeId": "office_id_1",
+        |   "businessId": "businessId1",
+        |   "officeId": "officeId1",
         |   "primaryContactFirstName": "Michael",
         |   "primaryContactLastName": "Yau",
         |   "contactEmail": "mike@gmail.com",

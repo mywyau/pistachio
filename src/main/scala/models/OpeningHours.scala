@@ -1,4 +1,4 @@
-package models.desk.deskSpecifications
+package models
 
 import doobie.util.meta.Meta
 import io.circe.Decoder
@@ -6,10 +6,10 @@ import io.circe.Encoder
 import io.circe.generic.semiauto.*
 import io.circe.parser.decode
 import io.circe.syntax.*
+import models.Day
 
 import java.time.LocalDateTime
 import java.time.LocalTime
-import models.Day
 
 case class OpeningHours(
   day: Day, 
@@ -28,4 +28,7 @@ object OpeningHours {
       decode[OpeningHours](jsonStr)
     .getOrElse(throw new Exception("Invalid JSON"))
     )(openingHours => openingHours.asJson.noSpaces)
+
+
+  implicit val dayTypeMeta: Meta[Day] = Meta[String].imap(Day.fromString)(_.toString)  
 }

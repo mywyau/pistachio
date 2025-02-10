@@ -12,7 +12,7 @@ import models.business.specifications.BusinessSpecificationsPartial
 import models.business.specifications.errors.BusinessSpecificationsNotFound
 import models.business.specifications.requests.CreateBusinessSpecificationsRequest
 import models.database.CreateSuccess
-import models.desk.deskSpecifications.OpeningHours
+import models.OpeningHours
 import repositories.business.BusinessSpecificationsRepositoryAlgebra
 import services.business.mocks.MockBusinessSpecificationsRepository
 import testData.TestConstants.*
@@ -32,7 +32,7 @@ object BusinessSpecificationsServiceSpec extends SimpleIOSuite {
       businessId = businessId,
       businessName = businessName1,
       description = businessDescription1,
-      availability = BusinessAvailability(
+      openingHours = BusinessAvailability(
         List(
           OpeningHours(
             day = Monday,
@@ -58,7 +58,7 @@ object BusinessSpecificationsServiceSpec extends SimpleIOSuite {
       businessId = businessId,
       businessName = Some("MikeyCorp"),
       description = Some("Some description"),
-      availability = Some(
+      openingHours = Some(
         BusinessAvailability(
           List(
             OpeningHours(

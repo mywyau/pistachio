@@ -11,7 +11,7 @@ import models.database.DeleteSuccess
 import models.desk.deskListing.DeskListing
 import models.desk.deskListing.requests.InitiateDeskListingRequest
 import models.desk.deskPricing.DeskPricingPartial
-import models.desk.deskSpecifications.Availability
+
 import models.desk.deskSpecifications.DeskSpecificationsPartial
 import models.desk.deskSpecifications.PrivateDesk
 import models.desk.deskSpecifications.requests.UpdateDeskSpecificationsRequest
@@ -41,7 +41,7 @@ class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
         insertDeskPricings.update.run.transact(transactor.xa).void
     )
 
-  val availability =
+  val openingHours =
     Availability(
       days = List("Monday", "Tuesday", "Wednesday"),
       openingTime = LocalTime.of(9, 0, 0),
@@ -62,13 +62,13 @@ class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
 
     val expectedSpecifications =
       DeskSpecificationsPartial(
-        deskId = "desk001",
+        deskId = "deskId1",
         deskName = "Mikey Desk 1",
         description = Some("A quiet, private desk perfect for focused work with a comfortable chair and good lighting."),
         deskType = Some(PrivateDesk),
         quantity = Some(5),
         features = Some(List("Wi-Fi", "Power Outlets", "Ergonomic Chair", "Desk Lamp")),
-        availability = Some(Availability(
+        openingHours = Some(Availability(
           days = List("Monday", "Tuesday", "Wednesday"),
           openingTime = LocalTime.of(9, 0, 0),
           closingTime = LocalTime.of(17, 0, 0)
@@ -81,13 +81,13 @@ class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
 
     val expectedResult =
       DeskListing(
-        deskId = "desk001",
+        deskId = "deskId1",
         expectedSpecifications,
         expectedPricing
       )
 
     for {
-      deskListingOpt <- businessDeskRepo.findByDeskId("desk001")
+      deskListingOpt <- businessDeskRepo.findByDeskId("deskId1")
     } yield expect(deskListingOpt == Some(expectedResult))
   }
 

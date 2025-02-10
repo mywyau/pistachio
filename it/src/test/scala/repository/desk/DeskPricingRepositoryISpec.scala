@@ -50,7 +50,7 @@ class DeskPricingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
       )
 
     for {
-      deskPricingOpt <- deskPricingRepo.findByDeskId("desk001")
+      deskPricingOpt <- deskPricingRepo.findByDeskId("deskId1")
     } yield expect(deskPricingOpt == Some(expectedResult))
   }
 
@@ -82,7 +82,7 @@ class DeskPricingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
       )
 
     for {
-      deskPricingOpt <- deskPricingRepo.update("desk001", updateRequest)
+      deskPricingOpt <- deskPricingRepo.update("deskId1", updateRequest)
     } yield expect(deskPricingOpt == Valid(UpdateSuccess))
   }
 

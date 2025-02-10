@@ -49,10 +49,10 @@ class OfficeAddressRepositoryISpec(global: GlobalRead) extends IOSuite {
 
   test(".findByBusinessId() - should return the office address if business_id exists for a previously created office address") { officeAddressRepo =>
 
-    val expectedResult = testOfficeAddressPartial("business_id_1", "office_id_1")
+    val expectedResult = testOfficeAddressPartial("businessId1", "officeId1")
 
     for {
-      officeAddressOpt <- officeAddressRepo.findByOfficeId("office_id_1")
+      officeAddressOpt <- officeAddressRepo.findByOfficeId("officeId1")
     } yield expect(officeAddressOpt == Valid(expectedResult))
   }
 
@@ -67,11 +67,11 @@ class OfficeAddressRepositoryISpec(global: GlobalRead) extends IOSuite {
       UpdateOfficeAddressRequest(
         buildingName = Some("Empire State Building"),
         floorNumber = Some("5th Floor"),
-        street = Some("123 Main Street"),
+        street = Some("Main street 123"),
         city = Some("New York"),
         country = Some("USA"),
         county = Some("Manhattan"),
-        postcode = Some("10001"),
+        postcode = Some("123456"),
         latitude = Some(40.748817),
         longitude = Some(-73.985428)
       )

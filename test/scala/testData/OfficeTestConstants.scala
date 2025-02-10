@@ -4,8 +4,6 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import models.desk.deskListing.DeskListingCard
 import models.desk.deskPricing.RetrievedDeskPricing
-import models.desk.deskSpecifications.Availability
-import models.desk.deskSpecifications.OpeningHours
 import models.office.address_details.requests.CreateOfficeAddressRequest
 import models.office.address_details.requests.UpdateOfficeAddressRequest
 import models.office.address_details.OfficeAddressPartial
@@ -14,9 +12,9 @@ import models.office.contact_details.requests.CreateOfficeContactDetailsRequest
 import models.office.contact_details.requests.UpdateOfficeContactDetailsRequest
 import models.office.specifications.requests.CreateOfficeSpecificationsRequest
 import models.office.specifications.requests.UpdateOfficeSpecificationsRequest
-import models.office.specifications.OfficeAvailability
 import models.office.specifications.OfficeSpecifications
 import models.Monday
+import models.OpeningHours
 import models.Tuesday
 import testData.DeskTestConstants.description1
 import testData.TestConstants.*
@@ -40,19 +38,17 @@ object OfficeTestConstants {
       longitude = Some(longitude1)
     )
 
-  val officeAvailability1 =
-    OfficeAvailability(
-      List(
-        OpeningHours(
-          day = Monday,
-          openingTime = openingTime0900,
-          closingTime = closingTime1700
-        ),
-        OpeningHours(
-          day = Tuesday,
-          openingTime = openingTime0900,
-          closingTime = closingTime1700
-        )
+  val officeOpeningHours1 =
+    List(
+      OpeningHours(
+        day = Monday,
+        openingTime = openingTime0900,
+        closingTime = closingTime1700
+      ),
+      OpeningHours(
+        day = Tuesday,
+        openingTime = openingTime0900,
+        closingTime = closingTime1700
       )
     )
 
@@ -67,7 +63,7 @@ object OfficeTestConstants {
       totalDesks = 3,
       capacity = 50,
       amenities = List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"),
-      availability = officeAvailability1,
+      openingHours = officeOpeningHours1,
       rules = Some(officeRules)
     )
 
@@ -87,13 +83,13 @@ object OfficeTestConstants {
       businessId = businessId1,
       officeId = officeId1,
       officeName = Some(officeName1),
-      description = Some("A vibrant office space in the heart of the city, ideal for teams or individuals."),
+      description = Some("some office description"),
       officeType = Some(OpenPlanOffice),
       numberOfFloors = Some(3),
       totalDesks = Some(3),
       capacity = Some(50),
       amenities = Some(List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking")),
-      availability = Some(officeAvailability1),
+      openingHours = Some(officeOpeningHours1),
       rules = Some(officeRules),
       createdAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0),
       updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
@@ -129,7 +125,7 @@ object OfficeTestConstants {
       totalDesks = 3,
       capacity = 50,
       amenities = List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"),
-      availability = officeAvailability1,
+      openingHours = officeOpeningHours1,
       rules = Some(officeRules)
     )
 

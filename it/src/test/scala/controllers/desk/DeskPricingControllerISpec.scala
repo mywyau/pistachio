@@ -71,7 +71,7 @@ class DeskPricingControllerISpec(global: GlobalRead) extends IOSuite with Contro
   }
 
   test(
-    "PUT - /pistachio/desk/pricing/update/desk001 - should update the desk for a given desk id"
+    "PUT - /pistachio/desk/pricing/update/deskId1 - should update the desk for a given desk id"
   ) { (sharedResources, log) =>
 
     val transactor = sharedResources._1.xa
@@ -87,7 +87,7 @@ class DeskPricingControllerISpec(global: GlobalRead) extends IOSuite with Contro
       )
 
     val request =
-      Request[IO](PUT, uri"http://127.0.0.1:9999/pistachio/desk/pricing/update/desk001")
+      Request[IO](PUT, uri"http://127.0.0.1:9999/pistachio/desk/pricing/update/deskId1")
         .withEntity(updateRequest.asJson)
 
     client.run(request).use { response =>

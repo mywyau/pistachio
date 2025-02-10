@@ -55,7 +55,7 @@ class BusinessSpecificationsControllerISpec(global: GlobalRead) extends IOSuite 
     } yield (transactor, client)
 
   test(
-    "GET - /pistachio/business/businesses/specifications/business_id_1 - " +
+    "GET - /pistachio/business/businesses/specifications/businessId1 - " +
       "given a business_id, find the business specifications data for given id, returning OK and the specifications json"
   ) { (sharedResources, log) =>
 
@@ -63,7 +63,7 @@ class BusinessSpecificationsControllerISpec(global: GlobalRead) extends IOSuite 
     val client = sharedResources._2.client
 
     val request =
-      Request[IO](GET, uri"http://127.0.0.1:9999/pistachio/business/businesses/specifications/business_id_1")
+      Request[IO](GET, uri"http://127.0.0.1:9999/pistachio/business/businesses/specifications/businessId1")
 
     val expectedBusinessSpecifications = testBusinessSpecs
 
@@ -115,7 +115,7 @@ class BusinessSpecificationsControllerISpec(global: GlobalRead) extends IOSuite 
       UpdateBusinessSpecificationsRequest(
         businessName = "MikeyCorp",
         description = "Some description",
-        availability = BusinessAvailability(
+        openingHours = BusinessAvailability(
           days = List("Monday", "Tuesday"),
           openingTime = LocalTime.of(10, 0, 0),
           closingTime = LocalTime.of(10, 30, 0)

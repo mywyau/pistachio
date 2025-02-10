@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import mocks.MockOfficeListingRepository
 import models.database.*
-import models.desk.deskSpecifications.OpeningHours
+import models.OpeningHours
 import models.office.address_details.requests.CreateOfficeAddressRequest
 import models.office.address_details.OfficeAddressPartial
 import models.office.adts.OpenPlanOffice
@@ -39,7 +39,7 @@ object OfficeListingServiceConstants {
       totalDesks = 3,
       capacity = 50,
       amenities = List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"),
-      availability = OfficeAvailability(
+      openingHours = OfficeAvailability(
         List(
           OpeningHours(
             day = Monday,
@@ -53,20 +53,20 @@ object OfficeListingServiceConstants {
           )
         )
       ),
-      rules = Some("No smoking. Maintain cleanliness.")
+      rules = Some("Please keep the office clean and tidy.")
     )
 
   val testCreateOfficeAddressRequest =
     CreateOfficeAddressRequest(
       businessId = businessId1,
       officeId = officeId1,
-      buildingName = Some("build_123"),
+      buildingName = Some("butter building"),
       floorNumber = Some("floor 1"),
-      street = Some("123 Main Street"),
+      street = Some("Main street 123"),
       city = Some("New York"),
       country = Some("USA"),
-      county = Some("New York County"),
-      postcode = Some("10001"),
+      county = Some("County 123"),
+      postcode = Some("123456"),
       latitude = Some(100.1),
       longitude = Some(-100.1)
     )
@@ -115,7 +115,7 @@ object OfficeListingServiceConstants {
       totalDesks = None,
       capacity = None,
       amenities = None,
-      availability = None,
+      openingHours = None,
       rules = None
     )
 

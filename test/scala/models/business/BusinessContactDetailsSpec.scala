@@ -4,27 +4,10 @@ import cats.effect.IO
 import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
-import models.business.contact_details.BusinessContactDetails
+import testData.BusinessTestConstants.testBusinessContactDetails
 import weaver.SimpleIOSuite
 
-import java.time.LocalDateTime
-
 object BusinessContactDetailsSpec extends SimpleIOSuite {
-
-  val testBusinessContactDetails: BusinessContactDetails =
-    BusinessContactDetails(
-      id = Some(1),
-      userId = "user_id_1",
-      businessId = "business_id_1",
-      businessName = Some("mikey_corp"),
-      primaryContactFirstName = Some("Mikey"),
-      primaryContactLastName = Some("Yau"),
-      contactEmail = Some("mikey5922@gmail.com"),
-      contactNumber = Some("07402205071"),
-      websiteUrl = Some("mikey5922.com"),
-      createdAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0),
-      updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
-    )
 
   test("BusinessContactDetails model encodes correctly to JSON") {
 
@@ -35,7 +18,7 @@ object BusinessContactDetailsSpec extends SimpleIOSuite {
         |{
         |  "id": 1,
         |  "userId": "user_id_1",
-        |  "businessId": "business_id_1",
+        |  "businessId": "businessId1",
         |  "businessName": "mikey_corp",
         |  "primaryContactFirstName": "Mikey",
         |  "primaryContactLastName": "Yau",
@@ -51,10 +34,7 @@ object BusinessContactDetailsSpec extends SimpleIOSuite {
 
     for {
       _ <- IO("")
-    } yield {
-      expect(jsonResult == expectedResult)
-    }
+    } yield expect(jsonResult == expectedResult)
   }
 
 }
-

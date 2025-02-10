@@ -15,10 +15,10 @@ object BusinessListingControllerConstants {
   val testCreateBusinessSpecificationsRequest: CreateBusinessSpecificationsRequest =
     CreateBusinessSpecificationsRequest(
       userId = "user_id_1",
-      businessId = "business_id_1",
-      businessName = "Modern Workspace",
+      businessId = "businessId1",
+      businessName = "Maginificanent Office",
       description = "A vibrant business space in the heart of the city, ideal for teams or individuals.",
-      availability = BusinessAvailability(
+      openingHours = BusinessAvailability(
         days = List("Monday", "Tuesday"),
         openingTime = LocalTime.of(10, 0, 0),
         closingTime = LocalTime.of(10, 30, 0)
@@ -28,15 +28,15 @@ object BusinessListingControllerConstants {
   val testCreateBusinessAddressRequest: CreateBusinessAddressRequest =
     CreateBusinessAddressRequest(
       userId = "user_id_1",
-      businessId = "business_id_1",
+      businessId = "businessId1",
       businessName = Some("MikeyCorp"),
       buildingName = Some("BusinessListingControllerISpec Building"),
       floorNumber = Some("floor 1"),
-      street = Some("123 Main Street"),
+      street = Some("Main street 123"),
       city = Some("New York"),
       country = Some("USA"),
-      county = Some("New York County"),
-      postcode = Some("10001"),
+      county = Some("County 123"),
+      postcode = Some("123456"),
       latitude = Some(100.1),
       longitude = Some(-100.1)
     )
@@ -44,7 +44,7 @@ object BusinessListingControllerConstants {
   val testCreateBusinessContactDetailsRequest: CreateBusinessContactDetailsRequest =
     CreateBusinessContactDetailsRequest(
       userId = "user_id_1",
-      businessId = "business_id_1",
+      businessId = "businessId1",
       primaryContactFirstName = "Michael",
       primaryContactLastName = "Yau",
       contactEmail = "mike@gmail.com",

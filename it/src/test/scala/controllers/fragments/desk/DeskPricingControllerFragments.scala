@@ -45,7 +45,7 @@ object DeskPricingControllerFragments {
           'user001',
           'business001',
           'office001',
-          'desk001',
+          'deskId1',
           15.00,
           100.00,
           600.00,

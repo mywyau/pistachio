@@ -17,7 +17,7 @@ import models.desk.deskListing.DeskListing
 import models.desk.deskListing.DeskListingCard
 import models.desk.deskPricing.DeskPricingPartial
 import models.desk.deskSpecifications.requests.UpdateDeskSpecificationsRequest
-import models.desk.deskSpecifications.Availability
+
 import models.desk.deskSpecifications.DeskSpecificationsPartial
 import models.desk.deskSpecifications.PrivateDesk
 import models.responses.CreatedResponse
@@ -69,7 +69,7 @@ class DeskListingControllerISpec(global: GlobalRead) extends IOSuite with Contro
         deskType = Some(PrivateDesk),
         quantity = Some(3),
         features = Some(List("Wi-Fi", "Power Outlets", "Whiteboard", "Projector")),
-        availability = Some(
+        openingHours = Some(
           Availability(
             List("Monday", "Wednesday", "Friday"),
             LocalTime.of(9, 0, 0),
@@ -123,7 +123,7 @@ class DeskListingControllerISpec(global: GlobalRead) extends IOSuite with Contro
         deskType = Some(PrivateDesk),
         quantity = None,
         features = None,
-        availability =None,
+        openingHours =None,
         rules = None
       )
 

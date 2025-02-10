@@ -5,24 +5,10 @@ import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import models.business.address.requests.UpdateBusinessAddressRequest
+import testData.BusinessTestConstants.testUpdateBusinessAddressRequest
 import weaver.SimpleIOSuite
 
-import java.time.LocalDateTime
-
 object UpdateBusinessAddressRequestSpec extends SimpleIOSuite {
-
-  val testUpdateBusinessAddressRequest: UpdateBusinessAddressRequest =
-    UpdateBusinessAddressRequest(
-      buildingName = Some("Nameless Building"),
-      floorNumber = Some("floor 1"),
-      street = "123 Main Street",
-      city = "New York",
-      country = "USA",
-      county = "New York County",
-      postcode = "CF3 3NJ",
-      latitude = 100.1,
-      longitude = -100.1,
-    )
 
   test("UpdateBusinessAddressRequest model encodes correctly to JSON") {
 
@@ -33,10 +19,10 @@ object UpdateBusinessAddressRequestSpec extends SimpleIOSuite {
         |{
         |  "buildingName": "Nameless Building",
         |  "floorNumber": "floor 1",
-        |  "street": "123 Main Street",
+        |  "street": "Main street 123",
         |  "city": "New York",
         |  "country": "USA",
-        |  "county": "New York County",
+        |  "county": "County 123",
         |  "postcode": "CF3 3NJ",
         |  "latitude": 100.1,
         |  "longitude": -100.1
@@ -47,10 +33,7 @@ object UpdateBusinessAddressRequestSpec extends SimpleIOSuite {
 
     for {
       _ <- IO("")
-    } yield {
-      expect(jsonResult == expectedResult)
-    }
+    } yield expect(jsonResult == expectedResult)
   }
 
 }
-

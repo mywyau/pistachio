@@ -17,9 +17,9 @@ object DeskListingCardSpec extends SimpleIOSuite {
     val expectedJson =
       """
         |{
-        |  "deskId" : "desk001",
-        |  "deskName" : "Coffee desk",
-        |  "description" : "Some desc description"
+        |  "deskId" : "deskId1",
+        |  "deskName" : "Luxury supreme desk",
+        |  "description" : "Some description"
         |}
       """.stripMargin
 

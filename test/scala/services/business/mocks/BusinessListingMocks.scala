@@ -17,7 +17,7 @@ import models.database.CreateSuccess
 import models.database.DatabaseError
 import models.database.DatabaseErrors
 import models.database.DatabaseSuccess
-import models.desk.deskSpecifications.OpeningHours
+import models.OpeningHours
 import repositories.business.BusinessListingRepositoryAlgebra
 
 object BusinessListingMocks {
@@ -48,7 +48,7 @@ object BusinessListingMocks {
       websiteUrl = Some("https://testbusiness.com")
     )
 
-  val mockBusinessAvailability: BusinessAvailability =
+  val mockBusinessAvailability: BusinessopeningHours =
     BusinessAvailability(
       List(
         OpeningHours(
@@ -70,7 +70,7 @@ object BusinessListingMocks {
       businessId = "business-001",
       businessName = Some("Test Business"),
       description = Some("A test business providing exemplary services."),
-      availability = Some(mockBusinessAvailability)
+      openingHours = Some(mockBusinessAvailability)
     )
 
   val mockBusinessListings: List[BusinessListing] = List(

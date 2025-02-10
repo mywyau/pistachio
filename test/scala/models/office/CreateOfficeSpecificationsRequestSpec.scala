@@ -6,7 +6,6 @@ import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import java.time.LocalDateTime
 import java.time.LocalTime
-import models.desk.deskSpecifications.OpeningHours
 import models.office.adts.*
 import models.office.specifications.requests.CreateOfficeSpecificationsRequest
 import models.office.specifications.OfficeAvailability
@@ -24,21 +23,30 @@ object CreateOfficeSpecificationsRequestSpec extends SimpleIOSuite {
     val expectedJson =
       """
         |{
-        |   "businessId": "business_id_1",
-        |   "officeId": "office_id_1",
-        |   "officeName": "Modern Workspace",
-        |   "description": "A vibrant office space in the heart of the city, ideal for teams or individuals.",
+        |   "businessId": "businessId1",
+        |   "officeId": "officeId1",
+        |   "officeName": "Maginificanent Office",
+        |   "description": "some office description",
         |   "officeType": "OpenPlanOffice",
         |   "numberOfFloors": 3,
         |   "totalDesks": 3,
         |   "capacity": 50,
         |   "availability": {
-        |     "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        |     "openingTime": "10:00:00",
-        |     "closingTime": "10:30:00"
+        |     [
+        |       {
+        |          "day": Monday"
+        |          "openingTime": "09:00:00",
+        |          "closingTime": "17:00:00"
+        |       },
+        |       {
+        |          "day": Tuesday"
+        |          "openingTime": "09:00:00",
+        |          "closingTime": "17:00:00"
+        |       }
+        |     ]
         |   },
         |   "amenities": ["Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"],
-        |   "rules": "No smoking. Maintain cleanliness."
+        |   "rules": "Please keep the office clean and tidy."
         |}
         |""".stripMargin
 
@@ -46,6 +54,7 @@ object CreateOfficeSpecificationsRequestSpec extends SimpleIOSuite {
 
     for {
       _ <- IO("")
+      _ <- IO(println(jsonResult))
     } yield expect(jsonResult == expectedResult)
   }
 

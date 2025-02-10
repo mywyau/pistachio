@@ -17,13 +17,13 @@ object UpdateOfficeAddressRequestSpec extends SimpleIOSuite {
     val expectedJson =
       """
         |{
-        |   "buildingName": "build_123",
+        |   "buildingName": "butter building",
         |   "floorNumber": "floor 1",
-        |   "street": "123 Main Street",
+        |   "street": "Main street 123",
         |   "city": "New York",
         |   "country": "USA",
-        |   "county": "New York County",
-        |   "postcode": "10001",
+        |   "county": "County 123",
+        |   "postcode": "123456",
         |   "latitude": 100.1,
         |   "longitude": -100.1
         |}

@@ -69,7 +69,7 @@ class OfficeSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite {
         totalDesks = Some(20),
         capacity = Some(50),
         amenities = Some(List("WiFi", "Parking")),
-        availability = Some(
+        openingHours = Some(
           OfficeAvailability(
             days = List("Monday", "Friday"),
             openingTime = LocalTime.of(9, 0, 0),
@@ -100,7 +100,7 @@ class OfficeSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite {
         totalDesks = 5000,
         capacity = 100000,
         amenities = List("Wi-Fi", "Coffee Machine", "Meeting Rooms"),
-        availability = OfficeAvailability(
+        openingHours = OfficeAvailability(
           days = List("Monday", "Friday"),
           openingTime = LocalTime.of(9, 0, 0),
           closingTime = LocalTime.of(17, 0, 0)
@@ -119,7 +119,7 @@ class OfficeSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite {
         totalDesks = Some(5000),
         capacity = Some(100000),
         amenities = Some(List("Wi-Fi", "Coffee Machine", "Meeting Rooms")),
-        availability = Some(
+        openingHours = Some(
           OfficeAvailability(
             days = List("Monday", "Friday"),
             openingTime = LocalTime.of(9, 0, 0),

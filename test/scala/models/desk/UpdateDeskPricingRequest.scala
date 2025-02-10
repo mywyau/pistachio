@@ -12,15 +12,6 @@ object UpdateDeskPricingRequestSpec extends SimpleIOSuite {
 
   test("UpdateDeskPricingRequest MAX model encodes correctly to JSON") {
 
-    val sampleUpdateRequest: UpdateDeskPricingRequest =
-      UpdateDeskPricingRequest(
-        pricePerHour = 30.00,
-        pricePerDay = Some(180.00),
-        pricePerWeek = Some(450.00),
-        pricePerMonth = Some(1000.00),
-        pricePerYear = Some(9000.00)
-      )
-
     val jsonResult = sampleUpdateRequest.asJson
 
     val expectedJson =
@@ -42,15 +33,6 @@ object UpdateDeskPricingRequestSpec extends SimpleIOSuite {
   }
 
   test("UpdateDeskPricingRequest MIN model encodes correctly to JSON") {
-
-    val sampleUpdateRequestMin: UpdateDeskPricingRequest =
-      UpdateDeskPricingRequest(
-        pricePerHour = 30.00,
-        pricePerDay = None,
-        pricePerWeek = None,
-        pricePerMonth = None,
-        pricePerYear = None
-      )
 
     val jsonResult = sampleUpdateRequestMin.asJson
 

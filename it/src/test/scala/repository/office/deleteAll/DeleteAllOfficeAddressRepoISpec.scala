@@ -48,12 +48,12 @@ class DeleteAllOfficeAddressRepoISpec(global: GlobalRead) extends IOSuite {
     setup
   }
 
-  test(".deleteAllByBusinessId() - should delete multiple offices for the same business_id - i.e. business_id_1") { officeAddressRepo =>
+  test(".deleteAllByBusinessId() - should delete multiple offices for the same business_id - i.e. businessId1") { officeAddressRepo =>
 
-    val expectedResult = testOfficeAddressPartial("business_id_1", "office_id_1")
+    val expectedResult = testOfficeAddressPartial("businessId1", "officeId1")
 
     for {
-      result <- officeAddressRepo.deleteAllByBusinessId("business_id_1")
+      result <- officeAddressRepo.deleteAllByBusinessId("businessId1")
     } yield expect(result == Valid(DeleteSuccess))
   }
 }

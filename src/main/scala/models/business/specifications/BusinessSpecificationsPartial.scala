@@ -6,13 +6,14 @@ import io.circe.Decoder
 import io.circe.Encoder
 import java.time.LocalDateTime
 import models.business.specifications.BusinessAvailability
+import models.OpeningHours
 
 case class BusinessSpecificationsPartial(
   userId: String,
   businessId: String,
   businessName: Option[String],
   description: Option[String],
-  availability: Option[BusinessAvailability]
+  openingHours: Option[List[OpeningHours]]
 )
 
 object BusinessSpecificationsPartial {

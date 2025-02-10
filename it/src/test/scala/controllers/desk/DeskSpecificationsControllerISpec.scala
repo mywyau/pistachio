@@ -10,7 +10,7 @@ import io.circe.syntax.*
 import controllers.constants.DeskSpecificationsControllerConstants.*
 import models.database.CreateSuccess
 import models.database.UpdateSuccess
-import models.desk.deskSpecifications.Availability
+
 import models.desk.deskSpecifications.DeskSpecificationsPartial
 import models.desk.deskSpecifications.PrivateDesk
 import models.desk.deskSpecifications.requests.UpdateDeskSpecificationsRequest
@@ -62,7 +62,7 @@ class DeskSpecificationsControllerISpec(global: GlobalRead) extends IOSuite with
         deskType = Some(PrivateDesk),
         quantity = Some(3),
         features = Some(List("Wi-Fi", "Power Outlets", "Whiteboard", "Projector")),
-        availability = Some(Availability(
+        openingHours = Some(Availability(
           List("Monday", "Wednesday", "Friday"),
           LocalTime.of(9, 0, 0),
           LocalTime.of(17, 0, 0)
@@ -81,7 +81,7 @@ class DeskSpecificationsControllerISpec(global: GlobalRead) extends IOSuite with
   }
 
   test(
-    "PUT - /pistachio/business/desk/specifications/details/update/desk001 - should update the desk for a given desk id"
+    "PUT - /pistachio/business/desk/specifications/details/update/deskId1 - should update the desk for a given desk id"
   ) { (sharedResources, log) =>
 
     val transactor = sharedResources._1.xa
@@ -94,7 +94,7 @@ class DeskSpecificationsControllerISpec(global: GlobalRead) extends IOSuite with
         deskType = PrivateDesk,
         quantity = 5, 
         features = List("Wi-Fi", "Power Outlets", "Ergonomic Chair", "Desk Lamp"),
-        availability = Availability(
+        openingHours = Availability(
           List("Monday", "Tuesday", "Wednesday"),
           LocalTime.of(9, 0, 0),
           LocalTime.of(17, 0, 0)
@@ -103,7 +103,7 @@ class DeskSpecificationsControllerISpec(global: GlobalRead) extends IOSuite with
       )
 
     val request =
-      Request[IO](PUT, uri"http://127.0.0.1:9999/pistachio/business/desk/specifications/details/update/desk001")
+      Request[IO](PUT, uri"http://127.0.0.1:9999/pistachio/business/desk/specifications/details/update/deskId1")
         .withEntity(updateRequest.asJson)
 
     client.run(request).use { response =>

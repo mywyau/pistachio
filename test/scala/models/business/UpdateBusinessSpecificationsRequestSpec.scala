@@ -4,24 +4,10 @@ import cats.effect.IO
 import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
-import models.business.specifications.BusinessAvailability
-import models.business.specifications.requests.UpdateBusinessSpecificationsRequest
+import testData.BusinessTestConstants.testUpdateBusinessSpecificationsRequest
 import weaver.SimpleIOSuite
 
-import java.time.LocalTime
-
 object UpdateBusinessSpecificationsRequestSpec extends SimpleIOSuite {
-
-  val testUpdateBusinessSpecificationsRequest: UpdateBusinessSpecificationsRequest =
-    UpdateBusinessSpecificationsRequest(
-      businessName = "MikeyCorp",
-      description = "Some description",
-      availability = BusinessAvailability(
-        days = List("Monday", "Tuesday"),
-        openingTime = LocalTime.of(10, 0, 0),
-        closingTime = LocalTime.of(10, 30, 0)
-      )
-    )
 
   test("UpdateBusinessSpecificationsRequest model encodes correctly to JSON") {
 
@@ -32,11 +18,20 @@ object UpdateBusinessSpecificationsRequestSpec extends SimpleIOSuite {
         |{
         |  "businessName": "MikeyCorp",
         |  "description": "Some description",
-        |  "availability": {
-        |    "days": ["Monday", "Tuesday"],
-        |    "openingTime": "10:00:00",
-        |    "closingTime": "10:30:00"
-        |  }
+        |   "availability": {
+        |     [
+        |       {
+        |          "day": Monday"
+        |          "openingTime": "09:00:00",
+        |          "closingTime": "17:00:00"
+        |       },
+        |       {
+        |          "day": Tuesday"
+        |          "openingTime": "09:00:00",
+        |          "closingTime": "17:00:00"
+        |       }
+        |     ]
+        |   }
         |}
         |""".stripMargin
 

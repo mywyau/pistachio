@@ -18,15 +18,15 @@ object CreateOfficeAddressRequestSpec extends SimpleIOSuite {
     val expectedJson =
       """
         |{
-        |   "businessId": "business_id_1",
-        |   "officeId": "office_id_1",
-        |   "buildingName": "build_123",
+        |   "businessId": "businessId1",
+        |   "officeId": "officeId1",
+        |   "buildingName": "butter building",
         |   "floorNumber": "floor 1",
-        |   "street": "123 Main Street",
+        |   "street": "Main street 123",
         |   "city": "New York",
         |   "country": "USA",
-        |   "county": "New York County",
-        |   "postcode": "10001",
+        |   "county": "County 123",
+        |   "postcode": "123456",
         |   "latitude": 100.1,
         |   "longitude": -100.1
         |}

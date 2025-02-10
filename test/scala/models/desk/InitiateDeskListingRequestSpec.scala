@@ -5,18 +5,10 @@ import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import models.desk.deskListing.requests.InitiateDeskListingRequest
+import testData.DeskTestConstants.sampleInitiateDeskListingRequest
 import weaver.SimpleIOSuite
 
 object InitiateDeskListingRequestSpec extends SimpleIOSuite {
-
-  val sampleInitiateDeskListingRequest: InitiateDeskListingRequest =
-    InitiateDeskListingRequest(
-      businessId = "business001",
-      officeId = "office001",
-      deskId = "desk001",
-      deskName = "Coffee desk",
-      description = "Some desc description"
-    )
 
   test("InitiateDeskListingRequest model encodes correctly to JSON") {
 
@@ -27,9 +19,9 @@ object InitiateDeskListingRequestSpec extends SimpleIOSuite {
         |{
         |  "businessId" : "business001",
         |  "officeId" : "office001",
-        |  "deskId" : "desk001",
-        |  "deskName" : "Coffee desk",
-        |  "description" : "Some desc description"
+        |  "deskId" : "deskId1",
+        |  "deskName" : "Luxury supreme desk",
+        |  "description" : "Some description"
         |}
       """.stripMargin
 

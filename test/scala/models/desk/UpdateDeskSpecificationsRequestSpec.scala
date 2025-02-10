@@ -7,8 +7,8 @@ import io.circe.syntax.EncoderOps
 import java.time.LocalDateTime
 import java.time.LocalTime
 import models.desk.deskSpecifications.requests.UpdateDeskSpecificationsRequest
-import models.desk.deskSpecifications.Availability
-import models.desk.deskSpecifications.OpeningHours
+
+import models.OpeningHours
 import models.desk.deskSpecifications.PrivateDesk
 import models.Monday
 import weaver.SimpleIOSuite
@@ -17,20 +17,9 @@ import testData.DeskTestConstants.*
 
 object UpdateDeskSpecificationsRequestSpec extends SimpleIOSuite {
 
-  val sampleUpdateRequest: UpdateDeskSpecificationsRequest =
-    UpdateDeskSpecificationsRequest(
-      deskName = deskName,
-      description = Some(description2),
-      deskType = PrivateDesk,
-      quantity = 5,
-      rules = Some(rules),
-      features = List("Wi-Fi", "Power Outlets", "Monitor", "Ergonomic Chair"),
-      availability = availability
-    )
-
   test("UpdateDeskSpecificationsRequest model encodes correctly to JSON") {
 
-    val jsonResult = sampleUpdateRequest.asJson
+    val jsonResult = sampleUpdateDeskSpecificationsRequest.asJson
 
     val expectedJson =
       """
@@ -42,16 +31,18 @@ object UpdateDeskSpecificationsRequestSpec extends SimpleIOSuite {
         |  "rules": "Please keep the desk clean and quiet.",
         |  "features": ["Wi-Fi", "Power Outlets", "Monitor", "Ergonomic Chair"],
         |  "availability": {
-        |    [
-        |       "day": Monday"
-        |       "openingTime": "10:00:00",
-        |       "closingTime": "10:30:00"
-        |    ],
-        |    [
-        |       "day": Tuesday"
-        |       "openingTime": "10:00:00",
-        |       "closingTime": "10:30:00"
-        |    ]
+        |     [
+        |       {
+        |          "day": Monday"
+        |          "openingTime": "09:00:00",
+        |          "closingTime": "17:00:00"
+        |       },
+        |       {
+        |          "day": Tuesday"
+        |          "openingTime": "09:00:00",
+        |          "closingTime": "17:00:00"
+        |       }
+        |     ]
         |  }
         |}
         |""".stripMargin

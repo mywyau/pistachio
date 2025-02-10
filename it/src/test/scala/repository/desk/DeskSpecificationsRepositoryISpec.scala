@@ -8,7 +8,7 @@ import doobie.*
 import doobie.implicits.*
 import models.database.CreateSuccess
 import models.database.DeleteSuccess
-import models.desk.deskSpecifications.Availability
+
 import models.desk.deskSpecifications.DeskSpecificationsPartial
 import models.desk.deskSpecifications.PrivateDesk
 import models.desk.deskSpecifications.requests.UpdateDeskSpecificationsRequest
@@ -33,7 +33,7 @@ class DeskSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite with
         insertDeskSpecifications.update.run.transact(transactor.xa).void
     )
 
-  val availability =
+  val openingHours =
     Availability(
       days = List("Monday", "Tuesday", "Wednesday"),
       openingTime = LocalTime.of(9, 0, 0),
@@ -54,13 +54,13 @@ class DeskSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite with
 
     val expectedResult =
       DeskSpecificationsPartial(
-        deskId = "desk001",
+        deskId = "deskId1",
         deskName = "Mikey Desk 1",
         description = Some("A quiet, private desk perfect for focused work with a comfortable chair and good lighting."),
         deskType = Some(PrivateDesk),
         quantity = Some(5),
         features = Some(List("Wi-Fi", "Power Outlets", "Ergonomic Chair", "Desk Lamp")),
-        availability = Some(Availability(
+        openingHours = Some(Availability(
           days = List("Monday", "Tuesday", "Wednesday"),
           openingTime = LocalTime.of(9, 0, 0),
           closingTime = LocalTime.of(17, 0, 0)
@@ -69,7 +69,7 @@ class DeskSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite with
       )
 
     for {
-      deskSpecificationsOpt <- businessDeskRepo.findByDeskId("desk001")
+      deskSpecificationsOpt <- businessDeskRepo.findByDeskId("deskId1")
     } yield expect(deskSpecificationsOpt == Some(expectedResult))
   }
 
@@ -77,13 +77,13 @@ class DeskSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite with
 
     val expectedResult =
       DeskSpecificationsPartial(
-        deskId = "desk001",
+        deskId = "deskId1",
         deskName = "Mikey Desk 1",
         description = Some("A quiet, private desk perfect for focused work with a comfortable chair and good lighting."),
         deskType = Some(PrivateDesk),
         quantity = Some(5),
         features = Some(List("Wi-Fi", "Power Outlets", "Ergonomic Chair", "Desk Lamp")),
-        availability = Some(Availability(
+        openingHours = Some(Availability(
           days = List("Monday", "Tuesday", "Wednesday"),
           openingTime = LocalTime.of(9, 0, 0),
           closingTime = LocalTime.of(17, 0, 0)
@@ -105,7 +105,7 @@ class DeskSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite with
         deskType = PrivateDesk,
         quantity = 5,
         features = List("Wi-Fi", "Power Outlets", "Ergonomic Chair", "Desk Lamp"),
-        availability = Availability(
+        openingHours = Availability(
           days = List("Monday", "Tuesday", "Wednesday"),
           openingTime = LocalTime.of(9, 0, 0),
           closingTime = LocalTime.of(17, 0, 0)

@@ -48,7 +48,7 @@ object OfficeListingRepoITConstants {
       totalDesks = None,
       capacity = None,
       amenities = None,
-      availability = None,
+      openingHours = None,
       rules = None
     )
 

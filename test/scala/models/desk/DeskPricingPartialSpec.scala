@@ -5,18 +5,10 @@ import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import models.desk.deskPricing.DeskPricingPartial
+import testData.DeskTestConstants.sampleDeskPricingPartial
 import weaver.SimpleIOSuite
 
 object DeskPricingPartialSpec extends SimpleIOSuite {
-
-  val sampleDeskPricingPartial: DeskPricingPartial =
-    DeskPricingPartial(
-      pricePerHour = 30.00,
-      pricePerDay = Some(180.00),
-      pricePerWeek = Some(450.00),
-      pricePerMonth = Some(1000.00),
-      pricePerYear = Some(9000.00)
-    )
 
   test("DeskPricingPartial model encodes correctly to JSON") {
 

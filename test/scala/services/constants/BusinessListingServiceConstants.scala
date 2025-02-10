@@ -7,7 +7,7 @@ import models.business.contact_details.requests.CreateBusinessContactDetailsRequ
 import models.business.specifications.BusinessAvailability
 import models.business.specifications.requests.CreateBusinessSpecificationsRequest
 import models.business_listing.requests.BusinessListingRequest
-import models.desk.deskSpecifications.OpeningHours
+import models.OpeningHours
 import testData.TestConstants.*
 
 import java.time.LocalDateTime
@@ -37,7 +37,7 @@ object BusinessListingServiceConstants {
       businessId = businessId1,
       businessName = businessName1,
       description = businessDescription1,
-      availability = BusinessAvailability(
+      openingHours = BusinessAvailability(
         List(
           OpeningHours(
             day = Monday,

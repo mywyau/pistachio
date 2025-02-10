@@ -9,6 +9,8 @@ import doobie.implicits.*
 import doobie.implicits.javasql.*
 import doobie.postgres.implicits.*
 import doobie.util.meta.Meta
+import io.circe.syntax.EncoderOps
+import io.circe.parser.decode
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import models.database.*
@@ -18,9 +20,10 @@ import models.office.adts.OfficeType
 import models.office.contact_details.requests.UpdateOfficeContactDetailsRequest
 import models.office.contact_details.OfficeContactDetails
 import models.office.contact_details.OfficeContactDetailsPartial
+import models.office.specifications.OfficeSpecificationsPartial
 import models.office_listing.requests.InitiateOfficeListingRequest
 import models.office_listing.OfficeListing
-import models.office.specifications.OfficeSpecificationsPartial
+import models.OpeningHours
 
 trait OfficeListingRepositoryAlgebra[F[_]] {
 
@@ -42,6 +45,9 @@ class OfficeListingRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transac
     Meta[Timestamp].imap(_.toLocalDateTime)(Timestamp.valueOf)
 
   implicit val officeTypeMeta: Meta[OfficeType] = Meta[String].imap(OfficeType.fromString)(_.toString)
+
+  implicit val openingHoursListMeta: Meta[List[OpeningHours]] =
+    Meta[String].imap(jsonStr => decode[List[OpeningHours]](jsonStr).getOrElse(Nil))(_.asJson.noSpaces)
 
   override def findAll(businessId: String): F[List[OfficeListing]] = {
     val fetchAllOfficeDetails =

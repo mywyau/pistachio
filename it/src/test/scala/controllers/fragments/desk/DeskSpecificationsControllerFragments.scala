@@ -34,7 +34,7 @@ object DeskSpecificationsControllerFragments {
         user_id, business_id, office_id, desk_id, desk_name, description, desk_type, 
         quantity, features, availability, rules, created_at, updated_at
       ) VALUES
-        ('user001', 'biz001', 'office001', 'desk001', 'Mikey Desk 1', 
+        ('user001', 'biz001', 'office001', 'deskId1', 'Mikey Desk 1', 
          'A quiet, private desk perfect for focused work with a comfortable chair and good lighting.', 'PrivateDesk', 
          5, 
          ARRAY['Wi-Fi', 'Power Outlets', 'Ergonomic Chair', 'Desk Lamp'], 
@@ -77,7 +77,7 @@ object DeskSpecificationsControllerFragments {
         user_id, business_id, office_id, desk_id, desk_name, description, desk_type, 
         quantity, features, availability, rules, created_at, updated_at
       ) VALUES
-        ('user001', 'biz001', 'office01', 'desk001', 'Mikey Desk 1', 
+        ('user001', 'biz001', 'office01', 'deskId1', 'Mikey Desk 1', 
          'A quiet, private desk perfect for focused work with a comfortable chair and good lighting.', 'PrivateDesk', 
          5,
          ARRAY['Wi-Fi', 'Power Outlets', 'Ergonomic Chair', 'Desk Lamp'], 

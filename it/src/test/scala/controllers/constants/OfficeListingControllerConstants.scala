@@ -18,7 +18,7 @@ import models.office.specifications.OfficeSpecificationsPartial
 
 object OfficeListingControllerConstants {
 
-  val testOfficeAvailability: OfficeAvailability =
+  val testOfficeAvailability: OfficeopeningHours =
     OfficeAvailability(
       days = List("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
       openingTime = LocalTime.of(0, 0, 0),
@@ -27,38 +27,38 @@ object OfficeListingControllerConstants {
 
   val testCreateOfficeSpecificationsRequest: CreateOfficeSpecificationsRequest =
     CreateOfficeSpecificationsRequest(
-      businessId = "business_id_1",
-      officeId = "office_id_1",
-      officeName = "Modern Workspace",
-      description = "A vibrant office space in the heart of the city, ideal for teams or individuals.",
+      businessId = "businessId1",
+      officeId = "officeId1",
+      officeName = "Maginificanent Office",
+      description = "some office description",
       officeType = OpenPlanOffice,
       numberOfFloors = 3,
       totalDesks = 3,
       capacity = 50,
       amenities = List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"),
-      availability = testOfficeAvailability,
-      rules = Some("No smoking. Maintain cleanliness.")
+      openingHours = testOfficeAvailability,
+      rules = Some("Please keep the office clean and tidy.")
     )
 
   val testOfficeAddressRequest: CreateOfficeAddressRequest =
     CreateOfficeAddressRequest(
-      businessId = "business_id_1",
-      officeId = "office_id_1",
+      businessId = "businessId1",
+      officeId = "officeId1",
       buildingName = Some("OfficeListingControllerISpec Building"),
       floorNumber = Some("floor 1"),
-      street = Some("123 Main Street"),
+      street = Some("Main street 123"),
       city = Some("New York"),
       country = Some("USA"),
-      county = Some("New York County"),
-      postcode = Some("10001"),
+      county = Some("County 123"),
+      postcode = Some("123456"),
       latitude = Some(100.1),
       longitude = Some(-100.1)
     )
 
   val testCreateOfficeContactDetailsRequest =
     CreateOfficeContactDetailsRequest(
-      businessId = "business_id_1",
-      officeId = "office_id_1",
+      businessId = "businessId1",
+      officeId = "officeId1",
       primaryContactFirstName = "Michael",
       primaryContactLastName = "Yau",
       contactEmail = "mike@gmail.com",
@@ -109,7 +109,7 @@ object OfficeListingControllerConstants {
       totalDesks = None,
       capacity = None,
       amenities = None,
-      availability = None,
+      openingHours = None,
       rules = None
     )
 

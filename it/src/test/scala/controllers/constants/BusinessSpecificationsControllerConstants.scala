@@ -14,10 +14,10 @@ object BusinessSpecificationsControllerConstants {
   val testBusinessSpecs: BusinessSpecificationsPartial =
     BusinessSpecificationsPartial(
       userId = "user_id_1",
-      businessId = "business_id_1",
+      businessId = "businessId1",
       businessName = Some("Example Business Name"),
       description = Some("some description"),
-      availability = Some(
+      openingHours = Some(
         BusinessAvailability(
           days = List("Monday", "Friday"),
           openingTime = LocalTime.of(9, 0, 0),

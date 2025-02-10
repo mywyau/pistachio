@@ -16,7 +16,7 @@ import models.desk.deskListing.DeskListingCard
 import models.desk.deskPricing.DeskPricingPartial
 import models.desk.deskPricing.RetrievedDeskPricing
 import models.desk.deskSpecifications.requests.UpdateDeskSpecificationsRequest
-import models.desk.deskSpecifications.Availability
+
 import models.desk.deskSpecifications.DeskSpecificationsPartial
 import models.desk.deskSpecifications.PrivateDesk
 import repositories.desk.DeskListingRepositoryImpl
@@ -55,7 +55,7 @@ class DeskListingRepositoryStreamAllISpec(global: GlobalRead) extends IOSuite wi
 
     val expectedCards =
       List(
-        DeskListingCard("desk001", "Mikey Desk 1", "A quiet, private desk perfect for focused work with a comfortable chair and good lighting."),
+        DeskListingCard("deskId1", "Mikey Desk 1", "A quiet, private desk perfect for focused work with a comfortable chair and good lighting."),
         DeskListingCard("desk002", "Mikey Desk 2", "A shared desk in a collaborative space with easy access to team members."),
         DeskListingCard("desk003", "Mikey Desk 3", "Spacious desk with a view and ample storage for your items."),
         DeskListingCard("desk004", "Mikey Desk 4", "A flexible, hot desk available for use in a dynamic work environment."),

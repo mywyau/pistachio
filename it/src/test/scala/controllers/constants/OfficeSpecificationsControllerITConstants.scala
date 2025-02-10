@@ -22,7 +22,7 @@ object OfficeSpecificationsControllerITConstants {
       totalDesks = 50,
       capacity = 100,
       amenities = List("Wi-Fi", "Coffee Machine", "Meeting Rooms"),
-      availability = OfficeAvailability(
+      openingHours = OfficeAvailability(
         days = List("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
         openingTime = LocalTime.of(8, 0, 0),
         closingTime = LocalTime.of(18, 0, 0)
@@ -41,7 +41,7 @@ object OfficeSpecificationsControllerITConstants {
       totalDesks = Some(50),
       capacity = Some(100),
       amenities = Some(List("Wi-Fi", "Coffee Machine", "Meeting Rooms")),
-      availability = Some(
+      openingHours = Some(
         OfficeAvailability(
           days = List("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
           openingTime = LocalTime.of(8, 0, 0),
@@ -63,7 +63,7 @@ object OfficeSpecificationsControllerITConstants {
       totalDesks = Some(20),
       capacity = Some(40),
       amenities = Some(List("Wi-Fi", "Tea", "Parking")),
-      availability = Some(
+      openingHours = Some(
         OfficeAvailability(
           days = List("Monday", "Wednesday"),
           openingTime = LocalTime.of(8, 0, 0),

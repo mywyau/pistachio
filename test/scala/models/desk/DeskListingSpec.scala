@@ -8,43 +8,15 @@ import java.time.LocalTime
 import models.desk.deskListing.DeskListing
 import models.desk.deskPricing.DeskPricingPartial
 import models.desk.deskPricing.RetrievedDeskPricing
-import models.desk.deskSpecifications.Availability
+
 import models.desk.deskSpecifications.DeskSpecificationsPartial
 import models.desk.deskSpecifications.PrivateDesk
 import weaver.SimpleIOSuite
-import models.desk.deskSpecifications.OpeningHours
+import models.OpeningHours
 import models.Monday
 import testData.DeskTestConstants.*
 
 object DeskListingSpec extends SimpleIOSuite {
-
-  val sampleDeskSpecificationsPartial: DeskSpecificationsPartial =
-    DeskSpecificationsPartial(
-      deskId = deskId1,
-      deskName = deskName,
-      description = Some(description1),
-      deskType = Some(PrivateDesk),
-      quantity = Some(5),
-      features = Some(List("Wi-Fi", "Power Outlets", "Monitor", "Ergonomic Chair")),
-      availability = Some(availability),
-      rules = Some(rules)
-    )
-
-  val sampleDeskPricingPartial: RetrievedDeskPricing =
-    RetrievedDeskPricing(
-      pricePerHour = Some(30.00),
-      pricePerDay = Some(180.00),
-      pricePerWeek = Some(450.00),
-      pricePerMonth = Some(1000.00),
-      pricePerYear = Some(9000.00)
-    )
-
-  val sampleDeskListing: DeskListing =
-    DeskListing(
-      deskId = "desk001",
-      sampleDeskSpecificationsPartial,
-      sampleDeskPricingPartial
-    )
 
   test("DeskListing model encodes correctly to JSON") {
 
@@ -53,9 +25,9 @@ object DeskListingSpec extends SimpleIOSuite {
     val expectedJson =
       """
         |{
-        |  "deskId" : "desk001",
+        |  "deskId" : "deskId1",
         |  "specifications" : {
-        |    "deskId" : "desk001",
+        |    "deskId" : "deskId1",
         |    "deskName" : "Private Office Desk",
         |    "description" : "A comfortable desk in a private office space with all amenities included.",
         |    "deskType" : "PrivateDesk",
@@ -66,18 +38,18 @@ object DeskListingSpec extends SimpleIOSuite {
         |      "Monitor",
         |      "Ergonomic Chair"
         |    ],
-        |   "availability": {
-        |     [
+        |   "availability": [
+        |     {
         |        "day": Monday"
-        |        "openingTime": "10:00:00",
-        |        "closingTime": "10:30:00"
-        |     ],
-        |     [
+        |        "openingTime": "09:00:00",
+        |        "closingTime": "17:00:00"
+        |     },
+        |     {
         |        "day": Tuesday"
-        |        "openingTime": "10:00:00",
-        |        "closingTime": "10:30:00"
-        |     ]
-        |   }
+        |        "openingTime": "09:00:00",
+        |        "closingTime": "17:00:00"
+        |     }
+        |   ],
         |    "rules" : "Please keep the desk clean and quiet."
         |  },
         |  "pricing" : {

@@ -9,7 +9,8 @@ import doobie.implicits.*
 import doobie.implicits.javasql.*
 import doobie.postgres.implicits.*
 import doobie.util.meta.Meta
-import io.circe.syntax.*
+import io.circe.syntax.EncoderOps
+import io.circe.parser.decode
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import models.database.*
@@ -17,6 +18,8 @@ import models.office.adts.OfficeType
 import models.office.specifications.requests.CreateOfficeSpecificationsRequest
 import models.office.specifications.requests.UpdateOfficeSpecificationsRequest
 import models.office.specifications.OfficeSpecificationsPartial
+import models.Day
+import models.OpeningHours
 
 trait OfficeSpecificationsRepositoryAlgebra[F[_]] {
 
@@ -38,6 +41,14 @@ class OfficeSpecificationsRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
 
   implicit val officeTypeMeta: Meta[OfficeType] = Meta[String].imap(OfficeType.fromString)(_.toString)
 
+    // Meta instance for List[OpeningHours]
+  implicit val openingHoursListMeta: Meta[List[OpeningHours]] =
+    Meta[String].imap(jsonStr =>
+      decode[List[OpeningHours]](jsonStr).getOrElse(Nil)
+    )(_.asJson.noSpaces)
+
+  implicit val dayTypeMeta: Meta[Day] = Meta[String].imap(Day.fromString)(_.toString)
+
   override def findByOfficeId(officeId: String): F[Option[OfficeSpecificationsPartial]] = {
     val findQuery: F[Option[OfficeSpecificationsPartial]] =
       sql"""
@@ -51,7 +62,7 @@ class OfficeSpecificationsRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
             total_desks,
             capacity,
             amenities,
-            availability,
+            openingHours,
             rules
          FROM office_specifications
          WHERE office_id = $officeId
@@ -72,7 +83,7 @@ class OfficeSpecificationsRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
         total_desks,
         capacity,
         amenities,
-        availability,
+        openingHours,
         rules
       ) VALUES (
         ${createOfficeSpecificationsRequest.businessId},
@@ -84,7 +95,7 @@ class OfficeSpecificationsRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
         ${createOfficeSpecificationsRequest.totalDesks},
         ${createOfficeSpecificationsRequest.capacity},
         ${createOfficeSpecificationsRequest.amenities},
-        ${createOfficeSpecificationsRequest.availability.asJson.noSpaces}::jsonb,
+        ${createOfficeSpecificationsRequest.openingHours.asJson.noSpaces}::jsonb,
         ${createOfficeSpecificationsRequest.rules}
       )
     """.update.run.transact(transactor).attempt.map {
@@ -111,7 +122,7 @@ class OfficeSpecificationsRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
         total_desks = ${request.totalDesks},
         capacity = ${request.capacity},
         amenities = ${request.amenities},
-        availability = ${request.availability}::jsonb,
+        openingHours = ${request.openingHours}::jsonb,
         rules = ${request.rules},
         updated_at = ${LocalDateTime.now()}
       WHERE office_id = $officeId

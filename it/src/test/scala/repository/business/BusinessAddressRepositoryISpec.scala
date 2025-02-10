@@ -37,13 +37,13 @@ class BusinessAddressRepositoryISpec(global: GlobalRead) extends IOSuite {
       userId = userId,
       businessId = businessId,
       businessName = Some("mikey_corp"),
-      buildingName = Some("build_123"),
+      buildingName = Some("butter building"),
       floorNumber = Some("floor 1"),
-      street = Some("123 Main Street"),
+      street = Some("Main street 123"),
       city = Some("New York"),
       country = Some("USA"),
       county = Some("fake county"),
-      postcode = Some("10001"),
+      postcode = Some("123456"),
       latitude = Some(100.1),
       longitude = Some(-100.1)
     )
@@ -95,7 +95,7 @@ class BusinessAddressRepositoryISpec(global: GlobalRead) extends IOSuite {
         city = Some("New York"),
         country = Some("USA"),
         county = Some("New York"),
-        postcode = Some("10001"),
+        postcode = Some("123456"),
         latitude = Some(40.712776),
         longitude = Some(-74.005974)
       )

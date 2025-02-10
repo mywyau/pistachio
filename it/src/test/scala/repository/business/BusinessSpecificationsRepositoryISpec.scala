@@ -53,7 +53,7 @@ class BusinessSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite 
         businessId = businessId,
         businessName = Some("business_name_1"),
         description = Some("some desc1"),
-        availability = Some(
+        openingHours = Some(
           BusinessAvailability(
             days = List("Monday", "Friday"),
             openingTime = LocalTime.of(9, 0, 0),
