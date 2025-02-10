@@ -12,16 +12,6 @@ import java.time.LocalDateTime
 
 object CreateOfficeContactDetailsRequestSpec extends SimpleIOSuite {
 
-  val createOfficeContactDetailsRequest: CreateOfficeContactDetailsRequest =
-    CreateOfficeContactDetailsRequest(
-      businessId = "business_id_1",
-      officeId = "office_id_1",
-      primaryContactFirstName = "Michael",
-      primaryContactLastName = "Yau",
-      contactEmail = "mike@gmail.com",
-      contactNumber = "07402205071"
-    )
-
   test("CreateOfficeContactDetailsRequest model encodes correctly to JSON") {
 
     val jsonResult = createOfficeContactDetailsRequest.asJson
