@@ -6,15 +6,9 @@ import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import models.desk.deskListing.DeskListingCard
 import weaver.SimpleIOSuite
+import testData.DeskTestConstants.*
 
 object DeskListingCardSpec extends SimpleIOSuite {
-
-  val sampleDeskListingCard: DeskListingCard =
-    DeskListingCard(
-      deskId = "desk001",
-      deskName = "Coffee desk",
-      description = "Some desc description"
-    )
 
   test("DeskListingCard model encodes correctly to JSON") {
 

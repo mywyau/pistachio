@@ -5,6 +5,7 @@ import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import models.desk.deskPricing.UpdateDeskPricingRequest
+import testData.DeskTestConstants.*
 import weaver.SimpleIOSuite
 
 object UpdateDeskPricingRequestSpec extends SimpleIOSuite {

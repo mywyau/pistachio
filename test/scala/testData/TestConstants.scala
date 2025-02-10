@@ -25,12 +25,6 @@ object TestConstants {
   val officeId4 = "officeId4"
   val officeId5 = "officeId5"
 
-  val deskId1 = "deskId1"
-  val deskId2 = "deskId2"
-  val deskId3 = "deskId3"
-  val deskId4 = "deskId4"
-  val deskId5 = "deskId5"
-
   val businessName1 = "businessName1"
   val businessName2 = "businessName2"
   val businessName3 = "businessName3"

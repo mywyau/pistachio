@@ -7,18 +7,10 @@ import io.circe.syntax.EncoderOps
 import java.time.LocalDateTime
 import java.time.LocalTime
 import models.desk.deskPricing.RetrievedDeskPricing
+import testData.DeskTestConstants.*
 import weaver.SimpleIOSuite
 
 object RetrievedDeskPricingSpec extends SimpleIOSuite {
-
-  val sampleRetrievedDeskPricing: RetrievedDeskPricing =
-    RetrievedDeskPricing(
-      pricePerHour = Some(30.00),
-      pricePerDay = Some(180.00),
-      pricePerWeek = Some(450.00),
-      pricePerMonth = Some(1000.00),
-      pricePerYear = Some(9000.00)
-    )
 
   test("RetrievedDeskPricing model encodes correctly to JSON") {
 

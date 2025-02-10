@@ -7,13 +7,9 @@ import io.circe.generic.semiauto.*
 import io.circe.parser.decode
 import io.circe.syntax.*
 
-import java.time.LocalDateTime
-import java.time.LocalTime
 
 case class Availability(
-  days: List[String], 
-  startTime: LocalTime,
-  endTime: LocalTime
+  availability: List[OpeningHours]
 )
 
 object Availability {

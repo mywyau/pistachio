@@ -7,31 +7,27 @@ import io.circe.syntax.EncoderOps
 import java.time.LocalTime
 import models.desk.deskListing.DeskListing
 import models.desk.deskPricing.DeskPricingPartial
+import models.desk.deskPricing.RetrievedDeskPricing
 import models.desk.deskSpecifications.Availability
 import models.desk.deskSpecifications.DeskSpecificationsPartial
 import models.desk.deskSpecifications.PrivateDesk
 import weaver.SimpleIOSuite
-import models.desk.deskPricing.RetrievedDeskPricing
+import models.desk.deskSpecifications.OpeningHours
+import models.Monday
+import testData.DeskTestConstants.*
 
 object DeskListingSpec extends SimpleIOSuite {
 
-  val availability: Availability =
-    Availability(
-      days = List("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
-      startTime = LocalTime.of(10, 0, 0),
-      endTime = LocalTime.of(10, 30, 0)
-    )
-
   val sampleDeskSpecificationsPartial: DeskSpecificationsPartial =
     DeskSpecificationsPartial(
-      deskId = "desk001",
-      deskName = "Private Office Desk",
-      description = Some("A comfortable desk in a private office space with all amenities included."),
+      deskId = deskId1,
+      deskName = deskName,
+      description = Some(description1),
       deskType = Some(PrivateDesk),
       quantity = Some(5),
       features = Some(List("Wi-Fi", "Power Outlets", "Monitor", "Ergonomic Chair")),
       availability = Some(availability),
-      rules = Some("Please keep the desk clean and quiet."),
+      rules = Some(rules)
     )
 
   val sampleDeskPricingPartial: RetrievedDeskPricing =
@@ -70,17 +66,18 @@ object DeskListingSpec extends SimpleIOSuite {
         |      "Monitor",
         |      "Ergonomic Chair"
         |    ],
-        |    "availability" : {
-        |      "days" : [
-        |        "Monday",
-        |        "Tuesday",
-        |        "Wednesday",
-        |        "Thursday",
-        |        "Friday"
-        |      ],
-        |      "startTime" : "10:00:00",
-        |      "endTime" : "10:30:00"
-        |    },
+        |   "availability": {
+        |     [
+        |        "day": Monday"
+        |        "startTime": "10:00:00",
+        |        "endTime": "10:30:00"
+        |     ],
+        |     [
+        |        "day": Tuesday"
+        |        "startTime": "10:00:00",
+        |        "endTime": "10:30:00"
+        |     ]
+        |   }
         |    "rules" : "Please keep the desk clean and quiet."
         |  },
         |  "pricing" : {
