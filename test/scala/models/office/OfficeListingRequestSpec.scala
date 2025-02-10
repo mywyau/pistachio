@@ -35,8 +35,8 @@ object OfficeListingRequestSpec extends SimpleIOSuite {
         |    "capacity": 50,
         |    "availability": {
         |      "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        |      "startTime": "10:00:00",
-        |      "endTime": "10:30:00"
+        |      "openingTime": "10:00:00",
+        |      "closingTime": "10:30:00"
         |    },
         |    "amenities": ["Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"],
         |    "rules": "No smoking. Maintain cleanliness."

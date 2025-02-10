@@ -46,8 +46,8 @@ object TestConstants {
 
   val businessDescription1 = "some business description"
 
-  val startTime0900 = LocalTime.of(9, 0, 0)
-  val endTime1700 = LocalTime.of(17, 0, 0)
+  val openingTime0900 = LocalTime.of(9, 0, 0)
+  val closingTime1700 = LocalTime.of(17, 0, 0)
 
   val createdAt01Jan2025 = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
   val updatedAt01Jan2025 = LocalDateTime.of(2025, 1, 1, 0, 0, 0)

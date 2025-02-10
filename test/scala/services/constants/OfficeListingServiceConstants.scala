@@ -8,6 +8,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import mocks.MockOfficeListingRepository
 import models.database.*
+import models.desk.deskSpecifications.OpeningHours
 import models.office.address_details.requests.CreateOfficeAddressRequest
 import models.office.address_details.OfficeAddressPartial
 import models.office.adts.OpenPlanOffice
@@ -20,6 +21,8 @@ import models.office.specifications.OfficeSpecificationsPartial
 import models.office_listing.requests.InitiateOfficeListingRequest
 import models.office_listing.requests.OfficeListingRequest
 import models.office_listing.OfficeListing
+import models.Monday
+import models.Tuesday
 import services.office.OfficeListingServiceImpl
 import testData.TestConstants.*
 
@@ -29,17 +32,26 @@ object OfficeListingServiceConstants {
     CreateOfficeSpecificationsRequest(
       businessId = businessId1,
       officeId = officeId1,
-      officeName = "Modern Workspace",
-      description = "A vibrant office space in the heart of the city, ideal for teams or individuals.",
+      officeName = officeName1,
+      description = officeDescription1,
       officeType = OpenPlanOffice,
       numberOfFloors = 3,
       totalDesks = 3,
       capacity = 50,
       amenities = List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"),
       availability = OfficeAvailability(
-        days = List("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
-        startTime = LocalTime.of(10, 0, 0),
-        endTime = LocalTime.of(10, 30, 0)
+        List(
+          OpeningHours(
+            day = Monday,
+            openingTime = LocalTime.of(10, 0, 0),
+            closingTime = LocalTime.of(10, 30, 0)
+          ),
+          OpeningHours(
+            day = Tuesday,
+            openingTime = LocalTime.of(10, 0, 0),
+            closingTime = LocalTime.of(10, 30, 0)
+          )
+        )
       ),
       rules = Some("No smoking. Maintain cleanliness.")
     )
@@ -76,10 +88,10 @@ object OfficeListingServiceConstants {
     CreateOfficeContactDetailsRequest(
       businessId = businessId1,
       officeId = officeId1,
-      primaryContactFirstName = "Michael",
-      primaryContactLastName = "Yau",
-      contactEmail = "mike@gmail.com",
-      contactNumber = "07402205071"
+      primaryContactFirstName = primaryContactFirstName1,
+      primaryContactLastName = primaryContactLastName1,
+      contactEmail = contactEmail1,
+      contactNumber = contactNumber1,
     )
 
   val officeListingRequest =

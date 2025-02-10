@@ -6,9 +6,12 @@ import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import java.time.LocalDateTime
 import java.time.LocalTime
+import models.desk.deskSpecifications.OpeningHours
 import models.office.adts.*
 import models.office.specifications.requests.UpdateOfficeSpecificationsRequest
 import models.office.specifications.OfficeAvailability
+import models.Monday
+import models.Tuesday
 import weaver.SimpleIOSuite
 
 object UpdateOfficeSpecificationsRequestSpec extends SimpleIOSuite {
@@ -23,9 +26,18 @@ object UpdateOfficeSpecificationsRequestSpec extends SimpleIOSuite {
       capacity = 50,
       amenities = List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"),
       availability = OfficeAvailability(
-        days = List("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
-        startTime = LocalTime.of(10, 0, 0),
-        endTime = LocalTime.of(10, 30, 0)
+        List(
+          OpeningHours(
+            day = Monday,
+            openingTime = LocalTime.of(10, 0, 0),
+            closingTime = LocalTime.of(10, 30, 0)
+          ),
+          OpeningHours(
+            day = Tuesday,
+            openingTime = LocalTime.of(10, 0, 0),
+            closingTime = LocalTime.of(10, 30, 0)
+          )
+        )
       ),
       rules = Some("No smoking. Maintain cleanliness.")
     )
@@ -45,8 +57,8 @@ object UpdateOfficeSpecificationsRequestSpec extends SimpleIOSuite {
         |   "capacity": 50,
         |   "availability": {
         |     "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        |     "startTime": "10:00:00",
-        |     "endTime": "10:30:00"
+        |     "openingTime": "10:00:00",
+        |     "closingTime": "10:30:00"
         |   },
         |   "amenities": ["Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"],
         |   "rules": "No smoking. Maintain cleanliness."

@@ -4,18 +4,22 @@ import cats.data.Validated.Invalid
 import cats.data.Validated.Valid
 import cats.data.ValidatedNel
 import cats.effect.IO
-import java.time.LocalDateTime
-import java.time.LocalTime
-import models.business.specifications.errors.BusinessSpecificationsNotFound
-import models.business.specifications.requests.CreateBusinessSpecificationsRequest
+import models.Monday
+import models.Tuesday
 import models.business.specifications.BusinessAvailability
 import models.business.specifications.BusinessSpecifications
 import models.business.specifications.BusinessSpecificationsPartial
+import models.business.specifications.errors.BusinessSpecificationsNotFound
+import models.business.specifications.requests.CreateBusinessSpecificationsRequest
+import models.database.CreateSuccess
+import models.desk.deskSpecifications.OpeningHours
 import repositories.business.BusinessSpecificationsRepositoryAlgebra
 import services.business.mocks.MockBusinessSpecificationsRepository
-import weaver.SimpleIOSuite
-import models.database.CreateSuccess
 import testData.TestConstants.*
+import weaver.SimpleIOSuite
+
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 object BusinessSpecificationsServiceSpec extends SimpleIOSuite {
 
@@ -29,9 +33,18 @@ object BusinessSpecificationsServiceSpec extends SimpleIOSuite {
       businessName = businessName1,
       description = businessDescription1,
       availability = BusinessAvailability(
-        days = List("Monday", "Tuesday"),
-        startTime = startTime0900,
-        endTime = endTime1700
+        List(
+          OpeningHours(
+            day = Monday,
+            openingTime = LocalTime.of(10, 0, 0),
+            closingTime = LocalTime.of(10, 30, 0)
+          ),
+          OpeningHours(
+            day = Tuesday,
+            openingTime = LocalTime.of(10, 0, 0),
+            closingTime = LocalTime.of(10, 30, 0)
+          )
+        )
       )
     )
 
@@ -47,9 +60,18 @@ object BusinessSpecificationsServiceSpec extends SimpleIOSuite {
       description = Some("Some description"),
       availability = Some(
         BusinessAvailability(
-          days = List("Monday", "Tuesday"),
-          startTime = startTime0900,
-          endTime = endTime1700
+          List(
+            OpeningHours(
+              day = Monday,
+              openingTime = LocalTime.of(10, 0, 0),
+              closingTime = LocalTime.of(10, 30, 0)
+            ),
+            OpeningHours(
+              day = Tuesday,
+              openingTime = LocalTime.of(10, 0, 0),
+              closingTime = LocalTime.of(10, 30, 0)
+            )
+          )
         )
       )
     )

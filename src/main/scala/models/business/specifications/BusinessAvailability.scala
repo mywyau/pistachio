@@ -7,8 +7,11 @@ import io.circe.syntax.*
 import io.circe.Decoder
 import io.circe.Encoder
 import java.time.LocalTime
+import models.desk.deskSpecifications.OpeningHours
 
-case class BusinessAvailability(days: List[String], startTime: LocalTime, endTime: LocalTime)
+case class BusinessAvailability(
+  availability: List[OpeningHours]
+)
 
 object BusinessAvailability {
   implicit val encoder: Encoder[BusinessAvailability] = deriveEncoder[BusinessAvailability]

@@ -72,8 +72,8 @@ class OfficeSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite {
         availability = Some(
           OfficeAvailability(
             days = List("Monday", "Friday"),
-            startTime = LocalTime.of(9, 0, 0),
-            endTime = LocalTime.of(17, 0, 0)
+            openingTime = LocalTime.of(9, 0, 0),
+            closingTime = LocalTime.of(17, 0, 0)
           )
         ),
         rules = Some("No smoking indoors.")
@@ -102,8 +102,8 @@ class OfficeSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite {
         amenities = List("Wi-Fi", "Coffee Machine", "Meeting Rooms"),
         availability = OfficeAvailability(
           days = List("Monday", "Friday"),
-          startTime = LocalTime.of(9, 0, 0),
-          endTime = LocalTime.of(17, 0, 0)
+          openingTime = LocalTime.of(9, 0, 0),
+          closingTime = LocalTime.of(17, 0, 0)
         ),
         rules = Some("No loud conversations. Keep the desks clean.")
       )
@@ -122,8 +122,8 @@ class OfficeSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite {
         availability = Some(
           OfficeAvailability(
             days = List("Monday", "Friday"),
-            startTime = LocalTime.of(9, 0, 0),
-            endTime = LocalTime.of(17, 0, 0)
+            openingTime = LocalTime.of(9, 0, 0),
+            closingTime = LocalTime.of(17, 0, 0)
           )
         ),
         rules = Some("No loud conversations. Keep the desks clean.")

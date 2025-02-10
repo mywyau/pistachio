@@ -24,8 +24,8 @@ object OfficeSpecificationsControllerITConstants {
       amenities = List("Wi-Fi", "Coffee Machine", "Meeting Rooms"),
       availability = OfficeAvailability(
         days = List("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
-        startTime = LocalTime.of(8, 0, 0),
-        endTime = LocalTime.of(18, 0, 0)
+        openingTime = LocalTime.of(8, 0, 0),
+        closingTime = LocalTime.of(18, 0, 0)
       ),
       rules = Some("No loud conversations. Keep the desks clean.")
     )
@@ -44,8 +44,8 @@ object OfficeSpecificationsControllerITConstants {
       availability = Some(
         OfficeAvailability(
           days = List("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
-          startTime = LocalTime.of(8, 0, 0),
-          endTime = LocalTime.of(18, 0, 0)
+          openingTime = LocalTime.of(8, 0, 0),
+          closingTime = LocalTime.of(18, 0, 0)
         )
       ),
       rules = Some("No loud conversations. Keep the desks clean.")
@@ -66,8 +66,8 @@ object OfficeSpecificationsControllerITConstants {
       availability = Some(
         OfficeAvailability(
           days = List("Monday", "Wednesday"),
-          startTime = LocalTime.of(8, 0, 0),
-          endTime = LocalTime.of(18, 0, 0)
+          openingTime = LocalTime.of(8, 0, 0),
+          closingTime = LocalTime.of(18, 0, 0)
         )
       ),
       rules = Some("No pets. Maintain silence."),

@@ -18,8 +18,8 @@ object UpdateBusinessSpecificationsRequestSpec extends SimpleIOSuite {
       description = "Some description",
       availability = BusinessAvailability(
         days = List("Monday", "Tuesday"),
-        startTime = LocalTime.of(10, 0, 0),
-        endTime = LocalTime.of(10, 30, 0)
+        openingTime = LocalTime.of(10, 0, 0),
+        closingTime = LocalTime.of(10, 30, 0)
       )
     )
 
@@ -34,8 +34,8 @@ object UpdateBusinessSpecificationsRequestSpec extends SimpleIOSuite {
         |  "description": "Some description",
         |  "availability": {
         |    "days": ["Monday", "Tuesday"],
-        |    "startTime": "10:00:00",
-        |    "endTime": "10:30:00"
+        |    "openingTime": "10:00:00",
+        |    "closingTime": "10:30:00"
         |  }
         |}
         |""".stripMargin

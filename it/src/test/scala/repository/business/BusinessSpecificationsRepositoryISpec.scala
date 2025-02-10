@@ -56,8 +56,8 @@ class BusinessSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite 
         availability = Some(
           BusinessAvailability(
             days = List("Monday", "Friday"),
-            startTime = LocalTime.of(9, 0, 0),
-            endTime = LocalTime.of(17, 0, 0)
+            openingTime = LocalTime.of(9, 0, 0),
+            closingTime = LocalTime.of(17, 0, 0)
           )
         )
       )

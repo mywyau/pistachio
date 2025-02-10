@@ -4,34 +4,18 @@ import cats.effect.IO
 import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
+import java.time.LocalDateTime
+import java.time.LocalTime
+import models.desk.deskSpecifications.OpeningHours
 import models.office.adts.*
-import models.office.specifications.OfficeAvailability
 import models.office.specifications.requests.CreateOfficeSpecificationsRequest
+import models.office.specifications.OfficeAvailability
+import models.Monday
+import models.Tuesday
 import weaver.SimpleIOSuite
-
-import java.time.{LocalDateTime, LocalTime}
+import testData.OfficeTestConstants.*
 
 object CreateOfficeSpecificationsRequestSpec extends SimpleIOSuite {
-
-  val createOfficeSpecificationsRequest: CreateOfficeSpecificationsRequest =
-    CreateOfficeSpecificationsRequest(
-      businessId = "business_id_1",
-      officeId = "office_id_1",
-      officeName = "Modern Workspace",
-      description = "A vibrant office space in the heart of the city, ideal for teams or individuals.",
-      officeType = OpenPlanOffice,
-      numberOfFloors = 3,
-      totalDesks = 3,
-      capacity = 50,
-      amenities = List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"),
-      availability =
-        OfficeAvailability(
-          days = List("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
-          startTime = LocalTime.of(10, 0, 0),
-          endTime = LocalTime.of(10, 30, 0)
-        ),
-      rules = Some("No smoking. Maintain cleanliness.")
-    )
 
   test("CreateOfficeSpecificationsRequest model encodes correctly to JSON") {
 
@@ -50,8 +34,8 @@ object CreateOfficeSpecificationsRequestSpec extends SimpleIOSuite {
         |   "capacity": 50,
         |   "availability": {
         |     "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        |     "startTime": "10:00:00",
-        |     "endTime": "10:30:00"
+        |     "openingTime": "10:00:00",
+        |     "closingTime": "10:30:00"
         |   },
         |   "amenities": ["Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"],
         |   "rules": "No smoking. Maintain cleanliness."
@@ -62,10 +46,7 @@ object CreateOfficeSpecificationsRequestSpec extends SimpleIOSuite {
 
     for {
       _ <- IO("")
-    } yield {
-      expect(jsonResult == expectedResult)
-    }
+    } yield expect(jsonResult == expectedResult)
   }
 
 }
-

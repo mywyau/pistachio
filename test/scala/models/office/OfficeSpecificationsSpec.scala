@@ -4,11 +4,15 @@ import cats.effect.IO
 import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
+import java.time.LocalDateTime
+import java.time.LocalTime
+import models.desk.deskSpecifications.OpeningHours
 import models.office.adts.*
-import models.office.specifications.{OfficeAvailability, OfficeSpecifications}
+import models.office.specifications.OfficeAvailability
+import models.office.specifications.OfficeSpecifications
+import models.Monday
+import models.Tuesday
 import weaver.SimpleIOSuite
-
-import java.time.{LocalDateTime, LocalTime}
 
 object OfficeSpecificationsSpec extends SimpleIOSuite {
 
@@ -24,14 +28,22 @@ object OfficeSpecificationsSpec extends SimpleIOSuite {
       totalDesks = Some(3),
       capacity = Some(50),
       amenities = Some(List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking")),
-      availability =
-        Some(
-          OfficeAvailability(
-            days = List("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
-            startTime = LocalTime.of(10, 0, 0),
-            endTime = LocalTime.of(10, 30, 0)
+      availability = Some(
+        OfficeAvailability(
+          List(
+            OpeningHours(
+              day = Monday,
+              openingTime = LocalTime.of(10, 0, 0),
+              closingTime = LocalTime.of(10, 30, 0)
+            ),
+            OpeningHours(
+              day = Tuesday,
+              openingTime = LocalTime.of(10, 0, 0),
+              closingTime = LocalTime.of(10, 30, 0)
+            )
           )
-        ),
+        )
+      ),
       rules = Some("No smoking. Maintain cleanliness."),
       createdAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0),
       updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
@@ -55,8 +67,8 @@ object OfficeSpecificationsSpec extends SimpleIOSuite {
         |   "capacity": 50,
         |   "availability": {
         |     "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        |     "startTime": "10:00:00",
-        |     "endTime": "10:30:00"
+        |     "openingTime": "10:00:00",
+        |     "closingTime": "10:30:00"
         |   },
         |   "amenities": ["Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"],
         |   "rules": "No smoking. Maintain cleanliness.",
@@ -69,10 +81,7 @@ object OfficeSpecificationsSpec extends SimpleIOSuite {
 
     for {
       _ <- IO("")
-    } yield {
-      expect(jsonResult == expectedResult)
-    }
+    } yield expect(jsonResult == expectedResult)
   }
 
 }
-

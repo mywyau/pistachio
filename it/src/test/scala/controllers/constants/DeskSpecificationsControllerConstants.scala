@@ -14,8 +14,8 @@ object DeskSpecificationsControllerConstants {
   val availability =
     Availability(
       days = List("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
-      startTime = LocalTime.of(10, 0, 0),
-      endTime = LocalTime.of(10, 30, 0)
+      openingTime = LocalTime.of(10, 0, 0),
+      closingTime = LocalTime.of(10, 30, 0)
     )
 
   val testDeskSpecificationsRequest =

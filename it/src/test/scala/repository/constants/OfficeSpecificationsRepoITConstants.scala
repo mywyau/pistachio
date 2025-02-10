@@ -24,8 +24,8 @@ object OfficeSpecificationsRepoITConstants {
       availability =
         OfficeAvailability(
           days = List("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
-          startTime = LocalTime.of(10, 0, 0),
-          endTime = LocalTime.of(10, 30, 0)
+          openingTime = LocalTime.of(10, 0, 0),
+          closingTime = LocalTime.of(10, 30, 0)
         ),
       rules = Some("No smoking. Maintain cleanliness.")
     )
@@ -47,8 +47,8 @@ object OfficeSpecificationsRepoITConstants {
       availability =
         Some(OfficeAvailability(
           days = List("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
-          startTime = LocalTime.of(10, 0, 0),
-          endTime = LocalTime.of(10, 30, 0)
+          openingTime = LocalTime.of(10, 0, 0),
+          closingTime = LocalTime.of(10, 30, 0)
         )),
       rules = Some("No smoking. Maintain cleanliness."),
       createdAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0),

@@ -36,8 +36,8 @@ class DeskSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite with
   val availability =
     Availability(
       days = List("Monday", "Tuesday", "Wednesday"),
-      startTime = LocalTime.of(9, 0, 0),
-      endTime = LocalTime.of(17, 0, 0)
+      openingTime = LocalTime.of(9, 0, 0),
+      closingTime = LocalTime.of(17, 0, 0)
     )
 
   def sharedResource: Resource[IO, DeskSpecificationsRepositoryImpl[IO]] = {
@@ -62,8 +62,8 @@ class DeskSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite with
         features = Some(List("Wi-Fi", "Power Outlets", "Ergonomic Chair", "Desk Lamp")),
         availability = Some(Availability(
           days = List("Monday", "Tuesday", "Wednesday"),
-          startTime = LocalTime.of(9, 0, 0),
-          endTime = LocalTime.of(17, 0, 0)
+          openingTime = LocalTime.of(9, 0, 0),
+          closingTime = LocalTime.of(17, 0, 0)
         )),
         rules = Some("No loud conversations, please keep the workspace clean.")
       )
@@ -85,8 +85,8 @@ class DeskSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite with
         features = Some(List("Wi-Fi", "Power Outlets", "Ergonomic Chair", "Desk Lamp")),
         availability = Some(Availability(
           days = List("Monday", "Tuesday", "Wednesday"),
-          startTime = LocalTime.of(9, 0, 0),
-          endTime = LocalTime.of(17, 0, 0)
+          openingTime = LocalTime.of(9, 0, 0),
+          closingTime = LocalTime.of(17, 0, 0)
         )),
         rules = Some("No loud conversations, please keep the workspace clean.")
       )
@@ -107,8 +107,8 @@ class DeskSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite with
         features = List("Wi-Fi", "Power Outlets", "Ergonomic Chair", "Desk Lamp"),
         availability = Availability(
           days = List("Monday", "Tuesday", "Wednesday"),
-          startTime = LocalTime.of(9, 0, 0),
-          endTime = LocalTime.of(17, 0, 0)
+          openingTime = LocalTime.of(9, 0, 0),
+          closingTime = LocalTime.of(17, 0, 0)
         ),
         rules = Some("No loud conversations, please keep the workspace clean.")
       )

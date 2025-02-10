@@ -69,13 +69,13 @@ object DeskListingSpec extends SimpleIOSuite {
         |   "availability": {
         |     [
         |        "day": Monday"
-        |        "startTime": "10:00:00",
-        |        "endTime": "10:30:00"
+        |        "openingTime": "10:00:00",
+        |        "closingTime": "10:30:00"
         |     ],
         |     [
         |        "day": Tuesday"
-        |        "startTime": "10:00:00",
-        |        "endTime": "10:30:00"
+        |        "openingTime": "10:00:00",
+        |        "closingTime": "10:30:00"
         |     ]
         |   }
         |    "rules" : "Please keep the desk clean and quiet."

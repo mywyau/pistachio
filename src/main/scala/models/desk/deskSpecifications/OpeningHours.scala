@@ -13,8 +13,8 @@ import models.Day
 
 case class OpeningHours(
   day: Day, 
-  startTime: LocalTime,
-  endTime: LocalTime
+  openingTime: LocalTime,
+  closingTime: LocalTime
 )
 
 object OpeningHours {

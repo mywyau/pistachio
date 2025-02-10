@@ -21,8 +21,8 @@ object OfficeListingControllerConstants {
   val testOfficeAvailability: OfficeAvailability =
     OfficeAvailability(
       days = List("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
-      startTime = LocalTime.of(0, 0, 0),
-      endTime = LocalTime.of(0, 0, 0)
+      openingTime = LocalTime.of(0, 0, 0),
+      closingTime = LocalTime.of(0, 0, 0)
     )
 
   val testCreateOfficeSpecificationsRequest: CreateOfficeSpecificationsRequest =

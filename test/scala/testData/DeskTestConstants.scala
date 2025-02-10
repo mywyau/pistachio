@@ -37,13 +37,13 @@ object DeskTestConstants {
       availability = List(
         OpeningHours(
           day = Monday,
-          startTime = LocalTime.of(10, 0, 0),
-          endTime = LocalTime.of(10, 30, 0)
+          openingTime = LocalTime.of(10, 0, 0),
+          closingTime = LocalTime.of(10, 30, 0)
         ),
         OpeningHours(
           day = Tuesday,
-          startTime = LocalTime.of(10, 0, 0),
-          endTime = LocalTime.of(10, 30, 0)
+          openingTime = LocalTime.of(10, 0, 0),
+          closingTime = LocalTime.of(10, 30, 0)
         )
       )
     )
