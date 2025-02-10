@@ -1,30 +1,18 @@
 package models.office
 
-import models.office.address_details.requests.UpdateOfficeAddressRequest
 import cats.effect.IO
 import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
+import models.office.address_details.requests.UpdateOfficeAddressRequest
+import testData.OfficeTestConstants.*
 import weaver.SimpleIOSuite
 
 object UpdateOfficeAddressRequestSpec extends SimpleIOSuite {
 
-  val createOfficeAddressRequest: UpdateOfficeAddressRequest =
-    UpdateOfficeAddressRequest(
-      buildingName = Some("build_123"),
-      floorNumber = Some("floor 1"),
-      street = Some("123 Main Street"),
-      city = Some("New York"),
-      country = Some("USA"),
-      county = Some("New York County"),
-      postcode = Some("10001"),
-      latitude = Some(100.1),
-      longitude = Some(-100.1)
-    )
-
   test("UpdateOfficeAddressRequest model encodes correctly to JSON") {
 
-    val jsonResult = createOfficeAddressRequest.asJson
+    val jsonResult = updateOfficeAddressRequest.asJson
 
     val expectedJson =
       """

@@ -5,23 +5,14 @@ import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import models.office.contact_details.requests.UpdateOfficeContactDetailsRequest
+import testData.OfficeTestConstants.*
 import weaver.SimpleIOSuite
-
-import java.time.LocalDateTime
 
 object UpdateOfficeContactDetailsRequestSpec extends SimpleIOSuite {
 
-  val createOfficeContactDetailsRequest: UpdateOfficeContactDetailsRequest =
-    UpdateOfficeContactDetailsRequest(
-      primaryContactFirstName = "Michael",
-      primaryContactLastName = "Yau",
-      contactEmail = "mike@gmail.com",
-      contactNumber = "07402205071"
-    )
-
   test("UpdateOfficeContactDetailsRequest model encodes correctly to JSON") {
 
-    val jsonResult = createOfficeContactDetailsRequest.asJson
+    val jsonResult = updateOfficeContactDetailsRequest.asJson
 
     val expectedJson =
       """
@@ -37,9 +28,7 @@ object UpdateOfficeContactDetailsRequestSpec extends SimpleIOSuite {
 
     for {
       _ <- IO("")
-    } yield {
-      expect(jsonResult == expectedResult)
-    }
+    } yield expect(jsonResult == expectedResult)
   }
 
 }

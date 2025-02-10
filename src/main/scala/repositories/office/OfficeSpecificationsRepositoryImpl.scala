@@ -16,7 +16,6 @@ import models.database.*
 import models.office.adts.OfficeType
 import models.office.specifications.requests.CreateOfficeSpecificationsRequest
 import models.office.specifications.requests.UpdateOfficeSpecificationsRequest
-import models.office.specifications.OfficeSpecifications
 import models.office.specifications.OfficeSpecificationsPartial
 
 trait OfficeSpecificationsRepositoryAlgebra[F[_]] {

@@ -9,6 +9,7 @@ import models.office.contact_details.requests.CreateOfficeContactDetailsRequest
 import weaver.SimpleIOSuite
 
 import java.time.LocalDateTime
+import testData.OfficeTestConstants.createOfficeContactDetailsRequest
 
 object CreateOfficeContactDetailsRequestSpec extends SimpleIOSuite {
 
