@@ -5,7 +5,7 @@ import io.circe.Encoder
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.generic.semiauto.deriveEncoder
 import models.office.adts.OfficeType
-import models.office.specifications.OfficeAvailability
+
 
 import java.time.LocalDateTime
 import models.OpeningHours

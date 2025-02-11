@@ -35,7 +35,7 @@ object BusinessSpecificationsRepoFragments {
         created_at,
         updated_at
       ) VALUES
-      ('user_id_1','businessId1','Example Business Name','some description', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00','2025-01-01 00:00:00'),
+      ('userId1','businessId1','Example Business Name','some description', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00','2025-01-01 00:00:00'),
       ('user_id_2','business_id_2','Example Business Name','some description', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00','2025-01-01 00:00:00'),
       ('user_id_4','business_id_4','Example Business Name','some description', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00','2025-01-01 00:00:00');
      """

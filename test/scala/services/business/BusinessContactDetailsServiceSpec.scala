@@ -18,7 +18,7 @@ object BusinessContactDetailsServiceSpec extends SimpleIOSuite {
 
   test(".getByBusinessId() - when there is an existing user ContactDetails details given a business_id should return the correct ContactDetails - Right(ContactDetails)") {
 
-    val existingContactDetailsForUser = testContactDetails("user_id_1", "businessId1")
+    val existingContactDetailsForUser = testContactDetails("userId1", "businessId1")
 
     val mockBusinessContactDetailsRepository = new MockBusinessContactDetailsRepository(Map("businessId1" -> existingContactDetailsForUser))
     val service = BusinessContactDetailsService[IO](mockBusinessContactDetailsRepository)
@@ -40,7 +40,7 @@ object BusinessContactDetailsServiceSpec extends SimpleIOSuite {
 
   test(".createBusinessContactDetails() - when given a BusinessContactDetails successfully create the ContactDetails") {
 
-    val sampleContactDetails = testCreateBusinessContactDetailsRequest("user_id_1", "businessId1")
+    val sampleContactDetails = testCreateBusinessContactDetailsRequest("userId1", "businessId1")
 
     val mockBusinessContactDetailsRepository = new MockBusinessContactDetailsRepository(Map())
     val service = BusinessContactDetailsService[IO](mockBusinessContactDetailsRepository)

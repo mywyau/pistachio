@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 import models.business.address.requests.CreateBusinessAddressRequest
 import models.business.address.BusinessAddressPartial
 import models.desk.deskSpecifications.PrivateDesk
-import models.business.specifications.BusinessAvailability
+
 import models.database.DeleteSuccess
 import repositories.business.BusinessAddressRepositoryImpl
 import repository.fragments.business.BusinessAddressRepoFragments.createBusinessAddressTable

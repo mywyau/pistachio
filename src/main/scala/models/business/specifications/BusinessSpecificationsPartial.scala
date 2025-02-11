@@ -1,12 +1,12 @@
 package models.business.specifications
 
-import io.circe.generic.semiauto.deriveDecoder
-import io.circe.generic.semiauto.deriveEncoder
 import io.circe.Decoder
 import io.circe.Encoder
-import java.time.LocalDateTime
-import models.business.specifications.BusinessAvailability
+import io.circe.generic.semiauto.deriveDecoder
+import io.circe.generic.semiauto.deriveEncoder
 import models.OpeningHours
+
+import java.time.LocalDateTime
 
 case class BusinessSpecificationsPartial(
   userId: String,

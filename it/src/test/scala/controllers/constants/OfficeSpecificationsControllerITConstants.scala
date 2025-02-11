@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import models.office.adts.*
 import models.office.specifications.requests.CreateOfficeSpecificationsRequest
-import models.office.specifications.OfficeAvailability
+
 import models.office.specifications.OfficeSpecifications
 import models.office.specifications.OfficeSpecificationsPartial
 

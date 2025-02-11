@@ -9,7 +9,6 @@ import java.time.LocalTime
 import models.*
 import models.business.address.BusinessAddressPartial
 import models.business.contact_details.BusinessContactDetailsPartial
-import models.business.specifications.BusinessAvailability
 import models.business.specifications.BusinessSpecificationsPartial
 import models.business_listing.requests.InitiateBusinessListingRequest
 import models.business_listing.BusinessListing
@@ -48,19 +47,17 @@ object BusinessListingMocks {
       websiteUrl = Some("https://testbusiness.com")
     )
 
-  val mockBusinessAvailability: BusinessopeningHours =
-    BusinessAvailability(
-      List(
-        OpeningHours(
-          day = Monday,
-          openingTime = LocalTime.of(10, 0, 0),
-          closingTime = LocalTime.of(10, 30, 0)
-        ),
-        OpeningHours(
-          day = Tuesday,
-          openingTime = LocalTime.of(10, 0, 0),
-          closingTime = LocalTime.of(10, 30, 0)
-        )
+  val mockBusinessAvailability =
+    List(
+      OpeningHours(
+        day = Monday,
+        openingTime = LocalTime.of(10, 0, 0),
+        closingTime = LocalTime.of(10, 30, 0)
+      ),
+      OpeningHours(
+        day = Tuesday,
+        openingTime = LocalTime.of(10, 0, 0),
+        closingTime = LocalTime.of(10, 30, 0)
       )
     )
 

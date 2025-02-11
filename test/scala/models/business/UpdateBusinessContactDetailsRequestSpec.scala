@@ -5,10 +5,11 @@ import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import models.business.contact_details.requests.UpdateBusinessContactDetailsRequest
+import models.ModelsBaseSpec
 import testData.BusinessTestConstants.testUpdateBusinessContactDetailsRequest
 import weaver.SimpleIOSuite
 
-object UpdateBusinessContactDetailsRequestSpec extends SimpleIOSuite {
+object UpdateBusinessContactDetailsRequestSpec extends SimpleIOSuite with ModelsBaseSpec {
 
   test("UpdateBusinessContactDetailsRequest model encodes correctly to JSON") {
 
@@ -17,19 +18,31 @@ object UpdateBusinessContactDetailsRequestSpec extends SimpleIOSuite {
     val expectedJson =
       """
         |{
-        |  "primaryContactFirstName": "Mikey",
+        |  "primaryContactFirstName": "Michael",
         |  "primaryContactLastName": "Yau",
-        |  "contactEmail": "mikey5922@gmail.com",
+        |  "contactEmail": "mike@gmail.com",
         |  "contactNumber": "07402205071",
-        |  "websiteUrl": "mikey5922.com"
+        |  "websiteUrl": "mikey.com"
         |}
         |""".stripMargin
 
     val expectedResult: Json = parse(expectedJson).getOrElse(Json.Null)
 
+    val jsonResultPretty = printer.print(jsonResult)
+    val expectedResultPretty = printer.print(expectedResult)
+
+    val differences = jsonDiff(jsonResult, expectedResult, expectedResultPretty, jsonResultPretty)
+
     for {
-      _ <- IO("")
-    } yield expect(jsonResult == expectedResult)
+      _ <- IO {
+        if (differences.nonEmpty) {
+          println("=== JSON Difference Detected! ===")
+          differences.foreach(diff => println(s"- $diff"))
+          println("Generated JSON:\n" + jsonResultPretty)
+          println("Expected JSON:\n" + expectedResultPretty)
+        }
+      }
+    } yield expect(differences.isEmpty)
   }
 
 }

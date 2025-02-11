@@ -8,7 +8,6 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import mocks.MockOfficeListingRepository
 import models.database.*
-import models.OpeningHours
 import models.office.address_details.requests.CreateOfficeAddressRequest
 import models.office.address_details.OfficeAddressPartial
 import models.office.adts.OpenPlanOffice
@@ -16,12 +15,12 @@ import models.office.contact_details.requests.CreateOfficeContactDetailsRequest
 import models.office.contact_details.OfficeContactDetails
 import models.office.contact_details.OfficeContactDetailsPartial
 import models.office.specifications.requests.CreateOfficeSpecificationsRequest
-import models.office.specifications.OfficeAvailability
 import models.office.specifications.OfficeSpecificationsPartial
 import models.office_listing.requests.InitiateOfficeListingRequest
 import models.office_listing.requests.OfficeListingRequest
 import models.office_listing.OfficeListing
 import models.Monday
+import models.OpeningHours
 import models.Tuesday
 import services.office.OfficeListingServiceImpl
 import testData.TestConstants.*
@@ -39,18 +38,16 @@ object OfficeListingServiceConstants {
       totalDesks = 3,
       capacity = 50,
       amenities = List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"),
-      openingHours = OfficeAvailability(
-        List(
-          OpeningHours(
-            day = Monday,
-            openingTime = LocalTime.of(10, 0, 0),
-            closingTime = LocalTime.of(10, 30, 0)
-          ),
-          OpeningHours(
-            day = Tuesday,
-            openingTime = LocalTime.of(10, 0, 0),
-            closingTime = LocalTime.of(10, 30, 0)
-          )
+      openingHours = List(
+        OpeningHours(
+          day = Monday,
+          openingTime = LocalTime.of(10, 0, 0),
+          closingTime = LocalTime.of(10, 30, 0)
+        ),
+        OpeningHours(
+          day = Tuesday,
+          openingTime = LocalTime.of(10, 0, 0),
+          closingTime = LocalTime.of(10, 30, 0)
         )
       ),
       rules = Some("Please keep the office clean and tidy.")
@@ -91,7 +88,7 @@ object OfficeListingServiceConstants {
       primaryContactFirstName = primaryContactFirstName1,
       primaryContactLastName = primaryContactLastName1,
       contactEmail = contactEmail1,
-      contactNumber = contactNumber1,
+      contactNumber = contactNumber1
     )
 
   val officeListingRequest =

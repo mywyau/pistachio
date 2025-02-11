@@ -4,11 +4,11 @@ import cats.effect.IO
 import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
-import models.office.contact_details.requests.UpdateOfficeContactDetailsRequest
+import models.ModelsBaseSpec
 import testData.OfficeTestConstants.*
 import weaver.SimpleIOSuite
 
-object UpdateOfficeContactDetailsRequestSpec extends SimpleIOSuite {
+object UpdateOfficeContactDetailsRequestSpec extends SimpleIOSuite with ModelsBaseSpec {
 
   test("UpdateOfficeContactDetailsRequest model encodes correctly to JSON") {
 
@@ -26,9 +26,21 @@ object UpdateOfficeContactDetailsRequestSpec extends SimpleIOSuite {
 
     val expectedResult: Json = parse(expectedJson).getOrElse(Json.Null)
 
+    val jsonResultPretty = printer.print(jsonResult)
+    val expectedResultPretty = printer.print(expectedResult)
+
+    val differences = jsonDiff(jsonResult, expectedResult, expectedResultPretty, jsonResultPretty)
+
     for {
-      _ <- IO("")
-    } yield expect(jsonResult == expectedResult)
+      _ <- IO {
+        if (differences.nonEmpty) {
+          println("=== JSON Difference Detected! ===")
+          differences.foreach(diff => println(s"- $diff"))
+          println("Generated JSON:\n" + jsonResultPretty)
+          println("Expected JSON:\n" + expectedResultPretty)
+        }
+      }
+    } yield expect(differences.isEmpty)
   }
 
 }

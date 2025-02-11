@@ -13,7 +13,7 @@ import models.office.address_details.OfficeAddress
 import models.office.address_details.requests.CreateOfficeAddressRequest
 import models.office.address_details.requests.UpdateOfficeAddressRequest
 import models.office_listing.requests.OfficeListingRequest
-import models.office.specifications.OfficeAvailability
+
 import repositories.office.OfficeAddressRepositoryImpl
 import repository.constants.OfficeAddressRepoITConstants.*
 import repository.fragments.OfficeAddressRepoFragments.createOfficeAddressTable

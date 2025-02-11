@@ -20,7 +20,7 @@ import models.office.adts.OpenPlanOffice
 import models.office.adts.PrivateOffice
 import models.office.specifications.requests.CreateOfficeSpecificationsRequest
 import models.office.specifications.requests.UpdateOfficeSpecificationsRequest
-import models.office.specifications.OfficeAvailability
+
 import models.office.specifications.OfficeSpecifications
 import models.office.specifications.OfficeSpecificationsPartial
 import repositories.office.OfficeSpecificationsRepositoryImpl

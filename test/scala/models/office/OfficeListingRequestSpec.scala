@@ -4,17 +4,12 @@ import cats.effect.IO
 import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
-import models.office.address_details.requests.CreateOfficeAddressRequest
-import models.office.adts.*
-import models.office.contact_details.OfficeContactDetails
-import models.office_listing.requests.OfficeListingRequest
-import models.office.specifications.{OfficeAvailability, OfficeSpecifications}
+
+import models.ModelsBaseSpec
+import testData.OfficeTestConstants.*
 import weaver.SimpleIOSuite
-import models.constants.OfficeListingConstants.*
 
-import java.time.{LocalDateTime, LocalTime}
-
-object OfficeListingRequestSpec extends SimpleIOSuite {
+object OfficeListingRequestSpec extends SimpleIOSuite with ModelsBaseSpec {
 
   test("OfficeListingRequest model encodes correctly to JSON") {
 
@@ -33,11 +28,18 @@ object OfficeListingRequestSpec extends SimpleIOSuite {
         |    "numberOfFloors": 3,
         |    "totalDesks": 3,
         |    "capacity": 50,
-        |    "availability": {
-        |      "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        |      "openingTime": "09:00:00",
-        |      "closingTime": "17:00:00"
-        |    },
+        |    "openingHours" : [
+        |     {
+        |       "day" : "Monday",
+        |       "openingTime" : "09:00:00",
+        |       "closingTime" : "17:00:00"
+        |     },
+        |     {
+        |       "day" : "Tuesday",
+        |       "openingTime" : "09:00:00",
+        |       "closingTime" : "17:00:00"
+        |     }
+        |    ],
         |    "amenities": ["Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"],
         |    "rules": "Please keep the office clean and tidy."
         |  },
@@ -69,13 +71,21 @@ object OfficeListingRequestSpec extends SimpleIOSuite {
 
     val expectedResult: Json = parse(expectedJson).getOrElse(Json.Null)
 
+    val jsonResultPretty = printer.print(jsonResult)
+    val expectedResultPretty = printer.print(expectedResult)
+
+    val differences = jsonDiff(jsonResult, expectedResult, expectedResultPretty, jsonResultPretty)
+
     for {
-      _ <- IO("")
-      //      _ <- IO(println(jsonResult))
-    } yield {
-      expect(jsonResult == expectedResult)
-    }
+      _ <- IO {
+        if (differences.nonEmpty) {
+          println("=== JSON Difference Detected! ===")
+          differences.foreach(diff => println(s"- $diff"))
+          println("Generated JSON:\n" + jsonResultPretty)
+          println("Expected JSON:\n" + expectedResultPretty)
+        }
+      }
+    } yield expect(differences.isEmpty)
   }
 
 }
-

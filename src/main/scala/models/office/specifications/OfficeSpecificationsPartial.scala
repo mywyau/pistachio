@@ -1,13 +1,11 @@
 package models.office.specifications
 
-import io.circe.Decoder
-import io.circe.Encoder
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.generic.semiauto.deriveEncoder
-import models.office.adts.OfficeType
-import models.office.specifications.OfficeAvailability
-
+import io.circe.Decoder
+import io.circe.Encoder
 import java.time.LocalDateTime
+import models.office.adts.OfficeType
 import models.OpeningHours
 
 case class OfficeSpecificationsPartial(
@@ -20,7 +18,7 @@ case class OfficeSpecificationsPartial(
   totalDesks: Option[Int],
   capacity: Option[Int],
   amenities: Option[List[String]],
-  openingHours: List[OpeningHours],
+  openingHours: Option[List[OpeningHours]],
   rules: Option[String]
 )
 

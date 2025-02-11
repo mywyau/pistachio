@@ -20,8 +20,8 @@ object DeskSpecificationsControllerConstants {
 
   val testDeskSpecificationsRequest =
     UpdateDeskSpecificationsRequest(
-      deskName = "Private Office Desk",
-      description = Some("A comfortable desk in a private office space with all amenities included."),
+      deskName = "Luxury supreme desk",
+      description = Some("Some description"),
       deskType = PrivateDesk,
       quantity = 5,
       rules = Some("Please keep the desk clean and quiet."),

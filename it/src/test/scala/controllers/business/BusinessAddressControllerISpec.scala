@@ -54,7 +54,7 @@ class BusinessAddressControllerISpec(global: GlobalRead) extends IOSuite with Co
     val request =
       Request[IO](GET, uri"http://127.0.0.1:9999/pistachio/business/businesses/address/details/businessId1")
 
-    val expectedBusinessAddress = testBusinessAddress("user_id_1", "businessId1")
+    val expectedBusinessAddress = testBusinessAddress("userId1", "businessId1")
 
     client.run(request).use { response =>
       response.as[BusinessAddressPartial].map { body =>

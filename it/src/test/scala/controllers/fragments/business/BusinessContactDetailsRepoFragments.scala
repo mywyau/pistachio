@@ -39,7 +39,7 @@ object BusinessContactDetailsRepoFragments {
         created_at,
         updated_at
       ) VALUES
-       ('user_id_1','businessId1', 'John', 'Doe', 'johndoe@example.com', '123-456-7890', 'https://example.com', '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
+       ('userId1','businessId1', 'John', 'Doe', 'johndoe@example.com', '123-456-7890', 'https://example.com', '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
        ('user_id_2','business_id_2', 'John', 'Doe', 'johndoe@example.com', '123-456-7890', 'https://example.com', '2025-01-01 00:00:00', '2025-01-01 00:00:00');
      """
   }

@@ -6,7 +6,7 @@ import cats.implicits.*
 import doobie.*
 import doobie.implicits.*
 import models.desk.deskSpecifications.PrivateDesk
-import models.business.specifications.BusinessAvailability
+
 import models.business.specifications.BusinessSpecifications
 import models.business.specifications.BusinessSpecificationsPartial
 import repositories.business.BusinessSpecificationsRepositoryImpl

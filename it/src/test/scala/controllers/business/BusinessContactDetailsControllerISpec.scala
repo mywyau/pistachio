@@ -64,7 +64,7 @@ class BusinessContactDetailsControllerISpec(global: GlobalRead) extends IOSuite 
     val request =
       Request[IO](GET, uri"http://127.0.0.1:9999/pistachio/business/businesses/contact/details/businessId1")
 
-    val expectedBusinessContactDetails = testBusinessContactDetails("user_id_1", "businessId1")
+    val expectedBusinessContactDetails = testBusinessContactDetails("userId1", "businessId1")
 
     client.run(request).use { response =>
       response.as[BusinessContactDetailsPartial].map { body =>

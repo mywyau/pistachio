@@ -5,10 +5,11 @@ import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
 import models.desk.deskListing.requests.InitiateDeskListingRequest
+import models.ModelsBaseSpec
 import testData.DeskTestConstants.sampleInitiateDeskListingRequest
 import weaver.SimpleIOSuite
 
-object InitiateDeskListingRequestSpec extends SimpleIOSuite {
+object InitiateDeskListingRequestSpec extends SimpleIOSuite with ModelsBaseSpec {
 
   test("InitiateDeskListingRequest model encodes correctly to JSON") {
 
@@ -17,8 +18,8 @@ object InitiateDeskListingRequestSpec extends SimpleIOSuite {
     val expectedJson =
       """
         |{
-        |  "businessId" : "business001",
-        |  "officeId" : "office001",
+        |  "businessId" : "businessId1",
+        |  "officeId" : "officeId1",
         |  "deskId" : "deskId1",
         |  "deskName" : "Luxury supreme desk",
         |  "description" : "Some description"
@@ -27,8 +28,20 @@ object InitiateDeskListingRequestSpec extends SimpleIOSuite {
 
     val expectedResult: Json = parse(expectedJson).getOrElse(Json.Null)
 
+    val jsonResultPretty = printer.print(jsonResult)
+    val expectedResultPretty = printer.print(expectedResult)
+
+    val differences = jsonDiff(jsonResult, expectedResult, expectedResultPretty, jsonResultPretty)
+
     for {
-      _ <- IO("")
-    } yield expect(jsonResult == expectedResult)
+      _ <- IO {
+        if (differences.nonEmpty) {
+          println("=== JSON Difference Detected! ===")
+          differences.foreach(diff => println(s"- $diff"))
+          println("Generated JSON:\n" + jsonResultPretty)
+          println("Expected JSON:\n" + expectedResultPretty)
+        }
+      }
+    } yield expect(differences.isEmpty)
   }
 }

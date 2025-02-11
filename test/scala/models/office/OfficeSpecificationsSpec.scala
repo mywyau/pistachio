@@ -4,12 +4,11 @@ import cats.effect.IO
 import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
-import models.office.adts.*
-import weaver.SimpleIOSuite
+import models.ModelsBaseSpec
 import testData.OfficeTestConstants.*
+import weaver.SimpleIOSuite
 
-
-object OfficeSpecificationsSpec extends SimpleIOSuite {
+object OfficeSpecificationsSpec extends SimpleIOSuite with ModelsBaseSpec {
 
   test("OfficeSpecifications model encodes correctly to JSON") {
 
@@ -18,41 +17,57 @@ object OfficeSpecificationsSpec extends SimpleIOSuite {
     val expectedJson =
       """
         |{
-        |   "id": 1,
-        |   "businessId": "businessId1",
-        |   "officeId": "officeId1",
-        |   "officeName": "Maginificanent Office",
-        |   "description": "some office description",
-        |   "officeType": "OpenPlanOffice",
-        |   "numberOfFloors": 3,
-        |   "totalDesks": 3,
-        |   "capacity": 50,
-        |   "availability": {
-        |     [
-        |       {
-        |          "day": Monday"
-        |          "openingTime": "09:00:00",
-        |          "closingTime": "17:00:00"
-        |       },
-        |       {
-        |          "day": Tuesday"
-        |          "openingTime": "09:00:00",
-        |          "closingTime": "17:00:00"
-        |       }
-        |     ]
-        |   },
-        |   "amenities": ["Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"],
-        |   "rules": "Please keep the office clean and tidy.",
-        |   "createdAt": "2025-01-01T00:00:00",
-        |   "updatedAt": "2025-01-01T00:00:00"
-        |}
+        |  "amenities" : [
+        |    "Wi-Fi",
+        |    "Coffee Machine",
+        |    "Projector",
+        |    "Whiteboard",
+        |    "Parking"
+        |  ],
+        |  "businessId" : "businessId1",
+        |  "capacity" : 50,
+        |  "createdAt" : "2025-01-01T00:00:00",
+        |  "description" : "some office description",
+        |  "id" : 1,
+        |  "numberOfFloors" : 3,
+        |  "officeId" : "officeId1",
+        |  "officeName" : "Maginificanent Office",
+        |  "officeType" : "OpenPlanOffice",
+        |  "openingHours" : [
+        |    {
+        |      "closingTime" : "17:00:00",
+        |      "day" : "Monday",
+        |      "openingTime" : "09:00:00"
+        |    },
+        |    {
+        |      "closingTime" : "17:00:00",
+        |      "day" : "Tuesday",
+        |      "openingTime" : "09:00:00"
+        |    }
+        |  ],
+        |  "rules" : "Please keep the office clean and tidy.",
+        |  "totalDesks" : 3,
+        |  "updatedAt" : "2025-01-01T00:00:00"
+        |}   
         |""".stripMargin
 
     val expectedResult: Json = parse(expectedJson).getOrElse(Json.Null)
 
+    val jsonResultPretty = printer.print(jsonResult)
+    val expectedResultPretty = printer.print(expectedResult)
+
+    val differences = jsonDiff(jsonResult, expectedResult, expectedResultPretty, jsonResultPretty)
+
     for {
-      _ <- IO("")
-    } yield expect(jsonResult == expectedResult)
+      _ <- IO {
+        if (differences.nonEmpty) {
+          println("=== JSON Difference Detected! ===")
+          differences.foreach(diff => println(s"- $diff"))
+          println("Generated JSON:\n" + jsonResultPretty)
+          println("Expected JSON:\n" + expectedResultPretty)
+        }
+      }
+    } yield expect(differences.isEmpty)
   }
 
 }

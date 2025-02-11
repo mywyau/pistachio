@@ -7,7 +7,7 @@ import models.business.address.requests.UpdateBusinessAddressRequest
 import models.business.contact_details.requests.UpdateBusinessContactDetailsRequest
 import models.business.contact_details.BusinessContactDetails
 import models.business.specifications.requests.UpdateBusinessSpecificationsRequest
-import models.business.specifications.BusinessAvailability
+
 import models.OpeningHours
 import models.Monday
 import models.Tuesday
@@ -15,8 +15,7 @@ import testData.TestConstants.*
 
 object BusinessTestConstants {
 
-  val businessAvailability1 =
-    BusinessAvailability(
+  val businessOpeningHours1 =
       List(
         OpeningHours(
           day = Monday,
@@ -27,7 +26,6 @@ object BusinessTestConstants {
           day = Tuesday,
           openingTime = openingTime0900,
           closingTime = closingTime1700
-        )
       )
     )
 
@@ -88,6 +86,6 @@ object BusinessTestConstants {
     UpdateBusinessSpecificationsRequest(
       businessName = businessName1,
       description = businessDescription1,
-      openingHours = businessAvailability1
+      openingHours = businessOpeningHours1
     )
 }

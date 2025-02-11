@@ -1,7 +1,7 @@
 package controllers.constants
 
 import cats.effect.*
-import models.business.specifications.BusinessAvailability
+
 import models.business.specifications.BusinessSpecifications
 import models.business.specifications.BusinessSpecificationsPartial
 import models.business.specifications.requests.CreateBusinessSpecificationsRequest
@@ -13,7 +13,7 @@ object BusinessSpecificationsControllerConstants {
 
   val testBusinessSpecs: BusinessSpecificationsPartial =
     BusinessSpecificationsPartial(
-      userId = "user_id_1",
+      userId = "userId1",
       businessId = "businessId1",
       businessName = Some("Example Business Name"),
       description = Some("some description"),

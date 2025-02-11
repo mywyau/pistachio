@@ -18,6 +18,7 @@ import models.OpeningHours
 import models.Tuesday
 import testData.DeskTestConstants.description1
 import testData.TestConstants.*
+import models.office_listing.requests.OfficeListingRequest
 
 object OfficeTestConstants {
 
@@ -38,7 +39,7 @@ object OfficeTestConstants {
       longitude = Some(longitude1)
     )
 
-  val officeOpeningHours1 =
+  val officeOpeningHours1: List[OpeningHours] =
     List(
       OpeningHours(
         day = Monday,
@@ -127,6 +128,67 @@ object OfficeTestConstants {
       amenities = List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"),
       openingHours = officeOpeningHours1,
       rules = Some(officeRules)
+    )
+
+  val testCreateOfficeSpecificationsRequest: CreateOfficeSpecificationsRequest =
+    CreateOfficeSpecificationsRequest(
+      businessId = "businessId1",
+      officeId = "officeId1",
+      officeName = "Maginificanent Office",
+      description = "some office description",
+      officeType = OpenPlanOffice,
+      numberOfFloors = 3,
+      totalDesks = 3,
+      capacity = 50,
+      amenities = List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"),
+      openingHours = List(
+        OpeningHours(
+          day = Monday,
+          openingTime = openingTime0900,
+          closingTime = closingTime1700
+        ),
+        OpeningHours(
+          day = Tuesday,
+          openingTime = openingTime0900,
+          closingTime = closingTime1700
+        )
+      ),
+      rules = Some("Please keep the office clean and tidy.")
+    )
+
+  val testCreateOfficeAddressRequest =
+    CreateOfficeAddressRequest(
+      businessId = "businessId1",
+      officeId = "officeId1",
+      buildingName = Some("butter building"),
+      floorNumber = Some("floor 1"),
+      street = Some("Main street 123"),
+      city = Some("New York"),
+      country = Some("USA"),
+      county = Some("County 123"),
+      postcode = Some("123456"),
+      latitude = Some(100.1),
+      longitude = Some(-100.1)
+    )
+
+  val testCreateOfficeContactDetailsRequest =
+    CreateOfficeContactDetailsRequest(
+      businessId = "businessId1",
+      officeId = "officeId1",
+      primaryContactFirstName = "Michael",
+      primaryContactLastName = "Yau",
+      contactEmail = "mike@gmail.com",
+      contactNumber = "07402205071"
+    )
+
+  val officeListingRequest =
+    OfficeListingRequest(
+      officeId = "officeId1",
+      createOfficeAddressRequest = testCreateOfficeAddressRequest,
+      createOfficeSpecificationsRequest = testCreateOfficeSpecificationsRequest,
+      createOfficeContactDetailsRequest = testCreateOfficeContactDetailsRequest,
+      createdAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0),
+      updatedAt = LocalDateTime.of(2025, 1, 1, 0, 0, 0)
     )
 
 }

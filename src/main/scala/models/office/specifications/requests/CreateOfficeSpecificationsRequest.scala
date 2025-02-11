@@ -8,7 +8,6 @@ import io.circe.Decoder
 import io.circe.Encoder
 import java.time.LocalDateTime
 import models.office.adts.OfficeType
-import models.office.specifications.OfficeAvailability
 import models.OpeningHours
 
 case class CreateOfficeSpecificationsRequest(

@@ -12,7 +12,7 @@ import doobie.implicits.*
 import doobie.util.transactor.Transactor
 import io.circe.Json
 import io.circe.syntax.*
-import models.business.specifications.BusinessAvailability
+
 import models.business.specifications.BusinessSpecifications
 import models.business.specifications.BusinessSpecificationsPartial
 import models.business.specifications.requests.UpdateBusinessSpecificationsRequest

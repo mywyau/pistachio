@@ -4,7 +4,7 @@ import cats.effect.*
 import models.business.address.requests.CreateBusinessAddressRequest
 import models.business_listing.requests.BusinessListingRequest
 import models.business.contact_details.requests.CreateBusinessContactDetailsRequest
-import models.business.specifications.BusinessAvailability
+
 import models.business.specifications.requests.CreateBusinessSpecificationsRequest
 
 import java.time.LocalDateTime
@@ -14,7 +14,7 @@ object BusinessListingControllerConstants {
 
   val testCreateBusinessSpecificationsRequest: CreateBusinessSpecificationsRequest =
     CreateBusinessSpecificationsRequest(
-      userId = "user_id_1",
+      userId = "userId1",
       businessId = "businessId1",
       businessName = "Maginificanent Office",
       description = "A vibrant business space in the heart of the city, ideal for teams or individuals.",
@@ -27,7 +27,7 @@ object BusinessListingControllerConstants {
 
   val testCreateBusinessAddressRequest: CreateBusinessAddressRequest =
     CreateBusinessAddressRequest(
-      userId = "user_id_1",
+      userId = "userId1",
       businessId = "businessId1",
       businessName = Some("MikeyCorp"),
       buildingName = Some("BusinessListingControllerISpec Building"),
@@ -43,7 +43,7 @@ object BusinessListingControllerConstants {
 
   val testCreateBusinessContactDetailsRequest: CreateBusinessContactDetailsRequest =
     CreateBusinessContactDetailsRequest(
-      userId = "user_id_1",
+      userId = "userId1",
       businessId = "businessId1",
       primaryContactFirstName = "Michael",
       primaryContactLastName = "Yau",

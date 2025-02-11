@@ -28,7 +28,7 @@ object DeskTestConstants {
 
   val deskName1 = "Luxury supreme desk"
   val description1 = "Some description"
-  val description2 = "A comfortable desk in a private office space with all amenities included."
+  val description2 = "Some description"
 
   val rules = "Please keep the desk clean and quiet."
 
@@ -79,7 +79,7 @@ object DeskTestConstants {
       deskType = Some(PrivateDesk),
       quantity = Some(5),
       features = Some(deskFeatures),
-      openingHours = Some(availability),
+      openingHours = Some(deskOpeningHours),
       rules = Some(rules)
     )
 
