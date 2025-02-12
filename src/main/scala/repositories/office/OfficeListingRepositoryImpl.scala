@@ -81,7 +81,7 @@ class OfficeListingRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transac
           os.total_desks AS os_total_desks,
           os.capacity AS os_capacity,
           os.amenities AS os_amenities,
-          os.availability AS os_availability,
+          os.opening_hours AS os_opening_hours,
           os.rules AS os_rules
       FROM office_address oa
       LEFT JOIN office_contact_details ocd ON oa.office_id = ocd.office_id
@@ -136,7 +136,7 @@ class OfficeListingRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transac
           os.total_desks AS os_total_desks,
           os.capacity AS os_capacity,
           os.amenities AS os_amenities,
-          os.availability AS os_availability,
+          os.opening_hours AS os_opening_hours,
           os.rules AS os_rules
       FROM office_address oa
       LEFT JOIN office_contact_details ocd ON oa.office_id = ocd.office_id

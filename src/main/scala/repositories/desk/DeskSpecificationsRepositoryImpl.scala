@@ -58,7 +58,7 @@ class DeskSpecificationsRepositoryImpl[F[_] : Concurrent : Monad : Logger](trans
           desk_type,
           quantity,
           features,
-          openingHours,
+          opening_hours,
           rules
          FROM desk_specifications
          WHERE desk_id = $deskId
@@ -77,7 +77,7 @@ class DeskSpecificationsRepositoryImpl[F[_] : Concurrent : Monad : Logger](trans
           desk_type,
           quantity,
           features,
-          openingHours,
+          opening_hours,
           rules
          FROM desk_specifications
          WHERE office_id = $officeId
@@ -97,7 +97,7 @@ class DeskSpecificationsRepositoryImpl[F[_] : Concurrent : Monad : Logger](trans
           desk_type,
           quantity,
           features,
-          openingHours,
+          opening_hours,
           rules
       ) VALUES (
         ${request.deskName},
@@ -133,7 +133,7 @@ class DeskSpecificationsRepositoryImpl[F[_] : Concurrent : Monad : Logger](trans
         desk_type = ${request.deskType},
         quantity = ${request.quantity},
         features = ${request.features},
-        openingHours = ${request.openingHours.asJson.noSpaces}::jsonb,
+        opening_hours = ${request.openingHours.asJson.noSpaces}::jsonb,
         rules = ${request.rules}
       WHERE desk_id = ${deskId}
     """.update.run

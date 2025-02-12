@@ -22,7 +22,7 @@ object OfficeSpecificationRepoFragments {
         total_desks INT,
         capacity INT,
         amenities TEXT[],
-        availability JSONB,
+        opening_hours JSONB,
         rules TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -43,7 +43,7 @@ object OfficeSpecificationRepoFragments {
           total_desks,
           capacity,
           amenities,
-          availability,
+          opening_hours,
           rules,
           created_at,
           updated_at
@@ -94,7 +94,7 @@ object OfficeSpecificationRepoFragments {
           total_desks,
           capacity,
           amenities,
-          availability,
+          opening_hours,
           rules,
           created_at,
           updated_at

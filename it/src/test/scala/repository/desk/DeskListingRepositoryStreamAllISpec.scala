@@ -58,14 +58,14 @@ class DeskListingRepositoryStreamAllISpec(global: GlobalRead) extends IOSuite wi
     val expectedCards =
       List(
         DeskListingCard("deskId1", "Mikey Desk 1", "A quiet, private desk perfect for focused work with a comfortable chair and good lighting."),
-        DeskListingCard("desk002", "Mikey Desk 2", "A shared desk in a collaborative space with easy access to team members."),
-        DeskListingCard("desk003", "Mikey Desk 3", "Spacious desk with a view and ample storage for your items."),
-        DeskListingCard("desk004", "Mikey Desk 4", "A flexible, hot desk available for use in a dynamic work environment."),
-        DeskListingCard("desk005", "Mikey Desk 5", "An executive desk in a quiet, well-lit space designed for high-level work.")
+        DeskListingCard(deskId2, "Mikey Desk 2", "A shared desk in a collaborative space with easy access to team members."),
+        DeskListingCard("deskId3", "Mikey Desk 3", "Spacious desk with a view and ample storage for your items."),
+        DeskListingCard("deskId4", "Mikey Desk 4", "A flexible, hot desk available for use in a dynamic work environment."),
+        DeskListingCard("deskId5", "Mikey Desk 5", "An executive desk in a quiet, well-lit space designed for high-level work.")
       )
 
     for {
-      deskListings <- deskRepo.streamAllListingCardDetails("office001").compile.toList
+      deskListings <- deskRepo.streamAllListingCardDetails("officeId1").compile.toList
     } yield expect(deskListings == expectedCards)
   }
 

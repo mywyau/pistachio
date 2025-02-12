@@ -42,14 +42,14 @@ class DeskPricingControllerISpec(global: GlobalRead) extends IOSuite with Contro
     } yield (transactor, client)
 
   test(
-    "GET - /pistachio/desk/pricing/find/desk002 - should get the desk for a given desk id"
+    "GET - /pistachio/desk/pricing/find/deskId2 - should get the desk for a given desk id"
   ) { (sharedResources, log) =>
 
     val transactor = sharedResources._1.xa
     val client = sharedResources._2.client
 
     val request =
-      Request[IO](GET, uri"http://127.0.0.1:9999/pistachio/desk/pricing/find/desk002")
+      Request[IO](GET, uri"http://127.0.0.1:9999/pistachio/desk/pricing/find/deskId2")
 
     val expectedDeskPricing =
       RetrievedDeskPricing(
@@ -103,7 +103,7 @@ class DeskPricingControllerISpec(global: GlobalRead) extends IOSuite with Contro
   test(
     "GET - /pistachio/desk/pricing/find/all/office01 - should find all the desk pricings for office01" +
       "\nPOST - /pistachio/desk/pricing/create - should create a desk pricing" +
-      "\nDELETE - /pistachio/desk/pricing/delete/desk003 - should delete a desk pricing for a given deskId"
+      "\nDELETE - /pistachio/desk/pricing/delete/deskId3 - should delete a desk pricing for a given deskId"
   ) { (sharedResources, log) =>
 
     val transactor = sharedResources._1.xa
@@ -117,7 +117,7 @@ class DeskPricingControllerISpec(global: GlobalRead) extends IOSuite with Contro
     //     .withEntity(testDeskPricingRequest.asJson)
 
     val deleteRequest =
-      Request[IO](DELETE, uri"http://127.0.0.1:9999/pistachio/desk/pricing/delete/desk003")
+      Request[IO](DELETE, uri"http://127.0.0.1:9999/pistachio/desk/pricing/delete/deskId3")
 
     val expectedDeskPricing = CreatedResponse(CreateSuccess.toString, "Business Desk created successfully")
 

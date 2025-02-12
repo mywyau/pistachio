@@ -48,7 +48,7 @@ class BusinessSpecificationsRepositoryImpl[F[_] : Concurrent : Monad](transactor
            business_id,
            business_name,
            description,
-           openingHours
+           opening_hours
          FROM business_specifications
          WHERE business_id = $businessId
        """.query[BusinessSpecificationsPartial].option.transact(transactor)
@@ -63,7 +63,7 @@ class BusinessSpecificationsRepositoryImpl[F[_] : Concurrent : Monad](transactor
         business_id,
         business_name,
         description,
-        openingHours
+        opening_hours
       ) VALUES (
         ${createBusinessSpecificationsRequest.userId},
         ${createBusinessSpecificationsRequest.businessId},
@@ -93,7 +93,7 @@ class BusinessSpecificationsRepositoryImpl[F[_] : Concurrent : Monad](transactor
         SET
         business_name = ${request.businessName},
         description = ${request.description},
-        openingHours = ${request.openingHours.asJson.noSpaces}::jsonb,
+        opening_hours = ${request.openingHours.asJson.noSpaces}::jsonb,
         updated_at = ${LocalDateTime.now()}
         WHERE business_id = $businessId
       """.update.run

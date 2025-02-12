@@ -9,21 +9,15 @@ import models.office.adts.*
 import models.office.contact_details.requests.CreateOfficeContactDetailsRequest
 import models.office.contact_details.OfficeContactDetails
 import models.office.contact_details.OfficeContactDetailsPartial
-import models.office_listing.requests.InitiateOfficeListingRequest
-import models.office_listing.OfficeListing
 import models.office.specifications.requests.CreateOfficeSpecificationsRequest
-
 import models.office.specifications.OfficeSpecifications
 import models.office.specifications.OfficeSpecificationsPartial
+import models.office_listing.requests.InitiateOfficeListingRequest
+import models.office_listing.OfficeListing
+import testData.OfficeTestConstants.*
+import testData.TestConstants.*
 
 object OfficeListingControllerConstants {
-
-  val testOfficeAvailability: OfficeopeningHours =
-    OfficeAvailability(
-      days = List("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
-      openingTime = LocalTime.of(0, 0, 0),
-      closingTime = LocalTime.of(0, 0, 0)
-    )
 
   val testCreateOfficeSpecificationsRequest: CreateOfficeSpecificationsRequest =
     CreateOfficeSpecificationsRequest(
@@ -36,7 +30,7 @@ object OfficeListingControllerConstants {
       totalDesks = 3,
       capacity = 50,
       amenities = List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"),
-      openingHours = testOfficeAvailability,
+      openingHours = officeOpeningHours1,
       rules = Some("Please keep the office clean and tidy.")
     )
 

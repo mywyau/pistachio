@@ -54,7 +54,7 @@ class DeskPricingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
     val expectedPricing = sampleRetrievedDeskPricing
 
     for {
-      deskPricingOpt <- deskPricingRepo.findByOfficeId("office001")
+      deskPricingOpt <- deskPricingRepo.findByOfficeId("officeId1")
     } yield expect(deskPricingOpt == List(expectedPricing))
   }
 
@@ -76,7 +76,7 @@ class DeskPricingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
 
   test(".delete() - should return DeleteSuccess for successfuly deleting the desk based on the deskId") { deskPricingRepo =>
     for {
-      deskPricingOpt <- deskPricingRepo.delete("desk002")
+      deskPricingOpt <- deskPricingRepo.delete(deskId2)
     } yield expect(deskPricingOpt == Valid(DeleteSuccess))
   }
 }

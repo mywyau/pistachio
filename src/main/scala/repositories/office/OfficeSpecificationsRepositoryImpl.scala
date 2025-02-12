@@ -42,7 +42,7 @@ class OfficeSpecificationsRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
   implicit val officeTypeMeta: Meta[OfficeType] = Meta[String].imap(OfficeType.fromString)(_.toString)
 
     // Meta instance for List[OpeningHours]
-  implicit val openingHoursListMeta: Meta[List[OpeningHours]] =
+  implicit val opening_hoursListMeta: Meta[List[OpeningHours]] =
     Meta[String].imap(jsonStr =>
       decode[List[OpeningHours]](jsonStr).getOrElse(Nil)
     )(_.asJson.noSpaces)
@@ -62,7 +62,7 @@ class OfficeSpecificationsRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
             total_desks,
             capacity,
             amenities,
-            openingHours,
+            opening_hours,
             rules
          FROM office_specifications
          WHERE office_id = $officeId
@@ -83,7 +83,7 @@ class OfficeSpecificationsRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
         total_desks,
         capacity,
         amenities,
-        openingHours,
+        opening_hours,
         rules
       ) VALUES (
         ${createOfficeSpecificationsRequest.businessId},
@@ -122,7 +122,7 @@ class OfficeSpecificationsRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
         total_desks = ${request.totalDesks},
         capacity = ${request.capacity},
         amenities = ${request.amenities},
-        openingHours = ${request.openingHours}::jsonb,
+        opening_hours = ${request.openingHours}::jsonb,
         rules = ${request.rules},
         updated_at = ${LocalDateTime.now()}
       WHERE office_id = $officeId

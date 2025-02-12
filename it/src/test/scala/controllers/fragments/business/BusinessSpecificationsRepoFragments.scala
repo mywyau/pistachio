@@ -17,7 +17,7 @@ object BusinessSpecificationsRepoFragments {
         business_id VARCHAR(255) NOT NULL UNIQUE,
         business_name VARCHAR(255) NOT NULL,
         description TEXT,
-        availability JSONB,
+        opening_hours JSONB,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
@@ -31,7 +31,7 @@ object BusinessSpecificationsRepoFragments {
         business_id,
         business_name,
         description,
-        availability,
+        opening_hours,
         created_at,
         updated_at
       ) VALUES
@@ -50,7 +50,7 @@ object BusinessSpecificationsRepoFragments {
         business_id,
         business_name,
         description,
-        availability,
+        opening_hours,
         created_at,
         updated_at
       ) VALUES

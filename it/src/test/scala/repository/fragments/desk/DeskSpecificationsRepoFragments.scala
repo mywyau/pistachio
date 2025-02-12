@@ -21,7 +21,7 @@ object DeskSpecificationsRepoFragments {
           desk_type VARCHAR(100),
           quantity INT CHECK (quantity >= 0),
           features TEXT[],
-          availability JSONB,
+          opening_hours JSONB,
           rules TEXT,
           created_at TIMESTAMP DEFAULT '2025-01-01 00:00:00',
           updated_at TIMESTAMP DEFAULT '2025-01-01 00:00:00'
@@ -32,7 +32,7 @@ object DeskSpecificationsRepoFragments {
     sql"""
       INSERT INTO desk_specifications (
         user_id, business_id, office_id, desk_id, desk_name, description, desk_type, 
-        quantity, features, availability, rules, created_at, updated_at
+        quantity, features, opening_hours, rules, created_at, updated_at
       ) VALUES
         ('userId1',
          'businessId1',
@@ -101,7 +101,7 @@ object DeskSpecificationsRepoFragments {
         }', 
          'Please keep your personal items to a minimum and respect shared spaces.', 
          '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
-        ('userId4', 'businessId3', 'officeId4', 'desk004', 'Mikey Desk 4', 
+        ('userId4', 'businessId3', 'officeId4', 'deskId4', 'Mikey Desk 4', 
          'A flexible, hot desk available for use in a dynamic work environment.', 'PrivateDesk', 
          10, 
          ARRAY['Wi-Fi', 'Power Outlets', 'Standing Desk'], 
@@ -121,7 +121,7 @@ object DeskSpecificationsRepoFragments {
           }', 
          'Please clean up after use and respect the shared space.', 
          '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
-        ('userId5', 'businessId4', 'officeId5', 'desk005', 'Mikey Desk 5', 
+        ('userId5', 'businessId4', 'officeId5', 'deskId5', 'Mikey Desk 5', 
          'An executive desk in a quiet, well-lit space designed for high-level work.', 'PrivateDesk', 
          1, 
          ARRAY['Wi-Fi', 'Power Outlets', 'Ergonomic Chair', 'Storage Space'], 
@@ -147,7 +147,7 @@ object DeskSpecificationsRepoFragments {
     sql"""
       INSERT INTO desk_specifications (
         user_id, business_id, office_id, desk_id, desk_name, description, desk_type, 
-        quantity, features, availability, rules, created_at, updated_at
+        quantity, features, opening_hours, rules, created_at, updated_at
       ) VALUES
         ('userId1',
          'bizId1',
@@ -176,7 +176,7 @@ object DeskSpecificationsRepoFragments {
          '2025-01-01 00:00:00',
          '2025-01-01 00:00:00'
         ),
-        ('user002', 'bizId1', 'officeId1', 'desk002', 'Mikey Desk 2', 
+        ('user002', 'bizId1', 'officeId1', 'deskId2', 'Mikey Desk 2', 
          'A shared desk in a collaborative space with easy access to team members.', 'PrivateDesk', 
          3, 
          ARRAY['Wi-Fi', 'Power Outlets', 'Whiteboard', 'Projector'], 
@@ -196,7 +196,7 @@ object DeskSpecificationsRepoFragments {
         }', 
         'Respect others'' privacy and keep noise levels to a minimum.', 
         '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
-        ('user003', 'biz002', 'officeId1', 'desk003', 'Mikey Desk 3', 
+        ('user003', 'biz002', 'officeId1', 'deskId3', 'Mikey Desk 3', 
          'Spacious desk with a view and ample storage for your items.', 'PrivateDesk', 
          2, 
          ARRAY['Wi-Fi', 'Power Outlets', 'Storage Space', 'View'], 
@@ -216,7 +216,7 @@ object DeskSpecificationsRepoFragments {
         }', 
          'Please keep your personal items to a minimum and respect shared spaces.', 
          '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
-        ('user004', 'biz003', 'officeId1', 'desk004', 'Mikey Desk 4', 
+        ('user004', 'biz003', 'officeId1', 'deskId4', 'Mikey Desk 4', 
          'A flexible, hot desk available for use in a dynamic work environment.', 'PrivateDesk', 
          10, 
          ARRAY['Wi-Fi', 'Power Outlets', 'Standing Desk'], 
@@ -236,7 +236,7 @@ object DeskSpecificationsRepoFragments {
         }', 
          'Please clean up after use and respect the shared space.', 
          '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
-        ('user005', 'biz004', 'officeId1', 'desk005', 'Mikey Desk 5', 
+        ('user005', 'biz004', 'officeId1', 'deskId5', 'Mikey Desk 5', 
          'An executive desk in a quiet, well-lit space designed for high-level work.', 'PrivateDesk', 
          1, 
          ARRAY['Wi-Fi', 'Power Outlets', 'Ergonomic Chair', 'Storage Space'], 

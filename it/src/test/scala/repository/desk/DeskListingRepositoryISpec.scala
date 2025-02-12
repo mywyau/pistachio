@@ -6,17 +6,15 @@ import cats.effect.Resource
 import cats.implicits.*
 import doobie.*
 import doobie.implicits.*
-import java.time.LocalDateTime
-import java.time.LocalTime
 import models.database.CreateSuccess
 import models.database.DeleteSuccess
-import models.desk.deskListing.requests.InitiateDeskListingRequest
 import models.desk.deskListing.DeskListing
+import models.desk.deskListing.requests.InitiateDeskListingRequest
 import models.desk.deskPricing.DeskPricingPartial
 import models.desk.deskPricing.RetrievedDeskPricing
-import models.desk.deskSpecifications.requests.UpdateDeskSpecificationsRequest
 import models.desk.deskSpecifications.DeskSpecificationsPartial
 import models.desk.deskSpecifications.PrivateDesk
+import models.desk.deskSpecifications.requests.UpdateDeskSpecificationsRequest
 import repositories.desk.DeskListingRepositoryImpl
 import repository.fragments.desk.DeskPricingRepoFragments.*
 import repository.fragments.desk.DeskSpecificationsRepoFragments.*
@@ -26,6 +24,9 @@ import testData.TestConstants.*
 import weaver.GlobalRead
 import weaver.IOSuite
 import weaver.ResourceTag
+
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with RepositoryISpecBase {
 
@@ -69,11 +70,11 @@ class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
       DeskListing(
         deskId = deskId1,
         expectedSpecifications,
-        expectedPricing
+        sampleRetrievedDeskPricing
       )
 
     for {
-      deskListingOpt <- businessDeskRepo.findByDeskId("deskId1")
+      deskListingOpt <- businessDeskRepo.findByDeskId(deskId1)
     } yield expect(deskListingOpt == Some(expectedResult))
   }
 
@@ -95,7 +96,7 @@ class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
 
   test(".delete() - should return DeleteSuccess for successfuly deleting the desk based on the deskId") { businessDeskRepo =>
     for {
-      deskListingOpt <- businessDeskRepo.delete("desk002")
+      deskListingOpt <- businessDeskRepo.delete(deskId2)
     } yield expect(deskListingOpt == Valid(DeleteSuccess))
   }
 }

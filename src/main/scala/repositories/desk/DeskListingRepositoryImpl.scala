@@ -90,7 +90,7 @@ class DeskListingRepositoryImpl[F[_] : Concurrent : Monad : Logger](transactor: 
         ds.desk_type AS ds_desk_type,
         ds.quantity AS ds_quantity,
         ds.features AS ds_features,
-        ds.availability AS ds_availability,
+        ds.opening_hours AS ds_opening_hours,
         ds.rules AS ds_rules,
 
         dp.price_per_hour AS dp_price_per_hour,

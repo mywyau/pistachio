@@ -39,7 +39,7 @@ class BusinessListingRepositoryImpl[F[_] : Concurrent : Monad](transactor: Trans
   implicit val localDateTimeMeta: Meta[LocalDateTime] =
     Meta[Timestamp].imap(_.toLocalDateTime)(Timestamp.valueOf)
 
-  implicit val openingHoursListMeta: Meta[List[OpeningHours]] =
+  implicit val opening_hoursListMeta: Meta[List[OpeningHours]] =
     Meta[String].imap(jsonStr => decode[List[OpeningHours]](jsonStr).getOrElse(Nil))(_.asJson.noSpaces)
 
   override def findAll(): F[List[BusinessListing]] = {
@@ -81,7 +81,7 @@ class BusinessListingRepositoryImpl[F[_] : Concurrent : Monad](transactor: Trans
            business_id,
            business_name,
            description,
-           openingHours
+           opening_hours
          FROM business_specifications
       """.query[BusinessSpecificationsPartial].to[List]
 
@@ -144,7 +144,7 @@ class BusinessListingRepositoryImpl[F[_] : Concurrent : Monad](transactor: Trans
            business_id,
            business_name,
            description,
-           openingHours
+           opening_hours
         FROM business_specifications WHERE business_id = $businessId
       """.query[BusinessSpecificationsPartial].option
     (
