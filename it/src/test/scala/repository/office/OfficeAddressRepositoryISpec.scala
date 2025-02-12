@@ -58,8 +58,8 @@ class OfficeAddressRepositoryISpec(global: GlobalRead) extends IOSuite {
 
   test(".update() - should return UpdateSucess and update the office address if office_id exists for a previously created office address") { officeAddressRepo =>
 
-    val businessId = "business_id_6"
-    val officeId = "office_id_6"
+    val businessId = businessId6
+    val officeId = officeId6
 
     val createRequest = createInitialOfficeAddress(businessId, officeId)
 
@@ -84,7 +84,7 @@ class OfficeAddressRepositoryISpec(global: GlobalRead) extends IOSuite {
 
   test(".delete() - should delete the office address for office_id_2 if it exists for a previously created office address") { officeAddressRepo =>
 
-    val officeId = "office_id_2"
+    val officeId = officeId2
 
     for {
       result <- officeAddressRepo.delete(officeId)

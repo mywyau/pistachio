@@ -5,10 +5,11 @@ import cats.effect.Resource
 import cats.implicits.*
 import doobie.*
 import doobie.implicits.*
-import models.desk.deskSpecifications.PrivateDesk
-
+import java.time.LocalDateTime
+import java.time.LocalTime
 import models.business.specifications.BusinessSpecifications
 import models.business.specifications.BusinessSpecificationsPartial
+import models.desk.deskSpecifications.PrivateDesk
 import repositories.business.BusinessSpecificationsRepositoryImpl
 import repository.fragments.business.BusinessSpecificationsRepoFragments.createBusinessSpecsTable
 import repository.fragments.business.BusinessSpecificationsRepoFragments.insertBusinessSpecificationsData
@@ -17,9 +18,6 @@ import shared.TransactorResource
 import weaver.GlobalRead
 import weaver.IOSuite
 import weaver.ResourceTag
-
-import java.time.LocalDateTime
-import java.time.LocalTime
 
 class BusinessSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite {
 
@@ -53,13 +51,7 @@ class BusinessSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite 
         businessId = businessId,
         businessName = Some("business_name_1"),
         description = Some("some desc1"),
-        openingHours = Some(
-          BusinessAvailability(
-            days = List("Monday", "Friday"),
-            openingTime = LocalTime.of(9, 0, 0),
-            closingTime = LocalTime.of(17, 0, 0)
-          )
-        )
+        openingHours = Some(businessOpeningHours1)
       )
 
     for {
