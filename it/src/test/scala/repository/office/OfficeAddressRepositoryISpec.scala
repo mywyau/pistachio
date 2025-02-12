@@ -6,24 +6,20 @@ import cats.effect.Resource
 import cats.implicits.*
 import doobie.*
 import doobie.implicits.*
+import models.database.*
 import models.desk.deskSpecifications.PrivateDesk
-import models.database.DeleteSuccess
-import models.database.UpdateSuccess
-import models.office.address_details.OfficeAddress
 import models.office.address_details.requests.CreateOfficeAddressRequest
 import models.office.address_details.requests.UpdateOfficeAddressRequest
+import models.office.address_details.OfficeAddress
 import models.office_listing.requests.OfficeListingRequest
-
 import repositories.office.OfficeAddressRepositoryImpl
 import repository.constants.OfficeAddressRepoITConstants.*
-import repository.fragments.OfficeAddressRepoFragments.createOfficeAddressTable
-import repository.fragments.OfficeAddressRepoFragments.insertOfficeAddressTable
-import repository.fragments.OfficeAddressRepoFragments.resetOfficeAddressTable
+import repository.fragments.OfficeAddressRepoFragments.*
 import shared.TransactorResource
+import testData.OfficeTestConstants.*
+import testData.TestConstants.*
 import weaver.GlobalRead
 import weaver.IOSuite
-
-import java.time.LocalDateTime
 
 class OfficeAddressRepositoryISpec(global: GlobalRead) extends IOSuite {
 

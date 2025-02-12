@@ -14,6 +14,8 @@ import repository.constants.OfficeListingRepoITConstants.*
 import repository.fragments.OfficeAddressRepoFragments.*
 import repository.fragments.OfficeContactDetailsRepoFragments.*
 import repository.fragments.OfficeSpecificationsRepoFragments.*
+import testData.TestConstants.*
+import testData.OfficeTestConstants.*
 import shared.TransactorResource
 import weaver.GlobalRead
 import weaver.IOSuite

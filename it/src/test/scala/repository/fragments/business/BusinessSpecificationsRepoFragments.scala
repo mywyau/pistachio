@@ -36,11 +36,11 @@ object BusinessSpecificationsRepoFragments {
         created_at,
         updated_at
       ) VALUES
-      ('USER001', 'BUS001', 'business_name_1', 'some desc1', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
-      ('USER002', 'BUS002', 'business_name_2', 'some desc2', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
-      ('USER003', 'BUS003', 'business_name_3', 'some desc3', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
-      ('USER004', 'BUS004', 'business_name_4', 'some desc4', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
-      ('USER005', 'BUS005', 'business_name_5', 'some desc5', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00', '2025-01-01 00:00:00');
+      ('userId1', 'businessId1', 'businessName1', 'some description', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
+      ('userId2', 'businessId2', 'businessName2', 'some description', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
+      ('userId3', 'businessId3', 'businessName3', 'some description', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
+      ('userId4', 'businessId4', 'businessName4', 'some description', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
+      ('userId5', 'businessId5', 'businessName5', 'some description', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00', '2025-01-01 00:00:00');
     """
   }
 

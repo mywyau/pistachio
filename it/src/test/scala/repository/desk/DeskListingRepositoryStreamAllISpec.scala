@@ -22,6 +22,8 @@ import models.desk.deskSpecifications.PrivateDesk
 import repositories.desk.DeskListingRepositoryImpl
 import repository.fragments.desk.DeskPricingRepoFragments.*
 import repository.fragments.desk.DeskSpecificationsRepoFragments.*
+import testData.TestConstants.*
+import testData.DeskTestConstants.*
 import shared.TransactorResource
 import weaver.GlobalRead
 import weaver.IOSuite

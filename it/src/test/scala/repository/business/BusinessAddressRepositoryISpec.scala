@@ -9,14 +9,13 @@ import doobie.implicits.*
 import java.time.LocalDateTime
 import models.business.address.requests.CreateBusinessAddressRequest
 import models.business.address.BusinessAddressPartial
-import models.desk.deskSpecifications.PrivateDesk
-
 import models.database.DeleteSuccess
+import models.desk.deskSpecifications.PrivateDesk
 import repositories.business.BusinessAddressRepositoryImpl
-import repository.fragments.business.BusinessAddressRepoFragments.createBusinessAddressTable
-import repository.fragments.business.BusinessAddressRepoFragments.insertBusinessAddressData
-import repository.fragments.business.BusinessAddressRepoFragments.resetBusinessAddressTable
+import repository.fragments.business.BusinessAddressRepoFragments.*
 import shared.TransactorResource
+import testData.BusinessTestConstants.*
+import testData.TestConstants.*
 import weaver.GlobalRead
 import weaver.IOSuite
 import weaver.ResourceTag

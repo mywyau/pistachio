@@ -43,7 +43,20 @@ object DeskSpecificationsRepoFragments {
         'PrivateDesk', 
          5,
          ARRAY['Wi-Fi', 'Power Outlets', 'Ergonomic Chair', 'Desk Lamp'], 
-         '{"days": ["Monday", "Tuesday", "Wednesday"], "openingTime": "09:00:00", "closingTime": "17:00:00"}', 
+        '{
+            "openingHours" : [
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Monday",
+                "openingTime" : "09:00:00"
+              },
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Tuesday",
+                "openingTime" : "09:00:00"
+              }
+            ]
+        }', 
          'No loud conversations, please keep the workspace clean.', 
          '2025-01-01 00:00:00',
          '2025-01-01 00:00:00'
@@ -52,32 +65,83 @@ object DeskSpecificationsRepoFragments {
          'A shared desk in a collaborative space with easy access to team members.', 'PrivateDesk', 
          3, 
          ARRAY['Wi-Fi', 'Power Outlets', 'Whiteboard', 'Projector'], 
-         '{"days": ["Monday", "Wednesday", "Friday"], "openingTime": "09:00:00", "closingTime": "17:00:00"}', 
+        '{
+            "openingHours" : [
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Monday",
+                "openingTime" : "09:00:00"
+              },
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Tuesday",
+                "openingTime" : "09:00:00"
+              }
+            ]
+         }', 
          'Respect others'' privacy and keep noise levels to a minimum.', 
          '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
         ('userId3', 'businessId2', 'officeId3', 'deskId3', 'Mikey Desk 3', 
          'Spacious desk with a view and ample storage for your items.', 'PrivateDesk', 
          2, 
          ARRAY['Wi-Fi', 'Power Outlets', 'Storage Space', 'View'], 
-         '{"days": ["Tuesday", "Thursday"], "openingTime": "09:00:00", "closingTime": "17:00:00"}', 
+        '{
+            "openingHours" : [
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Monday",
+                "openingTime" : "09:00:00"
+              },
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Tuesday",
+                "openingTime" : "09:00:00"
+              }
+            ]
+        }', 
          'Please keep your personal items to a minimum and respect shared spaces.', 
          '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
         ('userId4', 'businessId3', 'officeId4', 'desk004', 'Mikey Desk 4', 
          'A flexible, hot desk available for use in a dynamic work environment.', 'PrivateDesk', 
          10, 
          ARRAY['Wi-Fi', 'Power Outlets', 'Standing Desk'], 
-         '{"days": ["Monday", "Tuesday", "Thursday"], "openingTime": "09:00:00", "closingTime": "17:00:00"}', 
+         '{
+            "openingHours" : [
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Monday",
+                "openingTime" : "09:00:00"
+              },
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Tuesday",
+                "openingTime" : "09:00:00"
+              }
+            ]
+          }', 
          'Please clean up after use and respect the shared space.', 
          '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
         ('userId5', 'businessId4', 'officeId5', 'desk005', 'Mikey Desk 5', 
          'An executive desk in a quiet, well-lit space designed for high-level work.', 'PrivateDesk', 
          1, 
          ARRAY['Wi-Fi', 'Power Outlets', 'Ergonomic Chair', 'Storage Space'], 
-         '{"days": ["Monday", "Wednesday", "Friday"], "openingTime": "09:00:00", "closingTime": "17:00:00"}', 
+        '{
+            "openingHours" : [
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Monday",
+                "openingTime" : "09:00:00"
+              },
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Tuesday",
+                "openingTime" : "09:00:00"
+              }
+            ]
+        }', 
          'No food or drinks allowed at the desk. Keep the workspace organized.', 
          '2025-01-01 00:00:00', '2025-01-01 00:00:00');
     """
-
 
   val insertDeskSpecificationsSameOffice: fragment.Fragment =
     sql"""
@@ -94,7 +158,20 @@ object DeskSpecificationsRepoFragments {
         'PrivateDesk', 
          5,
          ARRAY['Wi-Fi', 'Power Outlets', 'Ergonomic Chair', 'Desk Lamp'], 
-         '{"days": ["Monday", "Tuesday", "Wednesday"], "openingTime": "09:00:00", "closingTime": "17:00:00"}', 
+        '{
+            "openingHours" : [
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Monday",
+                "openingTime" : "09:00:00"
+              },
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Tuesday",
+                "openingTime" : "09:00:00"
+              }
+            ]
+        }', 
          'No loud conversations, please keep the workspace clean.', 
          '2025-01-01 00:00:00',
          '2025-01-01 00:00:00'
@@ -103,30 +180,82 @@ object DeskSpecificationsRepoFragments {
          'A shared desk in a collaborative space with easy access to team members.', 'PrivateDesk', 
          3, 
          ARRAY['Wi-Fi', 'Power Outlets', 'Whiteboard', 'Projector'], 
-         '{"days": ["Monday", "Wednesday", "Friday"], "openingTime": "09:00:00", "closingTime": "17:00:00"}', 
-         'Respect others'' privacy and keep noise levels to a minimum.', 
-         '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
+        '{
+            "openingHours" : [
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Monday",
+                "openingTime" : "09:00:00"
+              },
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Tuesday",
+                "openingTime" : "09:00:00"
+              }
+            ]
+        }', 
+        'Respect others'' privacy and keep noise levels to a minimum.', 
+        '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
         ('user003', 'biz002', 'officeId1', 'desk003', 'Mikey Desk 3', 
          'Spacious desk with a view and ample storage for your items.', 'PrivateDesk', 
          2, 
          ARRAY['Wi-Fi', 'Power Outlets', 'Storage Space', 'View'], 
-         '{"days": ["Tuesday", "Thursday"], "openingTime": "09:00:00", "closingTime": "17:00:00"}', 
+        '{
+            "openingHours" : [
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Monday",
+                "openingTime" : "09:00:00"
+              },
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Tuesday",
+                "openingTime" : "09:00:00"
+              }
+            ]
+        }', 
          'Please keep your personal items to a minimum and respect shared spaces.', 
          '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
         ('user004', 'biz003', 'officeId1', 'desk004', 'Mikey Desk 4', 
          'A flexible, hot desk available for use in a dynamic work environment.', 'PrivateDesk', 
          10, 
          ARRAY['Wi-Fi', 'Power Outlets', 'Standing Desk'], 
-         '{"days": ["Monday", "Tuesday", "Thursday"], "openingTime": "09:00:00", "closingTime": "17:00:00"}', 
+        '{
+            "openingHours" : [
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Monday",
+                "openingTime" : "09:00:00"
+              },
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Tuesday",
+                "openingTime" : "09:00:00"
+              }
+            ]
+        }', 
          'Please clean up after use and respect the shared space.', 
          '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
         ('user005', 'biz004', 'officeId1', 'desk005', 'Mikey Desk 5', 
          'An executive desk in a quiet, well-lit space designed for high-level work.', 'PrivateDesk', 
          1, 
          ARRAY['Wi-Fi', 'Power Outlets', 'Ergonomic Chair', 'Storage Space'], 
-         '{"days": ["Monday", "Wednesday", "Friday"], "openingTime": "09:00:00", "closingTime": "17:00:00"}', 
-         'No food or drinks allowed at the desk. Keep the workspace organized.', 
-         '2025-01-01 00:00:00', '2025-01-01 00:00:00');
+        '{
+            "openingHours" : [
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Monday",
+                "openingTime" : "09:00:00"
+              },
+              {
+                "closingTime" : "17:00:00",
+                "day" : "Tuesday",
+                "openingTime" : "09:00:00"
+              }
+            ]
+        }', 
+        'No food or drinks allowed at the desk. Keep the workspace organized.', 
+        '2025-01-01 00:00:00', '2025-01-01 00:00:00');
     """
 
-  }
+}

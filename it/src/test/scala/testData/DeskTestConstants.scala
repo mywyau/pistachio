@@ -25,6 +25,7 @@ object DeskTestConstants {
   val deskId3 = "deskId3"
   val deskId4 = "deskId4"
   val deskId5 = "deskId5"
+  val deskId6 = "deskId6"
 
   val deskName1 = "Luxury supreme desk"
   val description1 = "Some description"

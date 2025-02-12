@@ -11,9 +11,9 @@ import models.business.specifications.BusinessSpecifications
 import models.business.specifications.BusinessSpecificationsPartial
 import models.desk.deskSpecifications.PrivateDesk
 import repositories.business.BusinessSpecificationsRepositoryImpl
-import repository.fragments.business.BusinessSpecificationsRepoFragments.createBusinessSpecsTable
-import repository.fragments.business.BusinessSpecificationsRepoFragments.insertBusinessSpecificationsData
-import repository.fragments.business.BusinessSpecificationsRepoFragments.resetBusinessSpecsTable
+import repository.fragments.business.BusinessSpecificationsRepoFragments.*
+import testData.BusinessTestConstants.*
+import testData.TestConstants.*
 import shared.TransactorResource
 import weaver.GlobalRead
 import weaver.IOSuite
@@ -42,8 +42,8 @@ class BusinessSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite 
 
   test(".findByBusinessId() - should return the business specifications if business_id exists for a previously created business specifications") { businessSpecsRepo =>
 
-    val userId = "USER001"
-    val businessId = "BUS001"
+    val userId = "userId1"
+    val businessId = "businessId1"
 
     val expectedResult =
       BusinessSpecificationsPartial(
