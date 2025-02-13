@@ -9,8 +9,6 @@ import cats.implicits.*
 import controllers.constants.OfficeSpecificationsControllerITConstants.testCreateOfficeSpecificationsRequest
 import doobie.*
 import doobie.implicits.*
-import java.time.LocalDateTime
-import java.time.LocalTime
 import models.database.CreateSuccess
 import models.database.DeleteSuccess
 import models.database.NotFoundError
@@ -18,21 +16,25 @@ import models.database.UpdateSuccess
 import models.office.address_details.requests.UpdateOfficeAddressRequest
 import models.office.adts.OpenPlanOffice
 import models.office.adts.PrivateOffice
-import models.office.specifications.requests.CreateOfficeSpecificationsRequest
-import models.office.specifications.requests.UpdateOfficeSpecificationsRequest
 import models.office.specifications.OfficeSpecifications
 import models.office.specifications.OfficeSpecificationsPartial
+import models.office.specifications.requests.CreateOfficeSpecificationsRequest
+import models.office.specifications.requests.UpdateOfficeSpecificationsRequest
 import repositories.office.OfficeSpecificationsRepositoryImpl
 import repository.constants.OfficeAddressRepoITConstants.createInitialOfficeAddress
 import repository.fragments.OfficeSpecificationsRepoFragments.createOfficeSpecsTable
 import repository.fragments.OfficeSpecificationsRepoFragments.insertOfficeSpecificationData
 import repository.fragments.OfficeSpecificationsRepoFragments.resetOfficeSpecsTable
 import shared.TransactorResource
-import testData.TestConstants.*
 import testData.OfficeTestConstants.*
+import testData.TestConstants.*
+import utils.Diffable
 import weaver.GlobalRead
 import weaver.IOSuite
 import weaver.ResourceTag
+
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 class OfficeSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite {
 
@@ -61,22 +63,31 @@ class OfficeSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite {
 
     val expectedResult =
       OfficeSpecificationsPartial(
-        businessId = "BUS001",
-        officeId = "OFF001",
-        officeName = Some("Main Office"),
-        description = Some("Spacious and well-lit office for teams."),
+        businessId = businessId1,
+        officeId = officeId1,
+        officeName = Some(officeName1),
+        description = Some(officeDescription1),
         officeType = Some(PrivateOffice),
-        numberOfFloors = Some(2),
-        totalDesks = Some(20),
-        capacity = Some(50),
+        numberOfFloors = Some(threeFloors),
+        totalDesks = Some(threeDesks),
+        capacity = Some(capacityOfFifty),
         amenities = Some(List("WiFi", "Parking")),
         openingHours = Some(officeOpeningHours1),
         rules = Some("No smoking indoors.")
       )
 
     for {
-      officeSpecsOpt <- officeSpecificationsRepo.findByOfficeId("OFF001")
-    } yield expect(officeSpecsOpt == Some(expectedResult))
+      officeSpecsOpt: Option[OfficeSpecificationsPartial] <- officeSpecificationsRepo.findByOfficeId(officeId1)
+      _ = officeSpecsOpt.foreach { office =>
+        val differences: Map[String, (Any, Any)] = Diffable.diff(expectedResult, office)
+        if (differences.nonEmpty) {
+          println("\n" + "[ Expected ] | [ Actual ]" +  ("***************") * 3 + "\n")
+          differences.foreach { difference =>
+            println(s"Difference Found - ${difference._1}: ${difference._2.head} | ${difference._2.last} \n")
+          }
+        }
+      }
+    } yield expect(officeSpecsOpt.contains(expectedResult))
   }
 
   test(".update() - should update the office specification if office_id exists for a previously created office specification") { officeSpecificationsRepo =>
@@ -125,9 +136,9 @@ class OfficeSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite {
     )
   }
 
-  test(".delete() - should delete the office specification if office_id exists for a previously created office specification - OFF002") { officeSpecificationsRepo =>
+  test(".delete() - should delete the office specification if office_id exists for a previously created office specification - officeId2") { officeSpecificationsRepo =>
     for {
-      deleteResult <- officeSpecificationsRepo.delete("OFF002")
+      deleteResult <- officeSpecificationsRepo.delete(officeId2)
     } yield expect(deleteResult == Valid(DeleteSuccess))
   }
 

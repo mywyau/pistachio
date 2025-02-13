@@ -1,28 +1,34 @@
 package testData
 
-import java.time.LocalDateTime
-import java.time.LocalTime
-import models.desk.deskListing.DeskListingCard
-import models.desk.deskPricing.RetrievedDeskPricing
-import models.office.address_details.requests.CreateOfficeAddressRequest
-import models.office.address_details.requests.UpdateOfficeAddressRequest
-import models.office.address_details.OfficeAddressPartial
-import models.office.adts.OpenPlanOffice
-import models.office.contact_details.requests.CreateOfficeContactDetailsRequest
-import models.office.contact_details.requests.UpdateOfficeContactDetailsRequest
-import models.office.specifications.requests.CreateOfficeSpecificationsRequest
-import models.office.specifications.requests.UpdateOfficeSpecificationsRequest
-import models.office.specifications.OfficeSpecifications
 import models.Monday
 import models.OpeningHours
 import models.Tuesday
+import models.desk.deskListing.DeskListingCard
+import models.desk.deskPricing.RetrievedDeskPricing
+import models.office.address_details.OfficeAddressPartial
+import models.office.address_details.requests.CreateOfficeAddressRequest
+import models.office.address_details.requests.UpdateOfficeAddressRequest
+import models.office.adts.OpenPlanOffice
+import models.office.contact_details.requests.CreateOfficeContactDetailsRequest
+import models.office.contact_details.requests.UpdateOfficeContactDetailsRequest
+import models.office.specifications.OfficeSpecifications
+import models.office.specifications.OfficeSpecificationsPartial
+import models.office.specifications.requests.CreateOfficeSpecificationsRequest
+import models.office.specifications.requests.UpdateOfficeSpecificationsRequest
+import models.office_listing.requests.OfficeListingRequest
 import testData.DeskTestConstants.description1
 import testData.TestConstants.*
-import models.office_listing.requests.OfficeListingRequest
+
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 object OfficeTestConstants {
 
   val officeRules = "Please keep the office clean and tidy."
+
+  val threeFloors = 3
+  val threeDesks = 3
+  val capacityOfFifty = 50
 
   val createOfficeAddressRequest: CreateOfficeAddressRequest =
     CreateOfficeAddressRequest(
@@ -60,9 +66,9 @@ object OfficeTestConstants {
       officeName = officeName1,
       description = officeDescription1,
       officeType = OpenPlanOffice,
-      numberOfFloors = 3,
-      totalDesks = 3,
-      capacity = 50,
+      numberOfFloors = threeFloors,
+      totalDesks = threeDesks,
+      capacity = capacityOfFifty,
       amenities = List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"),
       openingHours = officeOpeningHours1,
       rules = Some(officeRules)
@@ -78,17 +84,32 @@ object OfficeTestConstants {
       contactNumber = contactNumber1
     )
 
+  val testOfficeSpecificationsPartial =
+    OfficeSpecificationsPartial(
+      businessId = businessId1,
+      officeId = officeId1,
+      officeName = Some(officeName1),
+      description = Some(officeDescription1),
+      officeType = Some(OpenPlanOffice),
+      numberOfFloors = Some(threeFloors),
+      totalDesks = Some(threeDesks),
+      capacity = Some(capacityOfFifty),
+      amenities = Some(List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking")),
+      openingHours = Some(officeOpeningHours1),
+      rules = Some(officeRules)
+    )
+
   val officeSpecifications: OfficeSpecifications =
     OfficeSpecifications(
       id = Some(1),
       businessId = businessId1,
       officeId = officeId1,
       officeName = Some(officeName1),
-      description = Some("some office description"),
+      description = Some(officeDescription1),
       officeType = Some(OpenPlanOffice),
-      numberOfFloors = Some(3),
-      totalDesks = Some(3),
-      capacity = Some(50),
+      numberOfFloors = Some(threeFloors),
+      totalDesks = Some(threeDesks),
+      capacity = Some(capacityOfFifty),
       amenities = Some(List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking")),
       openingHours = Some(officeOpeningHours1),
       rules = Some(officeRules),
@@ -122,9 +143,9 @@ object OfficeTestConstants {
       officeName = officeName1,
       description = officeDescription1,
       officeType = OpenPlanOffice,
-      numberOfFloors = 3,
-      totalDesks = 3,
-      capacity = 50,
+      numberOfFloors = threeFloors,
+      totalDesks = threeDesks,
+      capacity = capacityOfFifty,
       amenities = List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"),
       openingHours = officeOpeningHours1,
       rules = Some(officeRules)
@@ -132,14 +153,14 @@ object OfficeTestConstants {
 
   val testCreateOfficeSpecificationsRequest: CreateOfficeSpecificationsRequest =
     CreateOfficeSpecificationsRequest(
-      businessId = "businessId1",
-      officeId = "officeId1",
-      officeName = "Maginificanent Office",
-      description = "some office description",
+      businessId = businessId1,
+      officeId = officeId1,
+      officeName = officeName1,
+      description = officeDescription1,
       officeType = OpenPlanOffice,
-      numberOfFloors = 3,
-      totalDesks = 3,
-      capacity = 50,
+      numberOfFloors = threeFloors,
+      totalDesks = threeDesks,
+      capacity = capacityOfFifty,
       amenities = List("Wi-Fi", "Coffee Machine", "Projector", "Whiteboard", "Parking"),
       openingHours = List(
         OpeningHours(
@@ -153,13 +174,13 @@ object OfficeTestConstants {
           closingTime = closingTime1700
         )
       ),
-      rules = Some("Please keep the office clean and tidy.")
+      rules = Some(officeRules)
     )
 
   val testCreateOfficeAddressRequest =
     CreateOfficeAddressRequest(
-      businessId = "businessId1",
-      officeId = "officeId1",
+      businessId = businessId1,
+      officeId = officeId1,
       buildingName = Some("butter building"),
       floorNumber = Some("floor 1"),
       street = Some("Main street 123"),
@@ -173,8 +194,8 @@ object OfficeTestConstants {
 
   val testCreateOfficeContactDetailsRequest =
     CreateOfficeContactDetailsRequest(
-      businessId = "businessId1",
-      officeId = "officeId1",
+      businessId = businessId1,
+      officeId = officeId1,
       primaryContactFirstName = "Michael",
       primaryContactLastName = "Yau",
       contactEmail = "mike@gmail.com",
@@ -183,7 +204,7 @@ object OfficeTestConstants {
 
   val officeListingRequest =
     OfficeListingRequest(
-      officeId = "officeId1",
+      officeId = officeId1,
       createOfficeAddressRequest = testCreateOfficeAddressRequest,
       createOfficeSpecificationsRequest = testCreateOfficeSpecificationsRequest,
       createOfficeContactDetailsRequest = testCreateOfficeContactDetailsRequest,
