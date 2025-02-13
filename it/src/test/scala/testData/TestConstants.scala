@@ -42,7 +42,7 @@ object TestConstants {
   val latitude1 = 100.1
   val longitude1 = -100.1
 
-  val officeName1 = "Maginificanent Office"
+  val officeName1 = "Magnificent Office"
 
   val officeDescription1 = "some office description"
 

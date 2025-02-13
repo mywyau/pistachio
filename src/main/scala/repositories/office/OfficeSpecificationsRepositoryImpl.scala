@@ -47,6 +47,7 @@ class OfficeSpecificationsRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
       decode[List[OpeningHours]](jsonStr).getOrElse(Nil)
     )(_.asJson.noSpaces)
 
+    
   implicit val dayTypeMeta: Meta[Day] = Meta[String].imap(Day.fromString)(_.toString)
 
   override def findByOfficeId(officeId: String): F[Option[OfficeSpecificationsPartial]] = {

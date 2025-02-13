@@ -57,38 +57,31 @@ class OfficeSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite {
     setup
   }
 
-  test(
-    ".findByOfficeId() - should return the office specifications if office_id exists for a previously created office specifications"
-  ) { officeSpecificationsRepo =>
+test(
+  ".findByOfficeId() - should return the office specifications if office_id exists for a previously created office specifications"
+) { officeSpecificationsRepo =>
 
-    val expectedResult =
-      OfficeSpecificationsPartial(
-        businessId = businessId1,
-        officeId = officeId1,
-        officeName = Some(officeName1),
-        description = Some(officeDescription1),
-        officeType = Some(PrivateOffice),
-        numberOfFloors = Some(threeFloors),
-        totalDesks = Some(threeDesks),
-        capacity = Some(capacityOfFifty),
-        amenities = Some(List("WiFi", "Parking")),
-        openingHours = Some(officeOpeningHours1),
-        rules = Some("No smoking indoors.")
-      )
+  val expectedResult =
+    OfficeSpecificationsPartial(
+      businessId = businessId1,
+      officeId = officeId1,
+      officeName = Some(officeName1),
+      description = Some(officeDescription1),
+      officeType = Some(PrivateOffice),
+      numberOfFloors = Some(threeFloors),
+      totalDesks = Some(threeDesks),
+      capacity = Some(capacityOfFifty),
+      amenities = Some(List("WiFi", "Parking")),
+      openingHours = Some(officeOpeningHours1),
+      rules = Some("No smoking indoors.")
+    )
 
-    for {
-      officeSpecsOpt: Option[OfficeSpecificationsPartial] <- officeSpecificationsRepo.findByOfficeId(officeId1)
-      _ = officeSpecsOpt.foreach { office =>
-        val differences: Map[String, (Any, Any)] = Diffable.diff(expectedResult, office)
-        if (differences.nonEmpty) {
-          println("\n" + "[ Expected ] | [ Actual ]" +  ("***************") * 3 + "\n")
-          differences.foreach { difference =>
-            println(s"Difference Found - ${difference._1}: ${difference._2.head} | ${difference._2.last} \n")
-          }
-        }
-      }
-    } yield expect(officeSpecsOpt.contains(expectedResult))
-  }
+  for {
+    officeSpecsOpt <- officeSpecificationsRepo.findByOfficeId(officeId1)
+    _ = officeSpecsOpt.foreach(office => Diffable.logDifferences(expectedResult, office)) // ✅ DRY Logging
+  } yield expect(officeSpecsOpt.contains(expectedResult))
+}
+
 
   test(".update() - should update the office specification if office_id exists for a previously created office specification") { officeSpecificationsRepo =>
 
