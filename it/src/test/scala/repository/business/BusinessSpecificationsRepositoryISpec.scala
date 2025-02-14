@@ -12,9 +12,10 @@ import models.business.specifications.BusinessSpecificationsPartial
 import models.desk.deskSpecifications.PrivateDesk
 import repositories.business.BusinessSpecificationsRepositoryImpl
 import repository.fragments.business.BusinessSpecificationsRepoFragments.*
+import shared.TransactorResource
 import testData.BusinessTestConstants.*
 import testData.TestConstants.*
-import shared.TransactorResource
+import utils.Diffable
 import weaver.GlobalRead
 import weaver.IOSuite
 import weaver.ResourceTag
@@ -49,13 +50,14 @@ class BusinessSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite 
       BusinessSpecificationsPartial(
         userId = userId,
         businessId = businessId,
-        businessName = Some("business_name_1"),
-        description = Some("some desc1"),
+        businessName = Some("businessName1"),
+        description = Some("some description"),
         openingHours = Some(businessOpeningHours1)
       )
 
     for {
       businessSpecsOpt <- businessSpecsRepo.findByBusinessId(businessId)
+      _ = businessSpecsOpt.foreach(businessSpec => Diffable.logDifferences(expectedResult, businessSpec))
     } yield expect(businessSpecsOpt == Some(expectedResult))
   }
 }

@@ -1,15 +1,14 @@
 package controllers.fragments.business
 
-import doobie.implicits.*
+import doobie.implicits._
 import doobie.util.fragment
 
 object BusinessSpecificationsRepoFragments {
 
-  val resetBusinessSpecsTable: fragment.Fragment = {
+  val resetBusinessSpecsTable: fragment.Fragment =
     sql"TRUNCATE TABLE business_specifications RESTART IDENTITY"
-  }
 
-  val createBusinessSpecsTable: fragment.Fragment = {
+  val createBusinessSpecsTable: fragment.Fragment =
     sql"""
       CREATE TABLE IF NOT EXISTS business_specifications (
         id SERIAL PRIMARY KEY,
@@ -22,9 +21,8 @@ object BusinessSpecificationsRepoFragments {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     """
-  }
 
-  val insertBusinessSpecsTable: fragment.Fragment = {
+  val insertBusinessSpecsTable: fragment.Fragment =
     sql"""
       INSERT INTO business_specifications (
         user_id,
@@ -35,15 +33,45 @@ object BusinessSpecificationsRepoFragments {
         created_at,
         updated_at
       ) VALUES
-      ('userId1','businessId1','Example Business Name','some description', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00','2025-01-01 00:00:00'),
-      ('user_id_2','business_id_2','Example Business Name','some description', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00','2025-01-01 00:00:00'),
-      ('user_id_4','business_id_4','Example Business Name','some description', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00','2025-01-01 00:00:00');
-     """
-  }
+        (
+          'userId1',
+          'businessId1',
+          'Example Business Name',
+          'some description',
+          '[
+            { "day": "Monday", "openingTime": "09:00", "closingTime": "17:00" },
+            { "day": "Tuesday", "openingTime": "09:00", "closingTime": "17:00" }
+          ]',
+          '2025-01-01 00:00:00',
+          '2025-01-01 00:00:00'
+        ),
+        (
+          'user_id_2',
+          'business_id_2',
+          'Example Business Name',
+          'some description',
+          '[
+            { "day": "Monday", "openingTime": "09:00", "closingTime": "17:00" },
+            { "day": "Tuesday", "openingTime": "09:00", "closingTime": "17:00" }
+          ]',
+          '2025-01-01 00:00:00',
+          '2025-01-01 00:00:00'
+        ),
+        (
+          'user_id_4',
+          'business_id_4',
+          'Example Business Name',
+          'some description',
+          '[
+            { "day": "Monday", "openingTime": "09:00", "closingTime": "17:00" },
+            { "day": "Tuesday", "openingTime": "09:00", "closingTime": "17:00" }
+          ]',
+          '2025-01-01 00:00:00',
+          '2025-01-01 00:00:00'
+        );
+    """
 
-
-
-  val sameUserIdBusinessSpecsData: fragment.Fragment = {
+  val sameUserIdBusinessSpecsData: fragment.Fragment =
     sql"""
       INSERT INTO business_specifications (
         user_id,
@@ -54,10 +82,41 @@ object BusinessSpecificationsRepoFragments {
         created_at,
         updated_at
       ) VALUES
-      ('USER123','businessId1','Example Business Name','some description', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00','2025-01-01 00:00:00'),
-      ('USER123','business_id_2','Example Business Name','some description', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00','2025-01-01 00:00:00'),
-      ('USER123','business_id_3','Example Business Name','some description', '{"days":["Monday","Friday"],"openingTime":"09:00:00","closingTime":"17:00:00"}'::jsonb, '2025-01-01 00:00:00','2025-01-01 00:00:00');
-     """
-  }
-
+        (
+          'USER123',
+          'businessId1',
+          'Example Business Name',
+          'some description',
+          '[
+            { "day": "Monday", "openingTime": "09:00", "closingTime": "17:00" },
+            { "day": "Tuesday", "openingTime": "09:00", "closingTime": "17:00" }
+          ]',
+          '2025-01-01 00:00:00',
+          '2025-01-01 00:00:00'
+        ),
+        (
+          'USER123',
+          'business_id_2',
+          'Example Business Name',
+          'some description',
+          '[
+            { "day": "Monday", "openingTime": "09:00", "closingTime": "17:00" },
+            { "day": "Tuesday", "openingTime": "09:00", "closingTime": "17:00" }
+          ]',
+          '2025-01-01 00:00:00',
+          '2025-01-01 00:00:00'
+        ),
+        (
+          'USER123',
+          'business_id_3',
+          'Example Business Name',
+          'some description',
+          '[
+            { "day": "Monday", "openingTime": "09:00", "closingTime": "17:00" },
+            { "day": "Tuesday", "openingTime": "09:00", "closingTime": "17:00" }
+          ]',
+          '2025-01-01 00:00:00',
+          '2025-01-01 00:00:00'
+        );
+    """
 }

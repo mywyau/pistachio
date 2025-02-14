@@ -6,27 +6,27 @@ import cats.effect.Resource
 import cats.implicits.*
 import doobie.*
 import doobie.implicits.*
+import java.time.LocalDateTime
+import java.time.LocalTime
 import models.database.CreateSuccess
 import models.database.DeleteSuccess
-import models.desk.deskListing.DeskListing
 import models.desk.deskListing.requests.InitiateDeskListingRequest
+import models.desk.deskListing.DeskListing
 import models.desk.deskPricing.DeskPricingPartial
 import models.desk.deskPricing.RetrievedDeskPricing
+import models.desk.deskSpecifications.requests.UpdateDeskSpecificationsRequest
 import models.desk.deskSpecifications.DeskSpecificationsPartial
 import models.desk.deskSpecifications.PrivateDesk
-import models.desk.deskSpecifications.requests.UpdateDeskSpecificationsRequest
 import repositories.desk.DeskListingRepositoryImpl
 import repository.fragments.desk.DeskPricingRepoFragments.*
 import repository.fragments.desk.DeskSpecificationsRepoFragments.*
 import shared.TransactorResource
 import testData.DeskTestConstants.*
 import testData.TestConstants.*
+import utils.Diffable
 import weaver.GlobalRead
 import weaver.IOSuite
 import weaver.ResourceTag
-
-import java.time.LocalDateTime
-import java.time.LocalTime
 
 class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with RepositoryISpecBase {
 
@@ -57,13 +57,13 @@ class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
     val expectedSpecifications =
       DeskSpecificationsPartial(
         deskId = deskId1,
-        deskName = "Mikey Desk 1",
-        description = Some("A quiet, private desk perfect for focused work with a comfortable chair and good lighting."),
+        deskName = deskName1,
+        description = Some(description1),
         deskType = Some(PrivateDesk),
         quantity = Some(5),
         features = Some(List("Wi-Fi", "Power Outlets", "Ergonomic Chair", "Desk Lamp")),
         openingHours = Some(deskOpeningHours),
-        rules = Some("No loud conversations, please keep the workspace clean.")
+        rules = Some(rules)
       )
 
     val expectedResult =
@@ -73,8 +73,10 @@ class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
         sampleRetrievedDeskPricing
       )
 
+
     for {
       deskListingOpt <- businessDeskRepo.findByDeskId(deskId1)
+      _ = deskListingOpt.foreach(deskListing => Diffable.logDifferences(expectedResult, deskListing))
     } yield expect(deskListingOpt == Some(expectedResult))
   }
 
@@ -85,8 +87,8 @@ class DeskListingRepositoryISpec(global: GlobalRead) extends IOSuite with Reposi
         businessId = businessId6,
         officeId = officeId6,
         deskId = deskId6,
-        deskName = "Mikey Desk 1",
-        description = "A quiet, private desk perfect for focused work with a comfortable chair and good lighting."
+        deskName = deskName1,
+        description = description1
       )
 
     for {

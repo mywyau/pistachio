@@ -15,9 +15,9 @@ import models.desk.deskSpecifications.DeskSpecificationsPartial
 import models.desk.deskSpecifications.PrivateDesk
 import repositories.desk.DeskSpecificationsRepositoryImpl
 import repository.fragments.desk.DeskSpecificationsRepoFragments.*
+import shared.TransactorResource
 import testData.DeskTestConstants.*
 import testData.TestConstants.*
-import shared.TransactorResource
 import weaver.GlobalRead
 import weaver.IOSuite
 import weaver.ResourceTag
@@ -47,14 +47,14 @@ class DeskSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite with
 
     val expectedResult =
       DeskSpecificationsPartial(
-        deskId = "deskId1",
-        deskName = "Mikey Desk 1",
-        description = Some("A quiet, private desk perfect for focused work with a comfortable chair and good lighting."),
+        deskId = deskId1,
+        deskName = deskName1,
+        description = Some(description1),
         deskType = Some(PrivateDesk),
         quantity = Some(5),
         features = Some(List("Wi-Fi", "Power Outlets", "Ergonomic Chair", "Desk Lamp")),
         openingHours = Some(deskOpeningHours),
-        rules = Some("No loud conversations, please keep the workspace clean.")
+        rules = Some(rules)
       )
 
     for {
@@ -66,14 +66,14 @@ class DeskSpecificationsRepositoryISpec(global: GlobalRead) extends IOSuite with
 
     val expectedResult =
       DeskSpecificationsPartial(
-        deskId = "deskId1",
-        deskName = "Mikey Desk 1",
-        description = Some("A quiet, private desk perfect for focused work with a comfortable chair and good lighting."),
+        deskId = deskId1,
+        deskName = deskName1,
+        description = Some(description1),
         deskType = Some(PrivateDesk),
         quantity = Some(5),
         features = Some(List("Wi-Fi", "Power Outlets", "Ergonomic Chair", "Desk Lamp")),
         openingHours = Some(deskOpeningHours),
-        rules = Some("No loud conversations, please keep the workspace clean.")
+        rules = Some(rules)
       )
 
     for {

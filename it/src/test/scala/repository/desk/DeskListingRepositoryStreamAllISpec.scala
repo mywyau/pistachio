@@ -57,11 +57,11 @@ class DeskListingRepositoryStreamAllISpec(global: GlobalRead) extends IOSuite wi
 
     val expectedCards =
       List(
-        DeskListingCard("deskId1", "Mikey Desk 1", "A quiet, private desk perfect for focused work with a comfortable chair and good lighting."),
-        DeskListingCard(deskId2, "Mikey Desk 2", "A shared desk in a collaborative space with easy access to team members."),
-        DeskListingCard("deskId3", "Mikey Desk 3", "Spacious desk with a view and ample storage for your items."),
-        DeskListingCard("deskId4", "Mikey Desk 4", "A flexible, hot desk available for use in a dynamic work environment."),
-        DeskListingCard("deskId5", "Mikey Desk 5", "An executive desk in a quiet, well-lit space designed for high-level work.")
+        DeskListingCard(deskId1, "Luxury supreme desk", description1),
+        DeskListingCard(deskId2, "Luxury supreme desk", description1),
+        DeskListingCard(deskId3, "Luxury supreme desk", description1),
+        DeskListingCard(deskId4, "Luxury supreme desk", description1),
+        DeskListingCard(deskId5, "Luxury supreme desk", description1),
       )
 
     for {
