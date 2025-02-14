@@ -29,6 +29,7 @@ import shared.HttpClientResource
 import shared.TransactorResource
 import testData.DeskTestConstants.*
 import testData.TestConstants.*
+import utils.Diffable
 import weaver.*
 
 class DeskSpecificationsControllerISpec(global: GlobalRead) extends IOSuite with ControllerISpecBase {
@@ -68,6 +69,7 @@ class DeskSpecificationsControllerISpec(global: GlobalRead) extends IOSuite with
 
     client.run(request).use { response =>
       response.as[DeskSpecificationsPartial].map { body =>
+        Diffable.logDifferences(expectedDeskSpecifications, body)
         expect.all(
           response.status == Status.Ok,
           body == expectedDeskSpecifications
