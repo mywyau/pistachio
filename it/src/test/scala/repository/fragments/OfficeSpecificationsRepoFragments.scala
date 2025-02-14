@@ -94,7 +94,7 @@ object OfficeSpecificationsRepoFragments {
         created_at,
         updated_at
       ) VALUES
-        ('businesId6', 'officeId6', '2025-01-01 12:00:00', '2025-01-01 12:00:00');
+        ('businessId6', 'officeId6', '2025-01-01 12:00:00', '2025-01-01 12:00:00');
     """
 
 }
