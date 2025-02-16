@@ -19,6 +19,7 @@ import models.business_listing.requests.InitiateBusinessListingRequest
 import models.business_listing.BusinessListing
 import models.database.*
 import models.OpeningHours
+import models.business.availability.BusinessAddressPartial
 
 trait BusinessListingRepositoryAlgebra[F[_]] {
 

@@ -5,11 +5,12 @@ import io.circe.generic.semiauto.deriveEncoder
 import io.circe.Decoder
 import io.circe.Encoder
 import java.time.LocalDateTime
-import models.business.availability.BusinessAddressPartial
+import models.business.availability.requests.CreateBusinessAddressRequest
 
-case class BusinessAddressPartial(
+case class CreateBusinessAddressRequest(
   userId: String,
   businessId: String,
+  businessName: Option[String],
   buildingName: Option[String],
   floorNumber: Option[String],
   street: Option[String],
@@ -21,7 +22,7 @@ case class BusinessAddressPartial(
   longitude: Option[BigDecimal]
 )
 
-object BusinessAddressPartial {
-  implicit val encoder: Encoder[BusinessAddressPartial] = deriveEncoder[BusinessAddressPartial]
-  implicit val decoder: Decoder[BusinessAddressPartial] = deriveDecoder[BusinessAddressPartial]
+object CreateBusinessAddressRequest {
+  implicit val createBusinessAddressRequestEncoder: Encoder[CreateBusinessAddressRequest] = deriveEncoder[CreateBusinessAddressRequest]
+  implicit val createBusinessAddressRequestDecoder: Decoder[CreateBusinessAddressRequest] = deriveDecoder[CreateBusinessAddressRequest]
 }

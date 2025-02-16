@@ -16,6 +16,7 @@ import org.typelevel.log4cats.SelfAwareStructuredLogger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 import services.business.BusinessAddressServiceAlgebra
 import weaver.SimpleIOSuite
+import models.business.availability.errors.BusinessUserNotFound
 
 
 object BusinessAddressControllerSpec extends SimpleIOSuite with ControllerSpecBase {

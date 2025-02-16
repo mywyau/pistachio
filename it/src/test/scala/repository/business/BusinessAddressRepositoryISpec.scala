@@ -19,6 +19,8 @@ import testData.TestConstants.*
 import weaver.GlobalRead
 import weaver.IOSuite
 import weaver.ResourceTag
+import models.business.availability.requests.CreateBusinessAddressRequest
+import models.business.availability.BusinessAddressPartial
 
 class BusinessAddressRepositoryISpec(global: GlobalRead) extends IOSuite {
 

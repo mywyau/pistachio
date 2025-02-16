@@ -5,6 +5,8 @@ import models.business.address.requests.CreateBusinessAddressRequest
 import models.database.*
 import services.business.BusinessListingServiceImpl
 import testData.TestConstants.*
+import models.business.availability.requests.CreateBusinessAddressRequest
+import models.business.availability.BusinessAddressPartial
 
 object BusinessAddressServiceConstants {
 

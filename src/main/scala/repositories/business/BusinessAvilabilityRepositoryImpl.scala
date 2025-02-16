@@ -10,33 +10,33 @@ import doobie.implicits.javasql.*
 import doobie.util.meta.Meta
 import java.sql.Timestamp
 import java.time.LocalDateTime
-import models.business.address.requests.CreateBusinessAddressRequest
-import models.business.address.requests.UpdateBusinessAddressRequest
-import models.business.address.BusinessAddressPartial
+import models.business.availability.requests.CreateBusinessAvailabilityRequest
+import models.business.availability.requests.UpdateBusinessAvailabilityRequest
+import models.business.availability.BusinessAvailabilityPartial
 import models.database.*
-import models.business.availability.requests.{UpdateBusinessAddressRequest, CreateBusinessAddressRequest}
-import models.business.availability.BusinessAddressPartial
 
-trait BusinessAddressRepositoryAlgebra[F[_]] {
+trait BusinessAvailabilityRepositoryAlgebra[F[_]] {
 
-  def findByBusinessId(businessId: String): F[Option[BusinessAddressPartial]]
+  def findAll(businessId: String): F[Option[BusinessAvailabilityPartial]]
 
-  def create(request: CreateBusinessAddressRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
+  def createDaysOpen(request: CreateBusinessAvailabilityRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
-  def update(businessId: String, request: UpdateBusinessAddressRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
+  def updateDaysOpen(request: CreateBusinessAvailabilityRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
-  def delete(businessId: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
+  def updateOpeningHours(day: String, request: UpdateBusinessAvailabilityRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
-  def deleteAllByUserId(userId: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
+  def delete(day: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
+
+  def deleteAll(userId: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 }
 
-class BusinessAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transactor[F]) extends BusinessAddressRepositoryAlgebra[F] {
+class BusinessAvailabilityRepositoryImpl[F[_] : Concurrent : Monad](transactor: Transactor[F]) extends BusinessAvailabilityRepositoryAlgebra[F] {
 
   implicit val localDateTimeMeta: Meta[LocalDateTime] =
     Meta[Timestamp].imap(_.toLocalDateTime)(Timestamp.valueOf)
 
-  override def findByBusinessId(businessId: String): F[Option[BusinessAddressPartial]] = {
-    val findQuery: F[Option[BusinessAddressPartial]] =
+  override def findByBusinessId(businessId: String): F[Option[BusinessAvailabilityPartial]] = {
+    val findQuery: F[Option[BusinessAvailabilityPartial]] =
       sql"""
          SELECT 
              user_id,
@@ -50,16 +50,16 @@ class BusinessAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Trans
              postcode,
              latitude,
              longitude
-         FROM business_address
+         FROM business_availability
          WHERE business_id = $businessId
-       """.query[BusinessAddressPartial].option.transact(transactor)
+       """.query[BusinessAvailabilityPartial].option.transact(transactor)
 
     findQuery
   }
 
-  override def create(request: CreateBusinessAddressRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
+  override def create(request: CreateBusinessAvailabilityRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
     sql"""
-      INSERT INTO business_address (
+      INSERT INTO business_availability (
         user_id,
         business_id,
         building_name,
@@ -101,9 +101,9 @@ class BusinessAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Trans
           UnexpectedResultError.invalidNel
       }
 
-  override def update(businessId: String, request: UpdateBusinessAddressRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
+  override def update(businessId: String, request: UpdateBusinessAvailabilityRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
     sql"""
-      UPDATE business_address
+      UPDATE business_availability
       SET
           building_name = ${request.buildingName},
           floor_number = ${request.floorNumber},
@@ -141,7 +141,7 @@ class BusinessAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Trans
   override def delete(businessId: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = {
     val deleteQuery: Update0 =
       sql"""
-        DELETE FROM business_address
+        DELETE FROM business_availability
         WHERE business_id = $businessId
       """.update
 
@@ -166,7 +166,7 @@ class BusinessAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Trans
   override def deleteAllByUserId(userId: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = {
     val deleteQuery: Update0 =
       sql"""
-         DELETE FROM business_address
+         DELETE FROM business_availability
          WHERE user_id = $userId
        """.update
 
@@ -189,7 +189,7 @@ class BusinessAddressRepositoryImpl[F[_] : Concurrent : Monad](transactor: Trans
   }
 }
 
-object BusinessAddressRepository {
-  def apply[F[_] : Concurrent : Monad](transactor: Transactor[F]): BusinessAddressRepositoryImpl[F] =
-    new BusinessAddressRepositoryImpl[F](transactor)
+object BusinessAvailabilityRepository {
+  def apply[F[_] : Concurrent : Monad](transactor: Transactor[F]): BusinessAvailabilityRepositoryImpl[F] =
+    new BusinessAvailabilityRepositoryImpl[F](transactor)
 }

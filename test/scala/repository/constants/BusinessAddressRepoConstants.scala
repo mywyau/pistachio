@@ -7,6 +7,8 @@ import java.time.LocalDateTime
 import models.business.address.requests.CreateBusinessAddressRequest
 import models.business.address.BusinessAddressPartial
 import mocks.MockBusinessAddressRepository
+import models.business.availability.requests.CreateBusinessAddressRequest
+import models.business.availability.BusinessAddressPartial
 
 object BusinessAddressRepoConstants {
 

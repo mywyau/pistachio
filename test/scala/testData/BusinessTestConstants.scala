@@ -12,6 +12,7 @@ import models.OpeningHours
 import models.Monday
 import models.Tuesday
 import testData.TestConstants.*
+import models.business.availability.requests.{UpdateBusinessAddressRequest, CreateBusinessAddressRequest}
 
 object BusinessTestConstants {
 

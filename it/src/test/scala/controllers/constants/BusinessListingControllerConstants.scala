@@ -9,6 +9,7 @@ import models.business.specifications.requests.CreateBusinessSpecificationsReque
 import models.business_listing.requests.BusinessListingRequest
 import testData.BusinessTestConstants.*
 import testData.TestConstants.*
+import models.business.availability.requests.CreateBusinessAddressRequest
 
 object BusinessListingControllerConstants {
 

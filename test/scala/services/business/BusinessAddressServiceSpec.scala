@@ -12,6 +12,8 @@ import testData.TestConstants.*
 import weaver.SimpleIOSuite
 
 import java.time.LocalDateTime
+import models.business.availability.requests.CreateBusinessAddressRequest
+import models.business.availability.errors.BusinessAddressNotFound
 
 object BusinessAddressServiceSpec extends SimpleIOSuite {
 

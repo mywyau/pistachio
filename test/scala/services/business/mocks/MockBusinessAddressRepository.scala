@@ -15,6 +15,9 @@ import repositories.business.BusinessAddressRepositoryAlgebra
 import services.business.BusinessAddressService
 import services.business.BusinessAddressServiceImpl
 import weaver.SimpleIOSuite
+import models.business.availability.requests.{UpdateBusinessAddressRequest, CreateBusinessAddressRequest}
+import models.business.availability.errors.BusinessAddressNotFound
+import models.business.availability.BusinessAddressPartial
 
 class MockBusinessAddressRepository(
   existingBusinessAddress: Map[String, BusinessAddressPartial] = Map.empty

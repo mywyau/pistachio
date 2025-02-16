@@ -16,6 +16,9 @@ import models.database.DatabaseErrors
 import models.database.DatabaseSuccess
 import repositories.business.BusinessAddressRepositoryAlgebra
 import models.database.UpdateSuccess
+import models.business.availability.requests.{UpdateBusinessAddressRequest, CreateBusinessAddressRequest}
+import models.business.availability.errors.{BusinessAddressErrors, BusinessAddressNotFound}
+import models.business.availability.BusinessAddressPartial
 
 trait BusinessAddressServiceAlgebra[F[_]] {
 

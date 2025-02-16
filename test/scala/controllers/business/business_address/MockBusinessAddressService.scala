@@ -10,6 +10,9 @@ import models.business.address.requests.CreateBusinessAddressRequest
 import models.business.address.requests.UpdateBusinessAddressRequest
 import models.database.*
 import services.business.BusinessAddressServiceAlgebra
+import models.business.availability.requests.{UpdateBusinessAddressRequest, CreateBusinessAddressRequest}
+import models.business.availability.errors.{BusinessAddressErrors, BusinessUserNotFound}
+import models.business.availability.BusinessAddressPartial
 
 class MockBusinessAddressService(userAddressData: Map[String, BusinessAddressPartial]) extends BusinessAddressServiceAlgebra[IO] {
 

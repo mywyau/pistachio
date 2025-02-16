@@ -9,6 +9,7 @@ import models.business.address.requests.CreateBusinessAddressRequest
 import models.ModelsBaseSpec
 import testData.BusinessTestConstants.testCreateBusinessAddressRequest
 import weaver.SimpleIOSuite
+import availability.requests.CreateBusinessAddressRequest
 
 object CreateBusinessAddressRequestSpec extends SimpleIOSuite with ModelsBaseSpec {
 

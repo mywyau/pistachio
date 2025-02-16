@@ -11,6 +11,7 @@ import repository.constants.BusinessAddressRepoConstants.*
 import services.RepositorySpecBase
 import testData.TestConstants.*
 import weaver.SimpleIOSuite
+import models.business.availability.requests.CreateBusinessAddressRequest
 
 object BusinessAddressRepositorySpec extends SimpleIOSuite with RepositorySpecBase {
 

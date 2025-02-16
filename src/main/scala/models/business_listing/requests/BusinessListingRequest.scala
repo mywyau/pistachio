@@ -9,6 +9,7 @@ import java.time.LocalDateTime
 import models.business.address.requests.CreateBusinessAddressRequest
 import models.business.contact_details.requests.CreateBusinessContactDetailsRequest
 import models.business.specifications.requests.CreateBusinessSpecificationsRequest
+import models.business.availability.requests.CreateBusinessAddressRequest
 
 case class BusinessListingRequest(
   businessId: String,
