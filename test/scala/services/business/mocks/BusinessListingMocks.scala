@@ -18,7 +18,7 @@ import models.database.DatabaseErrors
 import models.database.DatabaseSuccess
 import models.OpeningHours
 import repositories.business.BusinessListingRepositoryAlgebra
-import models.business.availability.BusinessAddressPartial
+import models.business.address.BusinessAddressPartial
 
 object BusinessListingMocks {
 

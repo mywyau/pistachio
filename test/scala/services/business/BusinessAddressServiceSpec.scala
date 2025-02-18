@@ -3,7 +3,7 @@ package services.business
 import cats.data.Validated.Valid
 import cats.effect.IO
 import models.business.address.errors.BusinessAddressNotFound
-import models.business.address.requests.CreateBusinessAddressRequest
+import models.business.address.CreateBusinessAddressRequest
 import models.database.CreateSuccess
 import repositories.business.BusinessAddressRepositoryAlgebra
 import services.business.mocks.MockBusinessAddressRepository
@@ -12,7 +12,7 @@ import testData.TestConstants.*
 import weaver.SimpleIOSuite
 
 import java.time.LocalDateTime
-import models.business.availability.requests.CreateBusinessAddressRequest
+import models.business.address.CreateBusinessAddressRequest
 import models.business.availability.errors.BusinessAddressNotFound
 
 object BusinessAddressServiceSpec extends SimpleIOSuite {

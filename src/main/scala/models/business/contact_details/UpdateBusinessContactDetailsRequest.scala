@@ -1,4 +1,4 @@
-package models.business.contact_details.requests
+package models.business.contact_details
 
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.generic.semiauto.deriveEncoder

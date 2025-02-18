@@ -9,8 +9,8 @@ import models.database.*
 import models.office.address_details.OfficeAddress
 import models.office.address_details.OfficeAddressPartial
 import models.office.address_details.errors.OfficeAddressNotFound
-import models.office.address_details.requests.CreateOfficeAddressRequest
-import models.office.address_details.requests.UpdateOfficeAddressRequest
+import models.office.address_details.CreateOfficeAddressRequest
+import models.office.address_details.UpdateOfficeAddressRequest
 import org.typelevel.log4cats.SelfAwareStructuredLogger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 import repositories.office.OfficeAddressRepositoryAlgebra

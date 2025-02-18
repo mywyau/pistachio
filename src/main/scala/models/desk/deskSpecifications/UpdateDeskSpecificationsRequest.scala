@@ -1,4 +1,4 @@
-package models.desk.deskSpecifications.requests
+package models.desk.deskSpecifications
 
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.generic.semiauto.deriveEncoder

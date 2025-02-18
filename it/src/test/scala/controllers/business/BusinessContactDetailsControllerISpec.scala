@@ -14,7 +14,7 @@ import io.circe.syntax.*
 import models.business.contact_details.BusinessContactDetails
 import models.business.contact_details.BusinessContactDetailsPartial
 import models.business.contact_details.errors.*
-import models.business.contact_details.requests.CreateBusinessContactDetailsRequest
+import models.business.contact_details.CreateBusinessContactDetailsRequest
 import models.business.specifications.BusinessSpecifications
 import models.database.*
 import models.responses.CreatedResponse

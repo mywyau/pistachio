@@ -35,11 +35,11 @@ class BusinessSpecificationsControllerImpl[F[_] : Concurrent : Logger](
     case GET -> Root / "business" / "businesses" / "specifications" / businessId =>
       Logger[F].info(s"[BusinessSpecificationsControllerImpl] GET - Business specifications for businessId: $businessId") *>
         businessSpecificationsService.getByBusinessId(businessId).flatMap {
-          case Right(specifications) =>
+          case Some(specifications) =>
             Logger[F].info(s"[BusinessSpecificationsControllerImpl] GET - Successfully retrieved business specification") *>
               Ok(specifications.asJson)
-          case Left(error) =>
-            val errorResponse = ErrorResponse(error.code, error.errorMessage)
+          case _ => 
+            val errorResponse = ErrorResponse("error", "error message")
             BadRequest(errorResponse.asJson)
         }
 

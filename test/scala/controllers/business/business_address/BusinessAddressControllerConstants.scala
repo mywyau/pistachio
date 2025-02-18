@@ -2,7 +2,7 @@ package controllers.business.business_address
 
 import java.time.LocalDateTime
 import models.business.address.BusinessAddressPartial
-import models.business.availability.BusinessAddressPartial
+import models.business.address.BusinessAddressPartial
 
 object BusinessAddressControllerConstants {
 

@@ -15,11 +15,10 @@ import java.time.LocalDateTime
 import models.business.address.BusinessAddressPartial
 import models.business.contact_details.BusinessContactDetailsPartial
 import models.business.specifications.BusinessSpecificationsPartial
-import models.business_listing.requests.InitiateBusinessListingRequest
+import models.business_listing.InitiateBusinessListingRequest
 import models.business_listing.BusinessListing
 import models.database.*
 import models.OpeningHours
-import models.business.availability.BusinessAddressPartial
 
 trait BusinessListingRepositoryAlgebra[F[_]] {
 

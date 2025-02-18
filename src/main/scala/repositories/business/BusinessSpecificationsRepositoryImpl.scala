@@ -16,7 +16,7 @@ import models.business.specifications.requests.CreateBusinessSpecificationsReque
 import models.business.specifications.requests.UpdateBusinessSpecificationsRequest
 import models.business.specifications.BusinessSpecificationsPartial
 import models.database.*
-import models.office.specifications.requests.UpdateOfficeSpecificationsRequest
+import models.office.specifications.UpdateOfficeSpecificationsRequest
 import models.OpeningHours
 
 trait BusinessSpecificationsRepositoryAlgebra[F[_]] {

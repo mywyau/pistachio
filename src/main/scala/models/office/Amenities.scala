@@ -1,4 +1,4 @@
-package models.office.adts
+package models.office
 
 import io.circe.Decoder
 import io.circe.Encoder

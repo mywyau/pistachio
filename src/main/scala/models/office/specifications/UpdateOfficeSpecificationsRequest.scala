@@ -1,10 +1,10 @@
-package models.office.specifications.requests
+package models.office.specifications
 
 import io.circe.Decoder
 import io.circe.Encoder
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.generic.semiauto.deriveEncoder
-import models.office.adts.OfficeType
+import models.office.OfficeType
 
 
 import java.time.LocalDateTime

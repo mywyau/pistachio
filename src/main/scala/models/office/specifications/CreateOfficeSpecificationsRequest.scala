@@ -1,4 +1,4 @@
-package models.office.specifications.requests
+package models.office.specifications
 
 import doobie.util.meta.Meta
 import io.circe.generic.semiauto.*
@@ -7,7 +7,7 @@ import io.circe.syntax.*
 import io.circe.Decoder
 import io.circe.Encoder
 import java.time.LocalDateTime
-import models.office.adts.OfficeType
+import models.office.OfficeType
 import models.OpeningHours
 
 case class CreateOfficeSpecificationsRequest(

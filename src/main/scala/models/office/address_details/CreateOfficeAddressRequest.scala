@@ -1,4 +1,4 @@
-package models.office.address_details.requests
+package models.office.address_details
 
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.generic.semiauto.deriveEncoder
@@ -6,7 +6,9 @@ import io.circe.Decoder
 import io.circe.Encoder
 import java.time.LocalDateTime
 
-case class UpdateOfficeAddressRequest(
+case class CreateOfficeAddressRequest(
+  businessId: String,
+  officeId: String,
   buildingName: Option[String],
   floorNumber: Option[String],
   street: Option[String],
@@ -18,7 +20,7 @@ case class UpdateOfficeAddressRequest(
   longitude: Option[BigDecimal]
 )
 
-object UpdateOfficeAddressRequest {
-  implicit val createOfficeAddressRequestEncoder: Encoder[UpdateOfficeAddressRequest] = deriveEncoder[UpdateOfficeAddressRequest]
-  implicit val createOfficeAddressRequestDecoder: Decoder[UpdateOfficeAddressRequest] = deriveDecoder[UpdateOfficeAddressRequest]
+object CreateOfficeAddressRequest {
+  implicit val createOfficeAddressRequestEncoder: Encoder[CreateOfficeAddressRequest] = deriveEncoder[CreateOfficeAddressRequest]
+  implicit val createOfficeAddressRequestDecoder: Decoder[CreateOfficeAddressRequest] = deriveDecoder[CreateOfficeAddressRequest]
 }

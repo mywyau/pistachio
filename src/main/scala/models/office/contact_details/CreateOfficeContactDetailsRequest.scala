@@ -1,4 +1,4 @@
-package models.office.contact_details.requests
+package models.office.contact_details
 
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.generic.semiauto.deriveEncoder

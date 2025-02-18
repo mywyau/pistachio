@@ -10,12 +10,10 @@ import doobie.implicits.javasql.*
 import doobie.util.meta.Meta
 import java.sql.Timestamp
 import java.time.LocalDateTime
-import models.business.address.requests.CreateBusinessAddressRequest
-import models.business.address.requests.UpdateBusinessAddressRequest
 import models.business.address.BusinessAddressPartial
+import models.business.address.CreateBusinessAddressRequest
+import models.business.address.UpdateBusinessAddressRequest
 import models.database.*
-import models.business.availability.requests.{UpdateBusinessAddressRequest, CreateBusinessAddressRequest}
-import models.business.availability.BusinessAddressPartial
 
 trait BusinessAddressRepositoryAlgebra[F[_]] {
 

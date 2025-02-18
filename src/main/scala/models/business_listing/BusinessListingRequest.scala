@@ -1,4 +1,4 @@
-package models.business_listing.requests
+package models.business_listing
 
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.generic.semiauto.deriveEncoder
@@ -6,10 +6,10 @@ import io.circe.Decoder
 import io.circe.Encoder
 import io.circe.Json
 import java.time.LocalDateTime
-import models.business.address.requests.CreateBusinessAddressRequest
-import models.business.contact_details.requests.CreateBusinessContactDetailsRequest
+import models.business.address.CreateBusinessAddressRequest
+import models.business.contact_details.CreateBusinessContactDetailsRequest
 import models.business.specifications.requests.CreateBusinessSpecificationsRequest
-import models.business.availability.requests.CreateBusinessAddressRequest
+import models.business.address.CreateBusinessAddressRequest
 
 case class BusinessListingRequest(
   businessId: String,

@@ -5,7 +5,7 @@ import io.circe.generic.semiauto.deriveEncoder
 import io.circe.Decoder
 import io.circe.Encoder
 import java.time.LocalDateTime
-import models.business.availability.requests.CreateBusinessAddressRequest
+import models.business.address.CreateBusinessAddressRequest
 
 case class CreateBusinessAddressRequest(
   userId: String,

@@ -9,8 +9,8 @@ import doobie.util.transactor.Transactor
 import io.circe.Json
 import io.circe.syntax.*
 import models.business.address.BusinessAddressPartial
-import models.business.address.requests.CreateBusinessAddressRequest
-import models.business.address.requests.UpdateBusinessAddressRequest
+import models.business.address.CreateBusinessAddressRequest
+import models.business.address.UpdateBusinessAddressRequest
 import models.database.*
 import models.responses.CreatedResponse
 import models.responses.DeletedResponse
@@ -28,7 +28,7 @@ import weaver.*
 
 import java.time.LocalDateTime
 import models.business.availability.requests.{UpdateBusinessAddressRequest, CreateBusinessAddressRequest}
-import models.business.availability.BusinessAddressPartial
+import models.business.address.BusinessAddressPartial
 
 class BusinessAddressControllerISpec(global: GlobalRead) extends IOSuite with ControllerISpecBase {
 

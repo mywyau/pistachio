@@ -2,8 +2,8 @@ package testData
 
 import java.time.LocalDateTime
 import java.time.LocalTime
-import models.business.address.requests.CreateBusinessAddressRequest
-import models.business.address.requests.UpdateBusinessAddressRequest
+import models.business.address.CreateBusinessAddressRequest
+import models.business.address.UpdateBusinessAddressRequest
 import models.business.contact_details.requests.UpdateBusinessContactDetailsRequest
 import models.business.contact_details.BusinessContactDetails
 import models.business.specifications.requests.UpdateBusinessSpecificationsRequest

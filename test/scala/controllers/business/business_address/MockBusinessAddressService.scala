@@ -6,13 +6,13 @@ import cats.effect.IO
 import models.business.address.BusinessAddressPartial
 import models.business.address.errors.BusinessAddressErrors
 import models.business.address.errors.BusinessUserNotFound
-import models.business.address.requests.CreateBusinessAddressRequest
-import models.business.address.requests.UpdateBusinessAddressRequest
+import models.business.address.CreateBusinessAddressRequest
+import models.business.address.UpdateBusinessAddressRequest
 import models.database.*
 import services.business.BusinessAddressServiceAlgebra
 import models.business.availability.requests.{UpdateBusinessAddressRequest, CreateBusinessAddressRequest}
 import models.business.availability.errors.{BusinessAddressErrors, BusinessUserNotFound}
-import models.business.availability.BusinessAddressPartial
+import models.business.address.BusinessAddressPartial
 
 class MockBusinessAddressService(userAddressData: Map[String, BusinessAddressPartial]) extends BusinessAddressServiceAlgebra[IO] {
 

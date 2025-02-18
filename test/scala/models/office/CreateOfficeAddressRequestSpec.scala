@@ -4,7 +4,7 @@ import cats.effect.IO
 import io.circe.*
 import io.circe.parser.*
 import io.circe.syntax.EncoderOps
-import models.office.address_details.requests.CreateOfficeAddressRequest
+import models.office.address_details.CreateOfficeAddressRequest
 import models.office.adts.*
 import models.ModelsBaseSpec
 import testData.OfficeTestConstants.*
