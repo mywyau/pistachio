@@ -5,7 +5,7 @@ import cats.data.Validated.Valid
 import cats.data.ValidatedNel
 import cats.effect.IO
 import java.time.LocalDateTime
-import models.business.contact_details.errors.BusinessContactDetailsNotFound
+
 import models.business.contact_details.CreateBusinessContactDetailsRequest
 import models.business.contact_details.UpdateBusinessContactDetailsRequest
 import models.business.contact_details.BusinessContactDetails

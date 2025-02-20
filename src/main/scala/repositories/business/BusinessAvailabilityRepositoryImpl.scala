@@ -1,25 +1,26 @@
 package repositories.business
 
-import cats.Monad
 import cats.data.ValidatedNel
 import cats.effect.Concurrent
 import cats.syntax.all.*
+import cats.Monad
 import doobie.*
 import doobie.implicits.*
 import doobie.implicits.javasql.*
 import doobie.util.meta.Meta
-import models.Day
-import models.business.availability.*
-import models.database.*
-
 import java.sql.Time
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import java.time.LocalTime
+import models.business.availability.*
+import models.database.*
+import models.Day
 
 trait BusinessAvailabilityRepositoryAlgebra[F[_]] {
 
-  // def findAll(businessId: String): F[Option[BusinessAvailabilityPartial]]
+  def findAvailabilityForBusiness(businessId: String): F[List[RetrieveSingleBusinessAvailability]]
+
+  def findAvailabilityForDay(businessId: String, weekDay: Day): F[Option[RetrieveSingleBusinessAvailability]]
 
   def createDaysOpen(request: CreateBusinessDaysRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
@@ -41,31 +42,37 @@ class BusinessAvailabilityRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
 
   implicit val dayMeta: Meta[Day] = Meta[String].timap(Day.fromString)(_.toString)
 
-  // Meta instance to map between SQL `TIME` and Scala `LocalTime`
   implicit val localTimeMeta: Meta[LocalTime] =
     Meta[Time].timap(_.toLocalTime)(Time.valueOf)
 
-  // override def findByBusinessId(businessId: String): F[Option[BusinessAvailabilityPartial]] = {
-  //   val findQuery: F[Option[BusinessAvailabilityPartial]] =
-  //     sql"""
-  //        SELECT
-  //            user_id,
-  //            business_id,
-  //            building_name,
-  //            floor_number,
-  //            street,
-  //            city,
-  //            country,
-  //            county,
-  //            postcode,
-  //            latitude,
-  //            longitude
-  //        FROM business_opening_hours
-  //        WHERE business_id = $businessId
-  //      """.query[BusinessAvailabilityPartial].option.transact(transactor)
+  override def findAvailabilityForBusiness(businessId: String): F[List[RetrieveSingleBusinessAvailability]] = {
+    val findQuery =
+      sql"""
+       SELECT
+        weekday,
+        opening_time,
+        closing_time
+       FROM business_opening_hours
+       WHERE business_id = $businessId
+     """.query[RetrieveSingleBusinessAvailability].to[List].transact(transactor)
 
-  //   findQuery
-  // }
+    findQuery
+  }
+
+  override def findAvailabilityForDay(businessId: String, weekDay: Day): F[Option[RetrieveSingleBusinessAvailability]] = {
+    val findQuery =
+      sql"""
+         SELECT
+          weekday,
+          opening_time,
+          closing_time
+         FROM business_opening_hours
+         WHERE business_id = $businessId
+         AND weekday = ${weekDay.toString}
+       """.query[RetrieveSingleBusinessAvailability].option.transact(transactor)
+
+    findQuery
+  }
 
   override def createDaysOpen(request: CreateBusinessDaysRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = {
 
@@ -136,8 +143,8 @@ class BusinessAvailabilityRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
     sql"""
       UPDATE business_opening_hours
       SET
-        opening_time = COALESCE(${request.openingTime.toString}, business_opening_hours.opening_time),
-        closing_time = COALESCE(${request.closingTime.toString}, business_opening_hours.closing_time),
+        opening_time = COALESCE(${request.openingTime}, business_opening_hours.opening_time),
+        closing_time = COALESCE(${request.closingTime}, business_opening_hours.closing_time),
         updated_at = CURRENT_TIMESTAMP
       WHERE business_id = ${request.businessId}
         AND weekday = ${request.day.toString}

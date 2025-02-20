@@ -6,6 +6,8 @@ import cats.effect.Resource
 import cats.implicits.*
 import doobie.*
 import doobie.implicits.*
+import java.time.LocalDateTime
+import java.time.LocalTime
 import models.*
 import models.business.availability.*
 import models.database.*
@@ -18,9 +20,6 @@ import testData.TestConstants.*
 import weaver.GlobalRead
 import weaver.IOSuite
 import weaver.ResourceTag
-
-import java.time.LocalDateTime
-import java.time.LocalTime
 
 class BusinessAvailabilityRepositoryISpec(global: GlobalRead) extends IOSuite {
 
@@ -41,6 +40,29 @@ class BusinessAvailabilityRepositoryISpec(global: GlobalRead) extends IOSuite {
     } yield businessAvailabilityRepo
 
     setup
+  }
+
+  test(".findAvailabilityForBusiness() - should find all availabilities for a given business id") { businessAvailabilityRepo =>
+
+    val expectedResult =
+      List(
+        RetrieveSingleBusinessAvailability(Monday, Some(LocalTime.of(10, 0, 0)), Some(LocalTime.of(17, 0, 0))),
+        RetrieveSingleBusinessAvailability(Tuesday, Some(LocalTime.of(10, 0, 0)), Some(LocalTime.of(17, 0, 0))),
+        RetrieveSingleBusinessAvailability(Wednesday, Some(LocalTime.of(10, 0, 0)), Some(LocalTime.of(17, 0, 0)))
+      )
+
+    for {
+      retrieivedAvailability <- businessAvailabilityRepo.findAvailabilityForBusiness(businessId1)
+    } yield expect(retrieivedAvailability == expectedResult)
+  }
+
+  test(".findAvailabilityForDay() - should find the availability for a given business id and single day") { businessAvailabilityRepo =>
+
+    val expectedResult = RetrieveSingleBusinessAvailability(Monday, Some(LocalTime.of(10, 0, 0)), Some(LocalTime.of(17, 0, 0)))
+
+    for {
+      retrieivedAvailability <- businessAvailabilityRepo.findAvailabilityForDay(businessId1, Monday)
+    } yield expect(retrieivedAvailability == Some(expectedResult))
   }
 
   test(".createDaysOpen() - should insert/create entries for the data in postgres for each day in request list") { businessAvailabilityRepo =>

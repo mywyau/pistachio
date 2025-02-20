@@ -16,8 +16,8 @@ object BusinessAvailabilityRepoFragments {
           business_id VARCHAR(255) NOT NULL,
           weekday VARCHAR(10) NOT NULL CHECK (weekday IN 
               ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')),                            
-          opening_time VARCHAR(100),                            
-          closing_time VARCHAR(100),                            
+          opening_time TIME,                            
+          closing_time TIME,                            
           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           UNIQUE (business_id, weekday) -- Prevents duplicate weekdays per business
@@ -35,12 +35,12 @@ object BusinessAvailabilityRepoFragments {
           created_at,
           updated_at
         ) VALUES
-          ('userId1', 'businessId1', 'Monday', '09:00', '17:00', '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
-          ('userId1', 'businessId1', 'Tuesday', '09:00', '17:00', '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
-          ('userId1', 'businessId1', 'Wednesday', '09:00', '17:00', '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
-          ('userId2', 'businessId2', 'Saturday', '09:00', '17:00', '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
-          ('userId3', 'businessId3', 'Saturday', '09:00', '17:00', '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
-          ('userId2', 'businessId2', 'Sunday', '09:00', '17:00', '2025-01-01 00:00:00', '2025-01-01 00:00:00');
+          ('userId1', 'businessId1', 'Monday', '09:00:00+00', '17:00:00+01', '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
+          ('userId1', 'businessId1', 'Tuesday', '09:00:00+00', '17:00:00+01', '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
+          ('userId1', 'businessId1', 'Wednesday', '09:00:00+00', '17:00:00+01', '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
+          ('userId2', 'businessId2', 'Saturday', '09:00:00+00', '17:00:00+01', '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
+          ('userId3', 'businessId3', 'Saturday', '09:00:00+00', '17:00:00+01', '2025-01-01 00:00:00', '2025-01-01 00:00:00'),
+          ('userId2', 'businessId2', 'Sunday', '09:00:00+00', '17:00:00+01', '2025-01-01 00:00:00', '2025-01-01 00:00:00');
       """
 
 }

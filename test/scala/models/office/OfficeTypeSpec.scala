@@ -7,7 +7,6 @@ import io.circe.syntax.*
 import weaver.SimpleIOSuite
 import OfficeType._
 import models.ModelsBaseSpec
-import {MeetingRoom, CoworkingSpace, PrivateOffice, OfficeType, SharedOffice, OpenPlanOffice, ExecutiveOffice}
 
 
 object OfficeTypeSpec extends SimpleIOSuite with ModelsBaseSpec {

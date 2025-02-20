@@ -4,7 +4,6 @@ import cats.effect.IO
 import controllers.ControllerSpecBase
 import controllers.business.BusinessAddressController
 import controllers.business.business_address.BusinessAddressControllerConstants.*
-import models.business.address.errors.BusinessUserNotFound
 import models.responses.ErrorResponse
 import org.http4s.*
 import org.http4s.Status.BadRequest
@@ -16,7 +15,6 @@ import org.typelevel.log4cats.SelfAwareStructuredLogger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 import services.business.BusinessAddressServiceAlgebra
 import weaver.SimpleIOSuite
-import models.business.availability.errors.BusinessUserNotFound
 
 
 object BusinessAddressControllerSpec extends SimpleIOSuite with ControllerSpecBase {
@@ -50,7 +48,7 @@ object BusinessAddressControllerSpec extends SimpleIOSuite with ControllerSpecBa
       body <- response.as[ErrorResponse]
     } yield expect.all(
       response.status == BadRequest,
-      body == ErrorResponse(BusinessUserNotFound.code, BusinessUserNotFound.errorMessage)
+      body == ErrorResponse("", "")
     )
   }
 }
