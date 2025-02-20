@@ -107,7 +107,7 @@ class BusinessAvailabilityRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
 
     val deleteExisting =
       sql"""
-        DELETE FROM business_opening_hours WHERE business_id = ${request.businessId}
+        DELETE FROM business_opening_hours WHERE business_id = ${request.businessId} AND user_id = ${request.userId}
       """.update.run
 
     val insertNew = Update[(String, String, Day)](

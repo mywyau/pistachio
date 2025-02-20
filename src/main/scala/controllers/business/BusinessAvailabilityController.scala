@@ -59,13 +59,13 @@ class BusinessAvailabilityControllerImpl[F[_] : Concurrent : Logger](businessAva
     //       }
     //     }
 
-    case req @ PUT -> Root / "business" / "availability" / "days" / "update" / businessId =>
-      Logger[F].info(s"[BusinessAvailabilityControllerImpl] PUT - Updating business availability with ID: $businessId") *>
-        req.decode[UpdateBusinessOpeningHoursRequest] { request =>
-          businessAvailabilityService.updateOpeningHours(businessId, request).flatMap {
+    case req @ PUT -> Root / "business" / "availability" / "days" / "update" =>
+      Logger[F].info(s"[BusinessAvailabilityControllerImpl] PUT - Updating business availability days") *>
+        req.decode[UpdateBusinessDaysRequest] { request =>
+          businessAvailabilityService.updateDays(request).flatMap {
             case Valid(response) =>
-              Logger[F].info(s"[BusinessAvailabilityControllerImpl] PUT - Successfully updated business availability for ID: $businessId") *>
-                Ok(UpdatedResponse(response.toString, "Business availability updated successfully").asJson)
+              Logger[F].info(s"[BusinessAvailabilityControllerImpl] PUT - Successfully updated business availability for ID: ${request.businessId}") *>
+                Ok(UpdatedResponse(response.toString, "Business availability days updated successfully").asJson)
             case Invalid(errors) =>
               Logger[F].warn(s"[BusinessAvailabilityControllerImpl] PUT - Validation failed for business availability update: ${errors.toList}") *>
                 BadRequest(ErrorResponse(code = "VALIDATION_ERROR", message = errors.toList.mkString(", ")).asJson)
