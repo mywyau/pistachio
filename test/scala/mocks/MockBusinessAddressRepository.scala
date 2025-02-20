@@ -12,7 +12,6 @@ import models.business.address.UpdateBusinessAddressRequest
 import models.business.address.BusinessAddressPartial
 import models.database.*
 import repositories.business.BusinessAddressRepositoryAlgebra
-import models.business.availability.requests.{UpdateBusinessAddressRequest, CreateBusinessAddressRequest}
 import models.business.address.BusinessAddressPartial
 
 case class MockBusinessAddressRepository(ref: Ref[IO, List[BusinessAddressPartial]]) extends BusinessAddressRepositoryAlgebra[IO] {

@@ -85,7 +85,7 @@ class BusinessContactDetailsControllerISpec(global: GlobalRead) extends IOSuite 
     val request =
       Request[IO](GET, uri"http://127.0.0.1:9999/pistachio/business/businesses/contact/details/id_does_not_exists")
 
-    val expectedResponseBody = ErrorResponse("", "")
+    val expectedResponseBody = ErrorResponse("error", "error message")
 
     client.run(request).use { response =>
       response.as[ErrorResponse].map { body =>

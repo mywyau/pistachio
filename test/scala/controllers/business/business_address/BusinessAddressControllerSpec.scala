@@ -48,7 +48,7 @@ object BusinessAddressControllerSpec extends SimpleIOSuite with ControllerSpecBa
       body <- response.as[ErrorResponse]
     } yield expect.all(
       response.status == BadRequest,
-      body == ErrorResponse("", "")
+      body == ErrorResponse("error", "error codes")
     )
   }
 }

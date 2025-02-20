@@ -31,7 +31,7 @@ object OfficeContactDetailsServiceSpec extends SimpleIOSuite with ServiceSpecBas
 
     for {
       result <- service.getByOfficeId(officeId1)
-    } yield expect(result == Right(existingContactDetailsForUser))
+    } yield expect(result == Some(existingContactDetailsForUser))
   }
 
   test(

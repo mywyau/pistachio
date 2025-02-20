@@ -78,7 +78,7 @@ object BusinessSpecificationsServiceSpec extends SimpleIOSuite {
 
     for {
       result <- service.getByBusinessId("business_1")
-    } yield expect(result == Right(existingSpecificationsForUser))
+    } yield expect(result == Some(existingSpecificationsForUser))
   }
 
   test(".getByBusinessId() - when there are no existing BusinessSpecifications, given a business_id should return Left(SpecificationsNotFound)") {

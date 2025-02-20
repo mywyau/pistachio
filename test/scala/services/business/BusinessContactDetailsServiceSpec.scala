@@ -24,7 +24,7 @@ object BusinessContactDetailsServiceSpec extends SimpleIOSuite {
 
     for {
       result <- service.getByBusinessId("businessId1")
-    } yield expect(result == Right(existingContactDetailsForUser))
+    } yield expect(result == Some(existingContactDetailsForUser))
   }
 
   test(".getByBusinessId() - when there are no existing user ContactDetails details given a business_id should return Left(ContactDetailsNotFound)") {

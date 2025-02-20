@@ -11,10 +11,10 @@ import services.business.BusinessAddressServiceAlgebra
 
 class MockBusinessAddressService(userAddressData: Map[String, BusinessAddressPartial]) extends BusinessAddressServiceAlgebra[IO] {
 
-  override def getByBusinessId(businessId: String): IO[Either[DatabaseErrors, BusinessAddressPartial]] =
+  override def getByBusinessId(businessId: String): IO[Option[BusinessAddressPartial]] =
     userAddressData.get(businessId) match {
-      case Some(address) => IO.pure(Right(address))
-      case None => IO.pure(Left(DatabaseError))
+      case Some(address) => IO.pure(Some(address))
+      case None => IO.pure(None)
     }
 
   override def createAddress(request: CreateBusinessAddressRequest): IO[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =

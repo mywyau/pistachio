@@ -10,7 +10,7 @@ import models.*
 import models.business.address.BusinessAddressPartial
 import models.business.contact_details.BusinessContactDetailsPartial
 import models.business.specifications.BusinessSpecificationsPartial
-import models.business_listing.requests.InitiateBusinessListingRequest
+import models.business_listing.InitiateBusinessListingRequest
 import models.business_listing.BusinessListing
 import models.database.CreateSuccess
 import models.database.DatabaseError

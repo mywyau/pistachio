@@ -4,29 +4,27 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import models.business.address.CreateBusinessAddressRequest
 import models.business.address.UpdateBusinessAddressRequest
-import models.business.contact_details.UpdateBusinessContactDetailsRequest
 import models.business.contact_details.BusinessContactDetails
+import models.business.contact_details.UpdateBusinessContactDetailsRequest
 import models.business.specifications.UpdateBusinessSpecificationsRequest
-
-import models.OpeningHours
 import models.Monday
+import models.OpeningHours
 import models.Tuesday
 import testData.TestConstants.*
-import models.business.availability.requests.{UpdateBusinessAddressRequest, CreateBusinessAddressRequest}
 
 object BusinessTestConstants {
 
   val businessOpeningHours1 =
-      List(
-        OpeningHours(
-          day = Monday,
-          openingTime = openingTime0900,
-          closingTime = closingTime1700
-        ),
-        OpeningHours(
-          day = Tuesday,
-          openingTime = openingTime0900,
-          closingTime = closingTime1700
+    List(
+      OpeningHours(
+        day = Monday,
+        openingTime = openingTime0900,
+        closingTime = closingTime1700
+      ),
+      OpeningHours(
+        day = Tuesday,
+        openingTime = openingTime0900,
+        closingTime = closingTime1700
       )
     )
 

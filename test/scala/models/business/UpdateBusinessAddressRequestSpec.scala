@@ -8,7 +8,6 @@ import models.business.address.UpdateBusinessAddressRequest
 import models.ModelsBaseSpec
 import testData.BusinessTestConstants.testUpdateBusinessAddressRequest
 import weaver.SimpleIOSuite
-import availability.requests.UpdateBusinessAddressRequest
 
 object UpdateBusinessAddressRequestSpec extends SimpleIOSuite with ModelsBaseSpec {
 
