@@ -1,9 +1,9 @@
-package repository.fragments.business
+package controllers.fragments.business
 
 import doobie.implicits.*
 import doobie.util.fragment
 
-object BusinessAvailabilityRepoFragments {
+object BusinessAvailabilityControllerFragments {
 
   val resetBusinessAvailabilityTable: fragment.Fragment =
     sql"TRUNCATE TABLE business_opening_hours RESTART IDENTITY"
