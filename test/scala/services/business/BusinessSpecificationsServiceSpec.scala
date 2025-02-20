@@ -7,7 +7,7 @@ import cats.effect.IO
 import java.time.LocalDateTime
 import java.time.LocalTime
 import models.business.specifications.errors.BusinessSpecificationsNotFound
-import models.business.specifications.requests.CreateBusinessSpecificationsRequest
+import models.business.specifications.CreateBusinessSpecificationsRequest
 import models.business.specifications.BusinessSpecifications
 import models.business.specifications.BusinessSpecificationsPartial
 import models.database.CreateSuccess

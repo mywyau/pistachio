@@ -1,4 +1,4 @@
-package models.business.specifications.requests
+package models.business.specifications
 
 import doobie.util.meta.Meta
 import io.circe.generic.semiauto.*

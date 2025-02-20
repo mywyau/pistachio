@@ -4,15 +4,15 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import models.business.address.CreateBusinessAddressRequest
 import models.business.address.UpdateBusinessAddressRequest
-import models.business.contact_details.requests.UpdateBusinessContactDetailsRequest
+import models.business.contact_details.UpdateBusinessContactDetailsRequest
 import models.business.contact_details.BusinessContactDetails
-import models.business.specifications.requests.UpdateBusinessSpecificationsRequest
+import models.business.specifications.UpdateBusinessSpecificationsRequest
 
 import models.OpeningHours
 import models.Monday
 import models.Tuesday
 import testData.TestConstants.*
-import models.business.availability.requests.{UpdateBusinessAddressRequest, CreateBusinessAddressRequest}
+import models.business.availability.*
 
 object BusinessTestConstants {
 

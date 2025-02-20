@@ -5,8 +5,8 @@ import cats.data.Validated.Valid
 import cats.effect.Concurrent
 import cats.implicits.*
 import io.circe.syntax.EncoderOps
-import models.business.specifications.requests.CreateBusinessSpecificationsRequest
-import models.business.specifications.requests.UpdateBusinessSpecificationsRequest
+import models.business.specifications.CreateBusinessSpecificationsRequest
+import models.business.specifications.UpdateBusinessSpecificationsRequest
 import models.business.specifications.BusinessSpecifications
 import models.responses.CreatedResponse
 import models.responses.DeletedResponse

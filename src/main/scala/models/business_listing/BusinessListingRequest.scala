@@ -8,7 +8,7 @@ import io.circe.Json
 import java.time.LocalDateTime
 import models.business.address.CreateBusinessAddressRequest
 import models.business.contact_details.CreateBusinessContactDetailsRequest
-import models.business.specifications.requests.CreateBusinessSpecificationsRequest
+import models.business.specifications.CreateBusinessSpecificationsRequest
 import models.business.address.CreateBusinessAddressRequest
 
 case class BusinessListingRequest(

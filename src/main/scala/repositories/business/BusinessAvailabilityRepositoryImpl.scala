@@ -1,30 +1,33 @@
 package repositories.business
 
+import cats.Monad
 import cats.data.ValidatedNel
 import cats.effect.Concurrent
 import cats.syntax.all.*
-import cats.Monad
 import doobie.*
 import doobie.implicits.*
 import doobie.implicits.javasql.*
 import doobie.util.meta.Meta
-import java.sql.Timestamp
-import java.time.LocalDateTime
+import models.Day
 import models.business.availability.*
 import models.database.*
-import models.Day
+
+import java.sql.Time
+import java.sql.Timestamp
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 trait BusinessAvailabilityRepositoryAlgebra[F[_]] {
 
   // def findAll(businessId: String): F[Option[BusinessAvailabilityPartial]]
 
-  def createDaysOpen(businessId: String, request: CreateBusinessDaysRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
+  def createDaysOpen(request: CreateBusinessDaysRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
   def updateDaysOpen(businessId: String, request: UpdateBusinessDaysRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
-  def createOpeningHours(businessId: String, request: CreateBusinessOpeningHoursRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
+  def createOpeningHours(request: CreateBusinessOpeningHoursRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
-  def updateOpeningHours(businessId: String, day: String, request: UpdateBusinessOpeningHoursRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
+  def updateOpeningHours(request: UpdateBusinessOpeningHoursRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
   def delete(businessId: String, day: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
@@ -35,6 +38,12 @@ class BusinessAvailabilityRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
 
   implicit val localDateTimeMeta: Meta[LocalDateTime] =
     Meta[Timestamp].imap(_.toLocalDateTime)(Timestamp.valueOf)
+
+  implicit val dayMeta: Meta[Day] = Meta[String].timap(Day.fromString)(_.toString)
+
+  // Meta instance to map between SQL `TIME` and Scala `LocalTime`
+  implicit val localTimeMeta: Meta[LocalTime] =
+    Meta[Time].timap(_.toLocalTime)(Time.valueOf)
 
   // override def findByBusinessId(businessId: String): F[Option[BusinessAvailabilityPartial]] = {
   //   val findQuery: F[Option[BusinessAvailabilityPartial]] =
@@ -58,17 +67,17 @@ class BusinessAvailabilityRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
   //   findQuery
   // }
 
-  override def createDaysOpen(businessId: String, request: CreateBusinessDaysRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = {
+  override def createDaysOpen(request: CreateBusinessDaysRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = {
 
-    val insertNew = Update[(String, Day)](
-      "INSERT INTO business_opening_hours (business_id, weekday) VALUES (?, ?)"
-    ).updateMany(request.days.map(day => (businessId, day))) // Use request.businessId
+    val insertNew = Update[(String, String, Day)](
+      "INSERT INTO business_opening_hours (user_id, business_id, weekday) VALUES (?, ?, ?)"
+    ).updateMany(request.days.map(day => (request.userId, request.businessId, day))) // Use request.businessId
 
     insertNew
       .transact(transactor)
       .attempt
       .map {
-        case Right(affectedRows) if affectedRows > 0 => UpdateSuccess.validNel
+        case Right(affectedRows) if affectedRows > 0 => CreateSuccess.validNel
         case Right(_) => NotFoundError.invalidNel
         case Left(ex: java.sql.SQLException) if ex.getSQLState == "23505" =>
           ConstraintViolation.invalidNel // Handle unique constraint violations
@@ -121,9 +130,34 @@ class BusinessAvailabilityRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
       }
   }
 
-  override def createOpeningHours(businessId: String, request: CreateBusinessOpeningHoursRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = ???
+  override def createOpeningHours(request: CreateBusinessOpeningHoursRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = ???
 
-  override def updateOpeningHours(businessId: String, day: String, request: UpdateBusinessOpeningHoursRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = ???
+  override def updateOpeningHours(request: UpdateBusinessOpeningHoursRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] =
+    sql"""
+      UPDATE business_opening_hours
+      SET
+        opening_time = COALESCE(${request.openingTime.toString}, business_opening_hours.opening_time),
+        closing_time = COALESCE(${request.closingTime.toString}, business_opening_hours.closing_time),
+        updated_at = CURRENT_TIMESTAMP
+      WHERE business_id = ${request.businessId}
+        AND weekday = ${request.day.toString}
+    """.update.run
+      .transact(transactor)
+      .attempt
+      .map {
+        case Right(affectedRows) if affectedRows > 0 => UpdateSuccess.validNel
+        case Right(_) => NotFoundError.invalidNel
+        case Left(ex: java.sql.SQLException) if ex.getSQLState == "23503" =>
+          ForeignKeyViolationError.invalidNel
+        case Left(ex: java.sql.SQLException) if ex.getSQLState == "08001" =>
+          DatabaseConnectionError.invalidNel
+        case Left(ex: java.sql.SQLException) if ex.getSQLState == "22001" =>
+          DataTooLongError.invalidNel
+        case Left(ex: java.sql.SQLException) =>
+          SqlExecutionError(ex.getMessage).invalidNel
+        case Left(ex) =>
+          UnknownError(s"Unexpected error: ${ex.getMessage}").invalidNel
+      }
 
   override def delete(businessId: String, day: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = {
     val deleteQuery: Update0 =

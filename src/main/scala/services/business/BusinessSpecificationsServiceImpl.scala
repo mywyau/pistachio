@@ -7,8 +7,8 @@ import cats.effect.Concurrent
 import cats.implicits.*
 import cats.Monad
 import cats.NonEmptyParallel
-import models.business.specifications.requests.CreateBusinessSpecificationsRequest
-import models.business.specifications.requests.UpdateBusinessSpecificationsRequest
+import models.business.specifications.CreateBusinessSpecificationsRequest
+import models.business.specifications.UpdateBusinessSpecificationsRequest
 import models.business.specifications.BusinessSpecificationsPartial
 import models.database.CreateSuccess
 import models.database.DatabaseErrors

@@ -14,7 +14,7 @@ import models.desk.deskListing.InitiateDeskListingRequest
 import models.desk.deskListing.DeskListing
 import models.desk.deskPricing.DeskPricingPartial
 import models.desk.deskPricing.RetrievedDeskPricing
-import models.desk.deskSpecifications.requests.UpdateDeskSpecificationsRequest
+import models.desk.deskSpecifications.UpdateDeskSpecificationsRequest
 import models.desk.deskSpecifications.DeskSpecificationsPartial
 import models.desk.deskSpecifications.PrivateDesk
 import repositories.desk.DeskListingRepositoryImpl

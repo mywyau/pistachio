@@ -1,4 +1,4 @@
-package models.business.specifications.requests
+package models.business.specifications
 
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.generic.semiauto.deriveEncoder

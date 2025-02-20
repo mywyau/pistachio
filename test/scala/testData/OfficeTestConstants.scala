@@ -7,7 +7,7 @@ import models.desk.deskPricing.RetrievedDeskPricing
 import models.office.address_details.CreateOfficeAddressRequest
 import models.office.address_details.UpdateOfficeAddressRequest
 import models.office.address_details.OfficeAddressPartial
-import models.office.adts.OpenPlanOffice
+import models.office.OpenPlanOffice
 import models.office.contact_details.CreateOfficeContactDetailsRequest
 import models.office.contact_details.UpdateOfficeContactDetailsRequest
 import models.office.specifications.CreateOfficeSpecificationsRequest

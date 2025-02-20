@@ -1,12 +1,17 @@
 package models.business.availability
 
-import io.circe.generic.semiauto.deriveDecoder
-import io.circe.generic.semiauto.deriveEncoder
 import io.circe.Decoder
 import io.circe.Encoder
+import io.circe.generic.semiauto.deriveDecoder
+import io.circe.generic.semiauto.deriveEncoder
+
 import java.time.LocalTime
+import models.Day
 
 case class UpdateBusinessOpeningHoursRequest(
+  userId: String,
+  businessId: String,
+  day: Day,
   openingTime: LocalTime,
   closingTime: LocalTime
 )

@@ -8,6 +8,8 @@ import java.time.LocalTime
 import models.Day
 
 case class CreateBusinessOpeningHoursRequest(
+  userId: String,
+  businessId: String,
   openingTime: LocalTime,
   closingTime: LocalTime
 )

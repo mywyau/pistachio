@@ -5,7 +5,7 @@ import java.time.LocalTime
 import models.office.address_details.CreateOfficeAddressRequest
 import models.office.address_details.OfficeAddress
 import models.office.address_details.OfficeAddressPartial
-import models.office.adts.*
+
 import models.office.contact_details.CreateOfficeContactDetailsRequest
 import models.office.contact_details.OfficeContactDetails
 import models.office.contact_details.OfficeContactDetailsPartial
@@ -16,6 +16,7 @@ import models.office_listing.requests.InitiateOfficeListingRequest
 import models.office_listing.OfficeListing
 import testData.OfficeTestConstants.*
 import testData.TestConstants.*
+import models.office.OpenPlanOffice
 
 object OfficeListingControllerConstants {
 
