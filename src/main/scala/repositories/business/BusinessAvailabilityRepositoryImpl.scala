@@ -30,7 +30,7 @@ trait BusinessAvailabilityRepositoryAlgebra[F[_]] {
 
   def updateOpeningHours(request: UpdateBusinessOpeningHoursRequest): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
-  def delete(businessId: String, day: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
+  def delete(businessId: String, day: Day): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 
   def deleteAll(businessId: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]]
 }
@@ -166,12 +166,12 @@ class BusinessAvailabilityRepositoryImpl[F[_] : Concurrent : Monad](transactor: 
           UnknownError(s"Unexpected error: ${ex.getMessage}").invalidNel
       }
 
-  override def delete(businessId: String, day: String): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = {
+  override def delete(businessId: String, day: Day): F[ValidatedNel[DatabaseErrors, DatabaseSuccess]] = {
     val deleteQuery: Update0 =
       sql"""
       DELETE FROM business_opening_hours
       WHERE business_id = $businessId
-      AND weekday = $day
+      AND weekday = ${day.toString}
     """.update
 
     deleteQuery.run.transact(transactor).attempt.map {
