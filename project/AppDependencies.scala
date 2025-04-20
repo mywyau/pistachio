@@ -66,3 +66,4 @@ object AppDependencies {
   // Aggregate all dependencies
   def apply(): Seq[ModuleID] = compile ++ test ++ integrationTest ++ macOsWorkaround()
 }
+
